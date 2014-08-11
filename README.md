@@ -66,7 +66,7 @@ class CfgLoadouts {
 	};
 };
 ```
-This clearly shows how efficient this system is in changing multiple units at the same time, with almost no busywork involved. Lists ( entries denoted with a `[]` ) expect an array as their input, even for a single entry. So make sure you don't forget to put them in `{}` and seperate the entries with a `,` like the example `addItems[]` above.
+This clearly shows how efficient this system is in changing multiple units at the same time ( in the mission this snippet is used, 18 units have their loadout set with this ), with almost no busywork involved. Lists ( entries denoted with a `[]` ) expect an array as their input, even for a single entry. So make sure you don't forget to put them in `{}` and seperate the entries with a `,` like the example `addItems[]` above.
 
 Options
 -------
