@@ -39,7 +39,34 @@ class CfgLoadout {
 	};
 };
 ```
-The loadouts work on a per-class basis, to create one you simply need to find out the classname of the unit ( this is available inside the editor for example ) and make it an entry in `CfgLoadout`. Changes inside now apply to all units of that class. You can of course have more than one class of units be represented with loadouts. Lists ( entries denoted with a `[]` ) expect an array as their input, even for a single entry. So make sure you don't forget to put them in `{}` and seperate the entries with a `,` like the example `addItems[]` above.
+The loadouts work on a per-class basis, to create one you simply need to find out the classname of the unit ( this is available inside the editor for example ) and make it an entry in `CfgLoadout`. Changes inside now apply to all units of that class. You can of course have more than one class of units be represented with loadouts. Here is an example that illustrates this:
+``` c++
+class CfgLoadout {
+	class AV_IndUs_SL_Des {
+		primaryWeapon = "RH_m4a1_ris";
+		primaryWeaponAttachments[] = {"RH_ta31rco"};
+	};
+	class AV_IndUs_Asst_AR_Des {
+		primaryWeapon = "RH_m4a1_ris";
+	};
+	class AV_IndUs_medic_Des {
+		primaryWeapon = "RH_m4a1_ris";
+	};
+	class AV_IndUs_AT_Des {
+		primaryWeapon = "RH_m4a1_ris";
+	};
+	class AV_IndUs_Marksman_M14_Des {
+		primaryWeaponAttachments[] = {"optic_DMS"};
+	};
+	class AV_IndUs_REP_Des {
+		primaryWeapon = "RH_m4a1_ris";
+	};
+	class AV_IndUs_AT_MAAWS_Des {
+		primaryWeapon = "RH_m4a1_ris";
+	};
+};
+```
+This clearly shows how efficient this system is in changing multiple units at the same time, with almost no busywork involved. Lists ( entries denoted with a `[]` ) expect an array as their input, even for a single entry. So make sure you don't forget to put them in `{}` and seperate the entries with a `,` like the example `addItems[]` above.
 
 Options
 -------
