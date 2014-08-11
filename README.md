@@ -18,9 +18,9 @@ class CfgFunctions {
 Loadouts
 --------
 Loadouts are created using a class based structure, this has vast advantages over the commonly accepted method of scripting them on a per-unit basis.
-The top entry point for a a loadout is the `CfgLoadout` class. Loadouts are written directly inside the `description.ext` and are applied _once_ on mission start. This is an example configuration that shows all the loadout options you have:
+The top entry point for a a loadout is the `CfgLoadouts` class. Loadouts are written directly inside the `description.ext` and are applied _once_ on mission start. This is an example configuration that shows all the loadout options you have:
 ``` c++
-class CfgLoadout {
+class CfgLoadouts {
 	class B_Soldier_F {
 		uniform = "kae_UN_Uniform_Armoured_P";
 		// vest = "";
@@ -39,9 +39,9 @@ class CfgLoadout {
 	};
 };
 ```
-The loadouts work on a per-class basis, to create one you simply need to find out the classname of the unit ( this is available inside the editor for example ) and make it an entry in `CfgLoadout`. Changes inside now apply to all units of that class. You can of course have more than one class of units be represented with loadouts. Here is an example that illustrates this:
+The loadouts work on a per-class basis, to create one you simply need to find out the classname of the unit ( this is available inside the editor for example ) and make it an entry in `CfgLoadouts`. Changes inside now apply to all units of that class. You can of course have more than one class of units be represented with loadouts. Here is an example that illustrates this:
 ``` c++
-class CfgLoadout {
+class CfgLoadouts {
 	class AV_IndUs_SL_Des {
 		primaryWeapon = "RH_m4a1_ris";
 		primaryWeaponAttachments[] = {"RH_ta31rco"};

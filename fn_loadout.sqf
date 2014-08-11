@@ -1,19 +1,19 @@
 // Make sure only clients run this script
 if (isDedicated) exitWith {};
 
-// Find out if player class is represented in CfgLoadout, if not we can exit the script right here, as there's no loadout to be applied
-if (!isClass (missionConfigFile >> "CfgLoadout" >> (typeOf player))) exitWith {};
+// Find out if player class is represented in CfgLoadouts, if not we can exit the script right here, as there's no loadout to be applied
+if (!isClass (missionConfigFile >> "CfgLoadouts" >> (typeOf player))) exitWith {};
 
 // At this point, there definitely is a loadout for player class, let's apply it
 
 // ======================================== Containers ============================================
 // Uniform
-if (isText (missionConfigFile >> "CfgLoadout" >> (typeOf player) >> "uniform")) then {
+if (isText (missionConfigFile >> "CfgLoadouts" >> (typeOf player) >> "uniform")) then {
 	// Backup items and magazines
 	_backUpItems = uniformItems player;
 	_backUpMagazines = uniformMagazines player;
 	
-	player forceAddUniform getText (missionConfigFile >> "CfgLoadout" >> (typeOf player) >> "uniform");
+	player forceAddUniform getText (missionConfigFile >> "CfgLoadouts" >> (typeOf player) >> "uniform");
 	
 	// Reapply items and magazines
 	{ player addItemToUniform _x; } forEach _backUpItems;
@@ -21,12 +21,12 @@ if (isText (missionConfigFile >> "CfgLoadout" >> (typeOf player) >> "uniform")) 
 };
 
 // Vest
-if (isText (missionConfigFile >> "CfgLoadout" >> (typeOf player) >> "vest")) then {
+if (isText (missionConfigFile >> "CfgLoadouts" >> (typeOf player) >> "vest")) then {
 	// Backup items and magazines
 	_backUpItems = vestItems player;
 	_backUpMagazines = vestMagazines player;
 	
-	player addVest getText (missionConfigFile >> "CfgLoadout" >> (typeOf player) >> "vest");
+	player addVest getText (missionConfigFile >> "CfgLoadouts" >> (typeOf player) >> "vest");
 	
 	// Reapply items and magazines
 	{ player addItemToVest _x; } forEach _backUpItems;
@@ -34,12 +34,12 @@ if (isText (missionConfigFile >> "CfgLoadout" >> (typeOf player) >> "vest")) the
 };
 
 // Backpack
-if (isText (missionConfigFile >> "CfgLoadout" >> (typeOf player) >> "backpack")) then {
+if (isText (missionConfigFile >> "CfgLoadouts" >> (typeOf player) >> "backpack")) then {
 	// Backup items and magazines
 	_backUpItems = backpackItems player;
 	_backUpMagazines = backpackMagazines player;
 	
-	player addBackpack getText (missionConfigFile >> "CfgLoadout" >> (typeOf player) >> "backpack");
+	player addBackpack getText (missionConfigFile >> "CfgLoadouts" >> (typeOf player) >> "backpack");
 	
 	// Reapply items and magazines
 	{ player addItemToBackpack _x; } forEach _backUpItems;
@@ -48,37 +48,37 @@ if (isText (missionConfigFile >> "CfgLoadout" >> (typeOf player) >> "backpack"))
 
 // ==================================== Items & Magazines =========================================
 // Magazines
-if (isArray (missionConfigFile >> "CfgLoadout" >> (typeOf player) >> "magazines")) then {
+if (isArray (missionConfigFile >> "CfgLoadouts" >> (typeOf player) >> "magazines")) then {
 	{ player removeMagazine _x; } forEach magazines player;
-	{ player addMagazine _x; } forEach getArray (missionConfigFile >> "CfgLoadout" >> (typeOf player) >> "magazines");
+	{ player addMagazine _x; } forEach getArray (missionConfigFile >> "CfgLoadouts" >> (typeOf player) >> "magazines");
 };
 
 // Items
-if (isArray (missionConfigFile >> "CfgLoadout" >> (typeOf player) >> "items")) then {
+if (isArray (missionConfigFile >> "CfgLoadouts" >> (typeOf player) >> "items")) then {
 	{ player removeItem _x; } forEach items player;
-	{ player addItem _x; } forEach getArray (missionConfigFile >> "CfgLoadout" >> (typeOf player) >> "items");
+	{ player addItem _x; } forEach getArray (missionConfigFile >> "CfgLoadouts" >> (typeOf player) >> "items");
 };
 
 // ================================= Added Items & Magazines ======================================
 // Magazines
-if (isArray (missionConfigFile >> "CfgLoadout" >> (typeOf player) >> "addMagazines")) then {
-	{ player addMagazine _x; } forEach getArray (missionConfigFile >> "CfgLoadout" >> (typeOf player) >> "addMagazines");
+if (isArray (missionConfigFile >> "CfgLoadouts" >> (typeOf player) >> "addMagazines")) then {
+	{ player addMagazine _x; } forEach getArray (missionConfigFile >> "CfgLoadouts" >> (typeOf player) >> "addMagazines");
 };
 
 // Items
-if (isArray (missionConfigFile >> "CfgLoadout" >> (typeOf player) >> "addItems")) then {
-	{ player addItem _x; } forEach getArray (missionConfigFile >> "CfgLoadout" >> (typeOf player) >> "addItems");
+if (isArray (missionConfigFile >> "CfgLoadouts" >> (typeOf player) >> "addItems")) then {
+	{ player addItem _x; } forEach getArray (missionConfigFile >> "CfgLoadouts" >> (typeOf player) >> "addItems");
 };
 
 // ======================================== Equipment =============================================
 // Headgear
-if (isText (missionConfigFile >> "CfgLoadout" >> (typeOf player) >> "headgear")) then {
-	player addHeadgear getText (missionConfigFile >> "CfgLoadout" >> (typeOf player) >> "headgear");
+if (isText (missionConfigFile >> "CfgLoadouts" >> (typeOf player) >> "headgear")) then {
+	player addHeadgear getText (missionConfigFile >> "CfgLoadouts" >> (typeOf player) >> "headgear");
 };
 
 // Goggles ( No, this is NOT Night Vision Goggles )
-if (isText (missionConfigFile >> "CfgLoadout" >> (typeOf player) >> "goggles")) then {
-	player addGoggles getText (missionConfigFile >> "CfgLoadout" >> (typeOf player) >> "goggles");
+if (isText (missionConfigFile >> "CfgLoadouts" >> (typeOf player) >> "goggles")) then {
+	player addGoggles getText (missionConfigFile >> "CfgLoadouts" >> (typeOf player) >> "goggles");
 };
 
 // ========================================= Weapons ==============================================
@@ -97,18 +97,18 @@ if (handgunWeapon player == "hgun_P07_F") then {
 };
 
 // Primary weapon
-if (isText (missionConfigFile >> "CfgLoadout" >> (typeOf player) >> "primaryWeapon")) then {
-	player addWeapon getText (missionConfigFile >> "CfgLoadout" >> (typeOf player) >> "primaryWeapon");
+if (isText (missionConfigFile >> "CfgLoadouts" >> (typeOf player) >> "primaryWeapon")) then {
+	player addWeapon getText (missionConfigFile >> "CfgLoadouts" >> (typeOf player) >> "primaryWeapon");
 };
 
 // Launcher
-if (isText (missionConfigFile >> "CfgLoadout" >> (typeOf player) >> "secondaryWeapon")) then {
-	player addWeapon getText (missionConfigFile >> "CfgLoadout" >> (typeOf player) >> "secondaryWeapon");
+if (isText (missionConfigFile >> "CfgLoadouts" >> (typeOf player) >> "secondaryWeapon")) then {
+	player addWeapon getText (missionConfigFile >> "CfgLoadouts" >> (typeOf player) >> "secondaryWeapon");
 };
 
 // Sidearm
-if (isText (missionConfigFile >> "CfgLoadout" >> (typeOf player) >> "handgunWeapon")) then {	
-	player addWeapon getText (missionConfigFile >> "CfgLoadout" >> (typeOf player) >> "handgunWeapon");
+if (isText (missionConfigFile >> "CfgLoadouts" >> (typeOf player) >> "handgunWeapon")) then {	
+	player addWeapon getText (missionConfigFile >> "CfgLoadouts" >> (typeOf player) >> "handgunWeapon");
 } else {
 	// Add handgun back to complete the workaround above
 	// Complete retard shit here, but basically it is required to replace the default handgun with something else, as neither adding nor removing it works
@@ -126,13 +126,13 @@ if (isText (missionConfigFile >> "CfgLoadout" >> (typeOf player) >> "handgunWeap
 
 // ======================================= Attachments ============================================
 // Primary weapon attachments
-if (isArray (missionConfigFile >> "CfgLoadout" >> (typeOf player) >> "primaryWeaponAttachments")) then {
+if (isArray (missionConfigFile >> "CfgLoadouts" >> (typeOf player) >> "primaryWeaponAttachments")) then {
 	removeAllPrimaryWeaponItems player;
-	{ player addPrimaryWeaponItem _x; } forEach getArray (missionConfigFile >> "CfgLoadout" >> (typeOf player) >> "primaryWeaponAttachments");
+	{ player addPrimaryWeaponItem _x; } forEach getArray (missionConfigFile >> "CfgLoadouts" >> (typeOf player) >> "primaryWeaponAttachments");
 };
 
 // Handgun weapon attachments
-if (isArray (missionConfigFile >> "CfgLoadout" >> (typeOf player) >> "handgunWeaponAttachments")) then {
+if (isArray (missionConfigFile >> "CfgLoadouts" >> (typeOf player) >> "handgunWeaponAttachments")) then {
 	removeAllHandgunItems player;
-	{ player addHandgunItem _x; } forEach getArray (missionConfigFile >> "CfgLoadout" >> (typeOf player) >> "handgunWeaponAttachments");
+	{ player addHandgunItem _x; } forEach getArray (missionConfigFile >> "CfgLoadouts" >> (typeOf player) >> "handgunWeaponAttachments");
 };
