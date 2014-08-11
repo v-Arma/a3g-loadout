@@ -28,7 +28,7 @@ class CfgLoadout {
 		// magazines[] = {};
 		// items[] = {};
 		// addMagazines[] = {};
-		addItems[] = {"AGM_Clacker"};
+		addItems[] = {"AGM_Clacker", "AGM_Bandage"};
 		// headgear = "";	
 		// goggles = "";
 		primaryWeapon = "RH_m4a1_ris";
