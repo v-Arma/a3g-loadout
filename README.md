@@ -44,6 +44,7 @@ The loadouts work on a per-class basis, to create one you simply need to find ou
 Options
 -------
 These are the different options can use for making a loadout, with a bit of an explanation of how they behave:
+
 | Option                       | Explanation                                                                     |
 | ---------------------------- | ------------------------------------------------------------------------------- |
 | `uniform`                    | Replaces the uniform and preserves the items inside.                            |
