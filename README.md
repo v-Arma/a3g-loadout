@@ -25,17 +25,17 @@ class CfgLoadout {
 		uniform = "kae_UN_Uniform_Armoured_P";          // Changes the uniform
 		// vest = "";                                   // Changes the vest
 		// backpack = "";                               // Changes the backpack
-		// magazines[] = {"30Rnd_556x45_Stanag_Tracer_Red", "30Rnd_556x45_Stanag_Tracer_Red"}; // Replaces magazines with the ones listed here
-		// items[] = {};				// Replaces items with the ones listed here
-		// addMagazines[] = {};				// Does not replace magazines, just adds them ontop of the default loadout
-		addItems[] = {"AGM_Clacker"};			// Does not replace items, just adds them ontop of the default loadout
-		// headgear = "";				// Replaces headgear	
-		// goggles = "";				// Replaces goggles
-		primaryWeapon = "RH_m4a1_ris";			// Replaces the primary weapon	
-		// secondaryWeapon = "";			// Replaces the secondary weapon ( launcher )		
-		// handgunWeapon = "RH_m9";			// Replaces the handgun
-		primaryWeaponAttachments[] = {"RH_ta31rco"};	// Replaces the primary weapon attachments ( ie. scopes )
-		// handgunWeaponAttachments[] = {};		// Replaces the handgun attachments ( ie. scopes )
+		// magazines[] = {};                            // Replaces magazines with the ones listed here
+		// items[] = {};                                // Replaces items with the ones listed here
+		// addMagazines[] = {};                         // Does not replace magazines, just adds them ontop of the default loadout
+		addItems[] = {"AGM_Clacker"};                   // Does not replace items, just adds them ontop of the default loadout
+		// headgear = "";                               // Replaces headgear	
+		// goggles = "";                                // Replaces goggles
+		primaryWeapon = "RH_m4a1_ris";                  // Replaces the primary weapon	
+		// secondaryWeapon = "";                        // Replaces the secondary weapon ( launcher )		
+		// handgunWeapon = "RH_m9";                     // Replaces the handgun
+		primaryWeaponAttachments[] = {"RH_ta31rco"};    // Replaces the primary weapon attachments ( ie. scopes )
+		// handgunWeaponAttachments[] = {};             // Replaces the handgun attachments ( ie. scopes )
 	};
 };
 ```
