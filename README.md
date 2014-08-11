@@ -23,7 +23,7 @@ The top entry point for a a loadout is the `CfgLoadout` class. Loadouts are writ
 class CfgLoadout {
 	class B_Soldier_F {
 		uniform = "kae_UN_Uniform_Armoured_P";		// Changes the uniform
-		// vest = "";					// Changes the vest
+		// vest = "";						// Changes the vest
 		// backpack = "";				// Changes the backpack
 		// magazines[] = {"30Rnd_556x45_Stanag_Tracer_Red", "30Rnd_556x45_Stanag_Tracer_Red"}; // Replaces magazines with the ones listed here
 		// items[] = {};				// Replaces items with the ones listed here
