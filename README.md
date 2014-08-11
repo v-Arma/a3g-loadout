@@ -5,8 +5,8 @@ An Arma 3 loadout system for mission makers
 Setup
 -----
 - Make a folder inside your mission root folder, name it a3g-loadout.
-- Put cfgfunctions.hpp and fn_loadout.sqf in it.
-- Make a description.ext ( See what this is [here](https://community.bistudio.com/wiki/Description.ext) ) and put it in your mission root folder.
+- Put `cfgfunctions.hpp` and `fn_loadout.sqf` in it.
+- Make a `description.ext` ( See what this is [here](https://community.bistudio.com/wiki/Description.ext) ) and put it in your mission root folder.
 - Add this to it:
 ``` c++ 
 class CfgFunctions { 
@@ -18,7 +18,7 @@ class CfgFunctions {
 Loadouts
 --------
 Loadouts are created using a class based structure, this has vast advantages over the commonly accepted method of scripting them on a per-unit basis.
-The top entry point for a a loadout is the `CfgLoadout` class. Loadouts are written directly inside the description.ext and are applied _once_ on mission start. This is an example configuration that shows all the loadout options you have:
+The top entry point for a a loadout is the `CfgLoadout` class. Loadouts are written directly inside the `description.ext` and are applied _once_ on mission start. This is an example configuration that shows all the loadout options you have:
 ``` c++
 class CfgLoadout {
 	class B_Soldier_F {
