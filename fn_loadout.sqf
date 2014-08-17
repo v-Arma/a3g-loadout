@@ -38,8 +38,13 @@ if (isText (missionConfigFile >> "CfgLoadouts" >> (typeOf player) >> "backpack")
 	// Backup items and magazines
 	_backUpItems = backpackItems player;
 	_backUpMagazines = backpackMagazines player;
-	
+
+	// We need to explicibly remove the backpack here, because otherwise it gets dropped on the floor
+	removeBackpack player;
 	player addBackpack getText (missionConfigFile >> "CfgLoadouts" >> (typeOf player) >> "backpack");
+	
+	// Newly spawned backpacks are auto filled with their config loadouts. We don't want this, so we clear them out at this point
+	{ player removeItemFromBackpack _x; } forEach backpackItems player;
 	
 	// Reapply items and magazines
 	{ player addItemToBackpack _x; } forEach _backUpItems;
