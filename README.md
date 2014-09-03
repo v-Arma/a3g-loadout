@@ -26,7 +26,7 @@ class CfgLoadouts {
 		// vest = "";
 		// backpack = "";
 		// magazines[] = {};
-  	// items[] = {};
+  		// items[] = {};
 		// addMagazines[] = {};
 		addItems[] = {"AGM_Clacker", "AGM_Bandage"};
 		// headgear = "";	
