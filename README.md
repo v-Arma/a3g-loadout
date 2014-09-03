@@ -7,7 +7,7 @@ Setup
 - Make a folder inside your mission root folder, name it a3g-loadout.
 - Put `cfgfunctions.hpp` and `fn_loadout.sqf` in it.
 - Make a `description.ext` ( See what this is [here](https://community.bistudio.com/wiki/Description.ext) ) and put it in your mission root folder.
-- Add this to it:
+- Add this:
 ``` c++ 
 class CfgFunctions { 
 	#include "a3g-loadout\cfgfunctions.hpp" 
@@ -26,7 +26,7 @@ class CfgLoadouts {
 		// vest = "";
 		// backpack = "";
 		// magazines[] = {};
-		// items[] = {};
+  	// items[] = {};
 		// addMagazines[] = {};
 		addItems[] = {"AGM_Clacker", "AGM_Bandage"};
 		// headgear = "";	
