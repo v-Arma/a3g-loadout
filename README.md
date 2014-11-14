@@ -61,6 +61,7 @@ Options
 These are the different options can use for making a loadout, with a bit of an explanation of how they behave. 
 The loadout options are completely modular, just use what you need and nothing more:
 
+
 | Option                       | Explanation                                |
 | ---------------------------- | --------------- -------------------------- |
 | `linkedItems[]`              | Replaces linked items. ( Arsenal export ). |
@@ -85,6 +86,7 @@ The loadout options are completely modular, just use what you need and nothing m
 | `gps`                        | Replaces gps.                              |
 | `compass`                    | Replaces compass.                          |
 | `watch`                      | Replaces watch.                            |
+
 
 ## Notes
 - All options default to removing the item(s) in question, if you leave the field empty ( ie. `uniform = "";` ), where it makes sense.
