@@ -1,3 +1,4 @@
+// Get config entry
 _configFile = _this select 0;
 _configEntry = _this select 1;
 

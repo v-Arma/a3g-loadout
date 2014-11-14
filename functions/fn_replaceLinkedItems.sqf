@@ -1,3 +1,4 @@
+// Get config entry
 _configPath = _this select 0;
 
 removeAllAssignedItems player;
