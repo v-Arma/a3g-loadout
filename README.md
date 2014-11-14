@@ -6,8 +6,6 @@
 | `vest`                       | Replaces vast.                              |
 | `items[]`                    | Replaces items.                             |
 | `magazines[]`                | Replaces magazines.                         |
-
-
 | `addItems[]`                 | Adds items.                                 |
 | `addMagazines[]`             | Adds items.                                 |
 | `weapons[]`                  | Replaces weapons. ( Arsenal export ).       |
