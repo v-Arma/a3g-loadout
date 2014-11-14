@@ -4,8 +4,8 @@ An Arma 3 loadout system for mission makers
 
 Setup
 -----
-- Make a folder inside your mission root folder, name it a3g-loadout.
-- Put `cfgfunctions.hpp` and `fn_loadout.sqf` in it.
+- Make a folder inside your mission root folder, name it a3g_loadout.
+- Drop the contents of this repository inside it.
 - Make a `description.ext` ( See what this is [here](https://community.bistudio.com/wiki/Description.ext) ) and put it in your mission root folder.
 - Add this to it:
 ``` c++ 
@@ -17,29 +17,39 @@ class CfgFunctions {
 
 Loadouts
 --------
-Loadouts are created using a class based structure, this has vast advantages over the commonly accepted method of scripting them on a per-unit basis.
+Loadouts are created using a priority based structure, this has vast advantages over the commonly accepted method of scripting them on a per-unit basis.
 The top entry point for a a loadout is the `CfgLoadouts` class. Loadouts are written directly inside the `description.ext` and are applied _once_ on mission start. This is an example configuration that shows all the loadout options you have:
 ``` c++
 class CfgLoadouts {
 	class B_Soldier_F {
-		uniform = "kae_UN_Uniform_Armoured_P";
-		// vest = "";
-		// backpack = "";
-		// magazines[] = {};
-		// items[] = {};
-		// addMagazines[] = {};
-		addItems[] = {"AGM_Clacker", "AGM_Bandage"};
-		// headgear = "";	
-		// goggles = "";
-		primaryWeapon = "RH_m4a1_ris";
-		// secondaryWeapon = "";	
-		// handgunWeapon = "RH_m9";
-		primaryWeaponAttachments[] = {"RH_ta31rco"};
-		// handgunWeaponAttachments[] = {};
+		linkedItems[] = {};
+		uniform = "";
+		backpack = "";
+		vest = "";
+		items[] = {};
+		magazines[] = {};
+		addItems[] = {};
+		addMagazines[] = {};
+		weapons[] = {};
+		primaryWeapon = "";
+		secondaryWeapon = "";
+		handgunWeapon = "";
+		primaryWeaponAttachments[] = {};
+		handgunWeaponAttachments[] = {};
+		headgear = "";	
+		goggles = "";
+		nvgoggles = "";
+		binoculars = "";
+		map = "";
+		gps = "";
+		compass = "";
+		watch = "";
 	};
 };
 ```
-The loadouts work on a per-class basis, to create one you simply need to find out the classname of the unit ( this is available inside the editor for example ) and make it an entry in `CfgLoadouts`. Changes inside now apply to all units of that class. You can of course have more than one class of units be represented with loadouts. Here is an example that illustrates this:
+The loadouts work on a priority basis, to create one you have several options. You can chose to apply them based on the unit class ( ie. so all medics get the same loadout ).
+To do this you simply need to find out the classname of the unit ( this is available inside the editor for example ) and make it an entry in `CfgLoadouts`.
+Changes inside now apply to all units of that class. You can of course have more than one class of units be represented with loadouts. Here is an example that illustrates this:
 ``` c++
 class CfgLoadouts {
 	class AV_IndUs_SL_Des {
@@ -66,7 +76,22 @@ class CfgLoadouts {
 	};
 };
 ```
-This clearly shows how efficient this system is in changing multiple units at the same time ( in the mission this snippet is used, 18 units have their loadout set with this ), with almost no busywork involved. Lists ( entries denoted with a `[]` ) expect an array as their input, even for a single entry. So make sure you don't forget to put them in `{}` and seperate the entries with a `,` like the example `addItems[]` above.
+Now where does the priority come into play? Simply put, you can combine several "layers" of loadout definitions. For example, let's say you want to give each unit a different weapon, EXCEPT the medic.
+You can do this simply with:
+``` c++
+class CfgLoadouts {
+	class Everyone {
+		primaryWeapon = "some weapon classname";
+	};
+	class AV_IndUs_medic_Des {
+		primaryWeapon = "some other weapon classname";
+	};
+};
+```
+This is all you have to do to give everyone a different weapon and give the medic a different weapon independent from the other guys. If you wanna further customize a unit, the script takes this into account and prioritizes special loadouts over generic ones. So the "everyone" loadout is
+overwritten by class loadouts, and class loadouts are overwritten by unique loadouts.
+This clearly shows how efficient this system is in changing multiple units at the same time ( in the mission this snippet is used, 18 units have their loadout set with this ), with almost no busywork involved.
+Lists ( entries denoted with a `[]` ) expect an array as their input, even for a single entry. So make sure you don't forget to put them in `{}` and seperate the entries with a `,` like the example `addItems[]` above.
 
 Options
 -------
