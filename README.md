@@ -63,7 +63,7 @@ The loadout options are completely modular, just use what you need and nothing m
 
 | Option                       | Explanation                                |
 | ---------------------------- | ------------------------------------------ |
-| `linkedItems[]`              | Replaces linked items. ( Arsenalexport ).  |
+| `linkedItems[]`              | Replaces linked items. ( Arsenal export ). |
 | `uniform`                    | Replaces uniform.                          |
 | `backpack`                   | Replaces backpack.                         |
 | `vest`                       | Replaces vest.                             |
@@ -71,7 +71,7 @@ The loadout options are completely modular, just use what you need and nothing m
 | `magazines[]`                | Replaces magazines.                        |
 | `addItems[]`                 | Adds items.                                |
 | `addMagazines[]`             | Adds magazines.                            |
-| `weapons[]`                  | Replaces weapons. ( Arsenalexport ).       |
+| `weapons[]`                  | Replaces weapons. ( Arsenal export ).      |
 | `primaryWeapon`              | Replaces primary weapon.                   |
 | `secondaryWeapon`            | Replaces secondary weapon.                 |
 | `handgunWeapon`              | Replaces handgun.                          |
@@ -88,7 +88,7 @@ The loadout options are completely modular, just use what you need and nothing m
 
 Notes
 -----
-- All options default to removing the item(s) in question, if you leave the field empty ( ie. `uniform = "";` ), where it makes sense.
+- All options default to removing the item(s) in question, if you leave the field empty, where it makes sense ( ie. `uniform = "";` ).
 - `linkedItems[]` is used in conjunction with the arsenal export and should be avoided if inputting a loadout manually.
 - `uniform`, `backpack` and `vest` options will try and preserve the items inside them, even if you change or completely remove them. 
 	If you delete a backpack for example, the system will try and move them to the rest of your inventory, as long as there's space for them.
