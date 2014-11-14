@@ -93,6 +93,8 @@ The loadout options are completely modular, just use what you need and nothing m
 | `watch`                      | Replaces watch.                            |
 
 ### Notes
+- Array entries ( denoted with a `[]` ) require the array syntax, even when they are only used with a single item. The correct usage looks like this: `magazines[] = {"some_magazine_classname"};`.
+- Single entries on the contrary look like this: `vest = "some_vest_classname";`. It is imperative that you do this right.
 - All options default to removing the item(s) in question, if you leave the field empty, where it makes sense ( ie. `uniform = "";` ).
 - `linkedItems[]` is used in conjunction with the arsenal export and should be avoided if inputting a loadout manually.
 - `uniform`, `backpack` and `vest` options will try and preserve the items inside them, even if you change or completely remove them. 
