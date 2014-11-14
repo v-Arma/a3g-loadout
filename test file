@@ -1,0 +1,53 @@
+// Exported from Arsenal by cephei
+uniform = "PLA_CombatUniform";
+backpack = "";
+weapons[] = {"hgun_P07_snds_F","Binocular","arifle_MX_SW_F","Throw","Put"};
+magazines[] = {};
+items[] = {"FirstAidKit"};
+linkedItems[] = {"","PLA_Cap","","ItemMap","ItemCompass","ItemWatch"};
+
+// Exported from Arsenal by cephei
+uniform = "U_O_CombatUniform_ocamo";
+backpack = "";
+weapons[] = {"bpx_uts15_csat_cqb","Throw","Put"};
+magazines[] = {"BPX_UTS15_Pellets","BPX_UTS15_Pellets","BPX_UTS15_Pellets","BPX_UTS15_Pellets","BPX_UTS15_Pellets","BPX_UTS15_Pellets","BPX_UTS15_Slug","BPX_UTS15_Slug","BPX_UTS15_Slug","HandGrenade","HandGrenade","MiniGrenade","MiniGrenade"};
+items[] = {"AGM_Bandage","AGM_Bandage"};
+linkedItems[] = {"AV_PlateCarrierIA1_dgtl","H_HelmetLeaderO_ocamo","","ItemMap","ItemCompass","ItemWatch","ACRE_PRC343_ID_1","NVGoggles_OPFOR"};
+
+
+
+comment "Exported from Arsenal by cephei";
+
+comment "Remove existing items";
+removeAllWeapons this;
+removeAllItems this;
+removeAllAssignedItems this;
+removeUniform this;
+removeVest this;
+removeBackpack this;
+removeHeadgear this;
+removeGoggles this;
+
+comment "Add containers";
+this forceAddUniform "PLA_CombatUniform";
+this addItemToUniform "FirstAidKit";
+this addHeadgear "PLA_Cap";
+
+comment "Add weapons";
+this addWeapon "arifle_MX_SW_F";
+this addPrimaryWeaponItem "muzzle_snds_H_SW";
+this addPrimaryWeaponItem "FHQ_acc_LLM01F";
+this addPrimaryWeaponItem "R3F_J10";
+this addWeapon "hgun_P07_snds_F";
+this addHandgunItem "muzzle_snds_L";
+this addWeapon "Binocular";
+
+comment "Add items";
+this linkItem "ItemMap";
+this linkItem "ItemCompass";
+this linkItem "ItemWatch";
+
+comment "Set identity";
+this setFace "WhiteHead_20";
+this setSpeaker "Male01ENG";
+
