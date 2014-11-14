@@ -61,30 +61,30 @@ Options
 These are the different options can use for making a loadout, with a bit of an explanation of how they behave. 
 The loadout options are completely modular, just use what you need and nothing more:
 
-|Option|Explanation|
-|----------------------------|------------------------------------------|
-|`linkedItems[]`|Replaceslinkeditems.(Arsenalexport).|
-|`uniform`|Replacesuniform.|
-|`backpack`|Replacesbackpack.|
-|`vest`|Replacesvast.|
-|`items[]`|Replacesitems.|
-|`magazines[]`|Replacesmagazines.|
-|`addItems[]`|Addsitems.|
-|`addMagazines[]`|Addsitems.|
-|`weapons[]`|Replacesweapons.(Arsenalexport).|
-|`primaryWeapon`|Replacesprimaryweapon.|
-|`secondaryWeapon`|Replacessecondaryweapon.|
-|`handgunWeapon`|Replaceshandgun.|
-|`primaryWeaponAttachments[]`|Replacesattachmentsofprimaryweapon.|
-|`handgunWeaponAttachments[]`|Replacesattachmentsofhandgun.|
-|`headgear`|Replacesheadgear.|
-|`goggles`|Replacesgoggles.|
-|`nvgoggles`|Replacesnightvisiongoggles.|
-|`binoculars`|Replacesbinoculars.|
-|`map`|Replacesmap.|
-|`gps`|Replacesgps.|
-|`compass`|Replacescompass.|
-|`watch`|Replaceswatch.|
+| Option                       | Explanation                                |
+| ---------------------------- | ------------------------------------------ |
+| `linkedItems[]`              | Replaces linked items. ( Arsenalexport ).  |
+| `uniform`                    | Replaces uniform.                          |
+| `backpack`                   | Replaces backpack.                         |
+| `vest`                       | Replaces vest.                             |
+| `items[]`                    | Replaces items.                            |
+| `magazines[]`                | Replaces magazines.                        |
+| `addItems[]`                 | Adds items.                                |
+| `addMagazines[]`             | Adds magazines.                            |
+| `weapons[]`                  | Replaces weapons. ( Arsenalexport ).       |
+| `primaryWeapon`              | Replaces primary weapon.                   |
+| `secondaryWeapon`            | Replaces secondary weapon.                 |
+| `handgunWeapon`              | Replaces handgun.                          |
+| `primaryWeaponAttachments[]` | Replaces attachments of primary weapon.    |
+| `handgunWeaponAttachments[]` | Replaces attachments of handgun.           |
+| `headgear`                   | Replaces headgear.                         |
+| `goggles`                    | Replaces goggles.                          |
+| `nvgoggles`                  | Replaces nightvision goggles.              |
+| `binoculars`                 | Replaces binoculars.                       |
+| `map`                        | Replaces map.                              |
+| `gps`                        | Replaces gps.                              |
+| `compass`                    | Replaces compass.                          |
+| `watch`                      | Replaces watch.                            |
 
 Notes
 -----
