@@ -1,19 +1,19 @@
 a3g-loadout
 ===========
-An Arma 3 loadout system for mission makers
+An Arma 3 loadout system for mission makers.
 
 Setup
 -----
-- Make a folder inside your mission root folder, name it a3g_loadout.
-- Drop the contents of this repository inside it.
+- Drag and drop the folder `a3g_loadout` into your mission root folder ( the folder that contains the mission.sqm ). It should look like this:
+![](http://puu.sh/cQMZ8/16464b6ef1.png)
 - Make a `description.ext` ( See what this is [here](https://community.bistudio.com/wiki/Description.ext) ) and put it in your mission root folder.
 - Add this to it:
 ``` c++ 
 class CfgFunctions { 
-	#include "a3g-loadout\cfgfunctions.hpp" 
+	#include "a3g_loadout\CfgFunctions.hpp" 
 };
 ```
-- Refer to How to make a loadout below.
+- Refer to `How to make a loadout` below.
 
 Loadouts
 --------
