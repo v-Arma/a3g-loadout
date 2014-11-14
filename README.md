@@ -5,7 +5,7 @@ An Arma 3 loadout system for mission makers.
 Setup
 -----
 - Drag and drop the folder `a3g_loadout` into your mission root folder ( the folder that contains the mission.sqm ). It should look like this:
-![](http://puu.sh/cQMZ8/16464b6ef1.png)
+- ![](http://puu.sh/cQMZ8/16464b6ef1.png)
 - Make a `description.ext` ( See what this is [here](https://community.bistudio.com/wiki/Description.ext) ) and put it in your mission root folder.
 - Add this to it:
 ``` c++ 
