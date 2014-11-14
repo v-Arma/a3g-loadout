@@ -61,34 +61,33 @@ Options
 These are the different options can use for making a loadout, with a bit of an explanation of how they behave. 
 The loadout options are completely modular, just use what you need and nothing more:
 
+| Option                       | Explanation                                 |
+| ---------------------------- | --------------- --------------------------- |
+| `linkedItems[]`              | Replaces linked items. ( Arsenal export ).  |
+| `uniform`                    | Replaces uniform.                           |
+| `backpack`                   | Replaces backpack.                          |
+| `vest`                       | Replaces vast.                              |
+| `items[]`                    | Replaces items.                             |
+| `magazines[]`                | Replaces magazines.                         |
+| `addItems[]`                 | Adds items.                                 |
+| `addMagazines[]`             | Adds items.                                 |
+| `weapons[]`                  | Replaces weapons. ( Arsenal export ).       |
+| `primaryWeapon`              | Replaces primary weapon.                    |
+| `secondaryWeapon`            | Replaces secondary weapon.                  |
+| `handgunWeapon`              | Replaces handgun.                           |
+| `primaryWeaponAttachments[]` | Replaces attachments of primary weapon.     |
+| `handgunWeaponAttachments[]` | Replaces attachments of handgun.            |
+| `headgear`                   | Replaces headgear.                          |
+| `goggles`                    | Replaces goggles.                           |
+| `nvgoggles`                  | Replaces nightvision goggles.               |
+| `binoculars`                 | Replaces binoculars.                        |
+| `map`                        | Replaces map.                               |
+| `gps`                        | Replaces gps.                               |
+| `compass`                    | Replaces compass.                           |
+| `watch`                      | Replaces watch.                             |
 
-| Option                       | Explanation                                |
-| ---------------------------- | --------------- -------------------------- |
-| `linkedItems[]`              | Replaces linked items. ( Arsenal export ). |
-| `uniform`                    | Replaces uniform.                          |
-| `backpack`                   | Replaces backpack.                         |
-| `vest`                       | Replaces vast.                             |
-| `items[]`                    | Replaces items.                            |
-| `magazines[]`                | Replaces magazines.                        |
-| `addItems[]`                 | Adds items.                                |
-| `addMagazines[]`             | Adds items.                                |
-| `weapons[]`                  | Replaces weapons. ( Arsenal export ).      |
-| `primaryWeapon`              | Replaces primary weapon.                   |
-| `secondaryWeapon`            | Replaces secondary weapon.                 |
-| `handgunWeapon`              | Replaces handgun.                          |
-| `primaryWeaponAttachments[]` | Replaces attachments of primary weapon.    |
-| `handgunWeaponAttachments[]` | Replaces attachments of handgun.           |
-| `headgear`                   | Replaces headgear.                         |
-| `goggles`                    | Replaces goggles.                          |
-| `nvgoggles`                  | Replaces nightvision goggles.              |
-| `binoculars`                 | Replaces binoculars.                       |
-| `map`                        | Replaces map.                              |
-| `gps`                        | Replaces gps.                              |
-| `compass`                    | Replaces compass.                          |
-| `watch`                      | Replaces watch.                            |
-
-
-## Notes
+Notes
+-----
 - All options default to removing the item(s) in question, if you leave the field empty ( ie. `uniform = "";` ), where it makes sense.
 - `linkedItems[]` is used in conjunction with the arsenal export and should be avoided if inputting a loadout manually.
 - `uniform`, `backpack` and `vest` options will try and preserve the items inside them, even if you change or completely remove them. 
