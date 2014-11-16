@@ -42,9 +42,12 @@ class A3G {
 		class ReplacePrimaryAttachments {
 			description = "Replaces the primary weapon attachments.";
 		};
+		class ReplaceSecondaryAttachments {
+			description = "Replaces the secondary weapon attachments.";
+		};
 		class ReplaceHandgunAttachments {
 			description = "Replaces the handgun attachments.";
-		};		
+		};	
 		
 		// Items & Magazines
 		class ReplaceItems {

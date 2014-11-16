@@ -67,30 +67,31 @@ Options
 These are the different options can use for making a loadout, with a bit of an explanation of how they behave. 
 The loadout options are completely modular, just use what you need and nothing more:
 
-| Option                       | Explanation                                |
-| ---------------------------- | ------------------------------------------ |
-| `linkedItems[]`              | Replaces linked items. ( Arsenal export ). |
-| `uniform`                    | Replaces uniform.                          |
-| `backpack`                   | Replaces backpack.                         |
-| `vest`                       | Replaces vest.                             |
-| `items[]`                    | Replaces items.                            |
-| `magazines[]`                | Replaces magazines.                        |
-| `addItems[]`                 | Adds items.                                |
-| `addMagazines[]`             | Adds magazines.                            |
-| `weapons[]`                  | Replaces weapons. ( Arsenal export ).      |
-| `primaryWeapon`              | Replaces primary weapon.                   |
-| `secondaryWeapon`            | Replaces secondary weapon.                 |
-| `handgunWeapon`              | Replaces handgun.                          |
-| `primaryWeaponAttachments[]` | Replaces attachments of primary weapon.    |
-| `handgunWeaponAttachments[]` | Replaces attachments of handgun.           |
-| `headgear`                   | Replaces headgear.                         |
-| `goggles`                    | Replaces goggles.                          |
-| `nvgoggles`                  | Replaces nightvision goggles.              |
-| `binoculars`                 | Replaces binoculars.                       |
-| `map`                        | Replaces map.                              |
-| `gps`                        | Replaces gps.                              |
-| `compass`                    | Replaces compass.                          |
-| `watch`                      | Replaces watch.                            |
+| Option                         | Explanation                                |
+| ------------------------------ | ------------------------------------------ |
+| `linkedItems[]`                | Replaces linked items. ( Arsenal export ). |
+| `uniform`                      | Replaces uniform.                          |
+| `backpack`                     | Replaces backpack.                         |
+| `vest`                         | Replaces vest.                             |
+| `items[]`                      | Replaces items.                            |
+| `magazines[]`                  | Replaces magazines.                        |
+| `addItems[]`                   | Adds items.                                |
+| `addMagazines[]`               | Adds magazines.                            |
+| `weapons[]`                    | Replaces weapons. ( Arsenal export ).      |
+| `primaryWeapon`                | Replaces primary weapon.                   |
+| `secondaryWeapon`              | Replaces secondary weapon.                 |
+| `handgunWeapon`                | Replaces handgun.                          |
+| `primaryWeaponAttachments[]`   | Replaces attachments of primary weapon.    |
+| `secondaryWeaponAttachments[]` | Replaces attachments of secondary weapon.  |
+| `handgunWeaponAttachments[]`   | Replaces attachments of handgun.           |
+| `headgear`                     | Replaces headgear.                         |
+| `goggles`                      | Replaces goggles.                          |
+| `nvgoggles`                    | Replaces nightvision goggles.              |
+| `binoculars`                   | Replaces binoculars.                       |
+| `map`                          | Replaces map.                              |
+| `gps`                          | Replaces gps.                              |
+| `compass`                      | Replaces compass.                          |
+| `watch`                        | Replaces watch.                            |
 
 ### Notes
 - Array entries ( denoted with a `[]` ) require the array syntax, even when they are only used with a single item. The correct usage looks like this: `magazines[] = {"some_magazine_classname"};`.
@@ -104,6 +105,6 @@ The loadout options are completely modular, just use what you need and nothing m
 - `weapons[]` is used in conjunction with the arsenal export and should be avoided if inputting a loadout manually.
 - `goggles` do _not_ replace nightvision goggles. There is a seperate option for it: `nvgoggles`. This is because nightvision goggles are their own independent slot.
 - `secondaryWeapon` refers to a launcher, not a handgun. Refer to `handgun` for the latter.
-- `secondaryWeapon` also does not have an option to replace attachments, this is because secondary weapons do not have attachments.
+- `secondaryWeaponAttachments[]` is not capable of removing attachments due to the lack of a proper scripting command for it.
 - There is no option to replace the radio item. This is intentional, because both popular radio systems ( ACRE and TFR ) both need to change these items dynamically at 
 	mission start. We want to avoid messing with these.
