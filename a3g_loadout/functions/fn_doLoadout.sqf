@@ -104,6 +104,11 @@ if (isArray (_configFile >> _configEntry >> "primaryWeaponAttachments")) then {
 	[_configFile >> _configEntry >> "primaryWeaponAttachments"] call A3G_fnc_ReplacePrimaryAttachments;
 };
 
+// Secondary weapon attachments
+if (isArray (_configFile >> _configEntry >> "secondaryWeaponAttachments")) then {
+	[_configFile >> _configEntry >> "secondaryWeaponAttachments"] call A3G_fnc_ReplaceSecondaryAttachments;
+};
+
 // Handgun weapon attachments
 if (isArray (_configFile >> _configEntry >> "handgunWeaponAttachments")) then {
 	[_configFile >> _configEntry >> "handgunWeaponAttachments"] call A3G_fnc_ReplaceHandgunAttachments;
