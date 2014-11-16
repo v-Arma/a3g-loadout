@@ -56,6 +56,7 @@ loadout descriptions. We don't have to redefine a different primary weapon for t
 gets a different primary weapon, which is why we redefine it in his loadout, which overwrites the generic behavior of `Everyone`.
 ### Notes
 - Unique loadouts ( targeting a specific unit ) overwrite class loadouts ( targeting all units of the same class ), which in turn overwrite `Everyone` loadouts ( targeting all units ).
+- Unique loadouts are case _insensitive_, meaning `person`, `Person` and `perSon` all refer to the same unit.
 - You can export a loadout directly from the virtual arsenal by pressing `CTRL`+`SHIFT`+`C`.
 - You can modify a loadout exported from the arsenal with other options, see `Options` below.
 - The order of options doesn't matter.
