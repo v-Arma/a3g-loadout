@@ -1,7 +1,5 @@
 a3g-loadout
 ===========
-An Arma 3 loadout system for mission makers.
-
 Setup
 -----
 - Drag and drop the folder `a3g_loadout` into your mission root folder ( the folder that contains the mission.sqm ). It should look like this:
