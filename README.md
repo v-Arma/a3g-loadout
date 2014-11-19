@@ -103,7 +103,7 @@ The loadout options are completely modular, just use what you need and nothing m
 - `addItems[]` and `addMagazines[]` options will add items / magazines without removing anything. This can be combined with `items[]` and `magazines[]`.
 - `weapons[]` is used in conjunction with the arsenal export and should be avoided if inputting a loadout manually.
 - `goggles` do _not_ replace nightvision goggles. There is a seperate option for it: `nvgoggles`. This is because nightvision goggles are their own independent slot.
-- `secondaryWeapon` refers to a launcher, not a handgun. Refer to `handgun` for the latter.
+- `secondaryWeapon` refers to a launcher, not a handgun. Refer to `handgunWeapon` for the latter.
 - `secondaryWeaponAttachments[]` is not capable of removing attachments due to the lack of a proper scripting command for it.
 - There is no option to replace the radio item. This is intentional, because both popular radio systems ( ACRE and TFR ) both need to change these items dynamically at 
 	mission start. We want to avoid messing with these.
