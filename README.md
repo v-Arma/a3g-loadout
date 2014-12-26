@@ -8,7 +8,7 @@ Setup
 - Add this to it:
 ``` c++ 
 class CfgFunctions { 
-	#include "a3g_loadout\CfgFunctions.hpp" 
+	#include "a3g-loadout\CfgFunctions.hpp" 
 };
 ```
 - Read the `Loadouts` section below.
