@@ -2,9 +2,9 @@ a3g-loadout
 ===========
 Setup
 -----
-- Drag and drop all files into the folder `a3g_loadout` ( create it if it doesn't exist ) in your mission root folder ( the folder that contains the mission.sqm ). It should look like this:
-- ![](http://puu.sh/cQMZ8/16464b6ef1.png)
+- Drag and drop all files into the folder `a3g-loadout` ( create it if it doesn't exist ) in your mission root folder ( the folder that contains the mission.sqm ).
 - Make a `description.ext` ( See what this is [here](https://community.bistudio.com/wiki/Description.ext) ) and put it in your mission root folder.
+- It should look like this: ![](http://puu.sh/dKbtn/1dd8caad6e.png)
 - Add this to it:
 ``` c++ 
 class CfgFunctions { 
