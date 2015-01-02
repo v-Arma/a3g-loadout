@@ -1,6 +1,5 @@
 class A3G {
-	tag = "A3G";
-	class Functions {
+	class A3G-Loadout {
 		file = "a3g-loadout\functions";
 		class ApplyLoadout { 
 			description = "Reads and instructs the loadout function based on config entries.";
