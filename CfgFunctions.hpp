@@ -1,5 +1,5 @@
-class A3G {
-	class A3G_Loadout {
+class A3G_Loadout {
+	class Functions {
 		file = "a3g-loadout\functions";
 		class ApplyLoadout { 
 			description = "Reads and instructs the loadout function based on config entries.";
