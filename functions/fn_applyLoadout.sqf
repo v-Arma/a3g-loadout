@@ -26,15 +26,15 @@ if(isClass (_configFile >> (str player))) then {
 // Run the loadout multiple times, with descending priority
 while { _hasGeneric || _hasClass || _hasSnowflake } do {
 	if(_hasGeneric) then {
-		[_configFile, "Everyone"] call A3G_fnc_doLoadout;
+		[_configFile, "Everyone"] call A3G_Loadout_fnc_doLoadout;
 		_hasGeneric = false;
 	} else {
 		if(_hasClass) then {
-			[_configFile, (typeof player)] call A3G_fnc_doLoadout;
+			[_configFile, (typeof player)] call A3G_Loadout_fnc_doLoadout;
 			_hasClass = false;
 		} else {
 			if(_hasSnowflake) then {
-				[_configFile, (str player)] call A3G_fnc_doLoadout;
+				[_configFile, (str player)] call A3G_Loadout_fnc_doLoadout;
 				_hasSnowflake = false;
 			};
 		};
