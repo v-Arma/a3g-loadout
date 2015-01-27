@@ -1,4 +1,4 @@
-class A3G_Loadout {
+class A3G_Loadout_Functions {
 	class Functions {
 		file = "a3g-loadout\functions";
 		class ApplyLoadout { 
