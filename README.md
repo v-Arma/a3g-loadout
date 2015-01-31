@@ -64,11 +64,13 @@ gets a different primary weapon, which is why we redefine it in his loadout, whi
 Classes
 -------
 Loadouts are written inside classes. There are a couple of generic classes for you to use, ontop of being able to specifiy a unit classname and just designating a unit name. The priority in order is like this:
+
 1. AllUnits
 2. AllAi
 3. AllPlayers
 4. Unit classes
 5. Unique names
+
 Every loadout class will override the class above it, in a merge fashion. If you define a `primaryWeapon` inside `AllUnits`, then define a different one inside `AllPlayers`, all players will get the one from `AllPlayers` and the `AllUnits` one will be overridden. But if you define `addItems[] = "AGM_Bandage"` inside `AllUnits` and a `primaryWeapon` inside `AllPlayers` _all_ players will get a Bandage from `AllUnits` and a primary weapon from `primaryWeapon`.
 
 Options
