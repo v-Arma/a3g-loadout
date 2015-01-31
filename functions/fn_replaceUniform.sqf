@@ -1,14 +1,15 @@
 // Get config entry
 _configPath = _this select 0;
+_loadoutTarget = _this select 1;
 
 // Backup items ( contains magazines )
-_backUpItems = uniformItems player;
+_backUpItems = uniformItems _loadoutTarget;
 
 if(getText _configPath == "") then {
-	removeUniform player;
-	{ player addItem _x; } forEach _backUpItems;
+	removeUniform _loadoutTarget;
+	{ _loadoutTarget addItem _x; } forEach _backUpItems;
 } else {
-	player forceAddUniform getText (_configPath);
+	_loadoutTarget forceAddUniform getText (_configPath);
 	// Reapply items
-	{ player addItemToUniform _x; } forEach _backUpItems;
+	{ _loadoutTarget addItemToUniform _x; } forEach _backUpItems;
 };

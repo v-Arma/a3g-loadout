@@ -1,8 +1,9 @@
 // Get config entry
 _configPath = _this select 0;
+_loadoutTarget = _this select 1;
 
-removeAllAssignedItems player;
-removeHeadgear player;
+removeAllAssignedItems _loadoutTarget;
+removeHeadgear _loadoutTarget;
 
 {
 	// Workaround since linkedItems contains other items than the vest. isKindOf makes sure only the vest is applied.
@@ -10,8 +11,8 @@ removeHeadgear player;
 	_class = [_x] call BIS_fnc_classWeapon;
 	_parents = [_class, true] call BIS_fnc_returnParents;
 	if("Vest_Camo_Base" in _parents || "Vest_NoCamo_Base" in _parents) then {
-		player addVest _x;
+		_loadoutTarget addVest _x;
 	} else {
-		player linkItem _x;
+		_loadoutTarget linkItem _x;
 	};
 } forEach getArray (_configPath);

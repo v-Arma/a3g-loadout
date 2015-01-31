@@ -1,8 +1,9 @@
 // Get config entry
 _configPath = _this select 0;
+_loadoutTarget = _this select 1;
 
 if(getText _configPath == "") then {
-	player removeWeapon (binocular player);
+	_loadoutTarget removeWeapon (binocular _loadoutTarget);
 } else {
-	player addWeapon getText (_configPath);
+	_loadoutTarget addWeapon getText (_configPath);
 };

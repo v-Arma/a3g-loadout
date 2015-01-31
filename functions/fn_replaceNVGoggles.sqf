@@ -1,8 +1,9 @@
 // Get config entry
 _configPath = _this select 0;
+_loadoutTarget = _this select 1;
 
 if(getText _configPath == "") then {
-	player unlinkItem (hmd player);
+	_loadoutTarget unlinkItem (hmd _loadoutTarget);
 } else {
-	player linkItem getText (_configPath);
+	_loadoutTarget linkItem getText (_configPath);
 };

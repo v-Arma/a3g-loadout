@@ -1,14 +1,15 @@
 // Get config entry
 _configPath = _this select 0;
+_loadoutTarget = _this select 1;
 
 // Backup items ( contains magazines )
-_backUpItems = vestItems player;
+_backUpItems = vestItems _loadoutTarget;
 
 if(getText _configPath == "") then {
-	removeVest player;
-	{ player addItem _x; } forEach _backUpItems;
+	removeVest _loadoutTarget;
+	{ _loadoutTarget addItem _x; } forEach _backUpItems;
 } else {
-	player addVest getText (_configPath);
+	_loadoutTarget addVest getText (_configPath);
 	// Reapply items
-	{ player addItemToVest _x; } forEach _backUpItems;
+	{ _loadoutTarget addItemToVest _x; } forEach _backUpItems;
 };

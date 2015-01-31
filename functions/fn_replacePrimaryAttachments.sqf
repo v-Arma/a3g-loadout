@@ -1,5 +1,6 @@
 // Get config entry
 _configPath = _this select 0;
+_loadoutTarget = _this select 1;
 
-removeAllPrimaryWeaponItems player;
-{ player addPrimaryWeaponItem _x; } forEach getArray (_configPath);
+removeAllPrimaryWeaponItems _loadoutTarget;
+{ _loadoutTarget addPrimaryWeaponItem _x; } forEach getArray (_configPath);

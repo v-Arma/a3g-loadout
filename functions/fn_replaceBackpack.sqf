@@ -1,20 +1,21 @@
 // Get config entry
 _configPath = _this select 0;
+_loadoutTarget = _this select 1;
 
 // Backup items ( contains magazines )
-_backUpItems = backpackItems player;
+_backUpItems = backpackItems _loadoutTarget;
 
 // We need to explicibly remove the backpack here, because otherwise it gets dropped on the floor
-removeBackpack player;
+removeBackpack _loadoutTarget;
 
 if(getText _configPath == "") then {
-	{ player addItem _x; } forEach _backUpItems;
+	{ _loadoutTarget addItem _x; } forEach _backUpItems;
 } else {
-	player addBackpack getText (_configPath);
+	_loadoutTarget addBackpack getText (_configPath);
 	// Newly spawned backpacks are auto filled with their config loadouts. We don't want this, so we clear them out at this point
-	{ player removeItemFromBackpack _x; } forEach backpackItems player;
+	{ _loadoutTarget removeItemFromBackpack _x; } forEach backpackItems _loadoutTarget;
 	// Reapply items
-	{ player addItemToBackpack _x;} forEach _backUpItems;
+	{ _loadoutTarget addItemToBackpack _x;} forEach _backUpItems;
 };
 
 

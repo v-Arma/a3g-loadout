@@ -1,8 +1,9 @@
 // Get config entry
 _configPath = _this select 0;
+_loadoutTarget = _this select 1;
 
 if(getText _configPath == "") then {
-	removeGoggles player;
+	removeGoggles _loadoutTarget;
 } else {
-	player addGoggles getText (_configPath);
+	_loadoutTarget addGoggles getText (_configPath);
 };

@@ -1,4 +1,5 @@
 // Get config entry
 _configPath = _this select 0;
+_loadoutTarget = _this select 1;
 
-{ player addMagazine _x; } forEach getArray (_configPath);
+{ _loadoutTarget addMagazine _x; } forEach getArray (_configPath);
