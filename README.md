@@ -36,7 +36,7 @@ have the option to define it based on their unit class, or even for everyone at 
 made:
 ``` c++
 class CfgLoadouts {
-	class Everyone {
+	class AllPlayers {
 		primaryWeapon = "RH_m4a1_ris";
 	};
 	class AV_IndUs_SL_Des {
@@ -48,18 +48,28 @@ class CfgLoadouts {
 	};
 };
 ```
-This simple block of code changes and applies the loadout of 18 units at once, based on a few key instructions. Since the `Everyone` class is done first ( the actual order inside the block plays no role, 
-the loadout for `Everyone` is always applied first ), followed by the class based loadouts and finally the individual loadouts, you can combine the different priority layers for some extremely tight 
-loadout descriptions. We don't have to redefine a different primary weapon for the individual soldiers because the `Everyone` class already gives them each one. Note that the marksman class `AV_IndUs_Marksman_M14_Des` 
-gets a different primary weapon, which is why we redefine it in his loadout, which overwrites the generic behavior of `Everyone`.
+This simple block of code changes and applies the loadout of 18 units at once, based on a few key instructions. Since the `AllPlayers` class is done first ( the actual order inside the block plays no role, 
+the loadout for `AllPlayers` is always applied first ), followed by the class based loadouts and finally the individual loadouts, you can combine the different priority layers for some extremely tight 
+loadout descriptions. We don't have to redefine a different primary weapon for the individual soldiers because the `AllPlayers` class already gives them each one. Note that the marksman class `AV_IndUs_Marksman_M14_Des` 
+gets a different primary weapon, which is why we redefine it in his loadout, which overwrites the generic behavior of `AllPlayers`.
 ### Notes
-- Unique loadouts ( targeting a specific unit ) overwrite class loadouts ( targeting all units of the same class ), which in turn overwrite `Everyone` loadouts ( targeting all units ).
-- All loadouts are case _insensitive_, meaning `person`, `Person` and `perSon` all refer to the same unit, likewise, class definition and the `Everyone` class are also case insensitive. This is because Bohemia Interactive doesn't know how string comparisons should work.
+- Unique loadouts ( targeting a specific unit ) overwrite class loadouts ( targeting all units of the same class ), which in turn overwrite `generic` loadouts ( targeting multiple units ).
+- All loadouts are case _insensitive_, meaning `person`, `Person` and `perSon` all refer to the same unit, likewise, class definition and the `AllPlayers` class are also case insensitive. This is because Bohemia Interactive doesn't know how string comparisons should work.
 - You can export a loadout directly from the virtual arsenal by pressing `CTRL`+`SHIFT`+`C`.
 - You can modify a loadout exported from the arsenal with other options, see `Options` below.
 - The order of options doesn't matter.
 - The order of classes doesn't matter either.
 - There's a caveat to using this system: You have to reload the mission everytime you change something inside the `description.ext` mission config file. Repeated previews do _not_ refresh it. In order to do it correctly, save the mission, then click the load mission button from the editor and select the mission you're currently editing, essentially loading the mission you're already editing. Due to caching this will typically take less than a second after the first time.
+
+Classes
+-------
+Loadouts are written inside classes. There are a couple of generic classes for you to use, ontop of being able to specifiy a unit classname and just designating a unit name. The priority in order is like this:
+1. AllUnits
+2. AllAi
+3. AllPlayers
+4. Unit classes
+5. Unique names
+Every loadout class will override the class above it, in a merge fashion. If you define a `primaryWeapon` inside `AllUnits`, then define a different one inside `AllPlayers`, all players will get the one from `AllPlayers` and the `AllUnits` one will be overridden. But if you define `addItems[] = "AGM_Bandage"` inside `AllUnits` and a `primaryWeapon` inside `AllPlayers` _all_ players will get a Bandage from `AllUnits` and a primary weapon from `primaryWeapon`.
 
 Options
 -------
