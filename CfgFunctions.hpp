@@ -8,6 +8,9 @@ class A3G_Loadout {
 		class DoLoadout {
 			description = "Applies the loadout";
 		};
+		class AssignRespawn {
+			postInit = 1;
+		};
 		
 		// Arsenal
 		class ReplaceLinkedItems {

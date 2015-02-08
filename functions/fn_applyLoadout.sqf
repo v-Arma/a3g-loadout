@@ -1,19 +1,22 @@
 _configFile = missionConfigFile >> "CfgLoadouts";
 
+_respawn = if ( isNil { _this select 0 }) then { true } else { false };
+
+// Make sure that only local player is considered as local target on respawn.
+// This is because AI don't respawn, and we especially don't want to have local AI go through an entire loadout loop again, everytime the player respawns that the AI belongs to.
 _units = [];
-{
-	if ( local _x ) then {
-		_units pushBack _x;
-	};
-} forEach allUnits;
+if( _respawn ) then {
+	_units pushBack player;
+	hint "fires";
+} else {
+	{
+		if ( local _x ) then {
+			_units pushBack _x;
+		};
+	} forEach allUnits;
+};
 
 {
-	_allUnits = false;
-	_allAi = false;
-	_allPlayers = false;
-	_class = false;
-	_unique = false;
-
 	// Find out if there's a loadout for this unit from AllUnits.
 	if(isClass (_configFile >> "AllUnits")) then {
 		[_configFile, "AllUnits", _x] call A3G_Loadout_fnc_DoLoadout;
