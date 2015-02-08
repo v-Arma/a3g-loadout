@@ -8,7 +8,7 @@ Setup
 - Add this to it:
 ``` c++ 
 class CfgFunctions { 
-	#include "a3g-loadout\CfgFunctions.hpp" 
+  #include "a3g-loadout\CfgFunctions.hpp" 
 };
 ```
 - Read the `Loadouts` section below.
@@ -20,10 +20,10 @@ The top entry point for a loadout is the `CfgLoadouts` class. Loadouts are appli
 mission makers can use and freely combine with each other. More on that later. First of all, this is an example on how a loadout looks like with this system:
 ``` c++
 class CfgLoadouts {
-	class My_Cool_Unit {
-		primaryWeapon = "RH_m4a1_ris";
-		primaryWeaponAttachments[] = {"RH_ta31rco"};
-	};
+  class My_Cool_Unit {
+    primaryWeapon = "RH_m4a1_ris";
+    primaryWeaponAttachments[] = {"RH_ta31rco"};
+  };
 };
 ```
 As you can see, they can be extremely simple, and contain only the information necessary to create the loadout. A loadout defining dozens of units can be done in as little 
@@ -36,16 +36,16 @@ have the option to define it based on their unit class, or even for everyone at 
 made:
 ``` c++
 class CfgLoadouts {
-	class AllPlayers {
-		primaryWeapon = "RH_m4a1_ris";
-	};
-	class AV_IndUs_SL_Des {
-		primaryWeaponAttachments[] = {"RH_ta31rco"};
-	};
-	class AV_IndUs_Marksman_M14_Des {
-		primaryWeapon = "RH_mk12mod1";
-		primaryWeaponAttachments[] = {"RH_ta31rco"};
-	};
+  class AllPlayers {
+    primaryWeapon = "RH_m4a1_ris";
+  };
+  class AV_IndUs_SL_Des {
+    primaryWeaponAttachments[] = {"RH_ta31rco"};
+  };
+  class AV_IndUs_Marksman_M14_Des {
+    primaryWeapon = "RH_mk12mod1";
+    primaryWeaponAttachments[] = {"RH_ta31rco"};
+  };
 };
 ```
 This simple block of code changes and applies the loadout of 18 units at once, based on a few key instructions. Since the `AllPlayers` class is done first ( the actual order inside the block plays no role, 
@@ -72,6 +72,18 @@ Loadouts are written inside classes. There are a couple of generic classes for y
 5. Unique names
 
 Every loadout class will override the class above it, in a merge fashion. If you define a `primaryWeapon` inside `AllUnits`, then define a different one inside `AllPlayers`, all players will get the one from `AllPlayers` and the `AllUnits` one will be overridden. But if you define `addItems[] = "AGM_Bandage"` inside `AllUnits` and a `primaryWeapon` inside `AllPlayers` _all_ players will get a Bandage from `AllUnits` and a primary weapon from `primaryWeapon`.
+
+Respawn
+-------
+You can enable loadouts being applied again on respawn, by adding a `allowRespawn = 1` to the `CfgLoadouts` class. Like this:
+``` c++
+class CfgLoadouts {
+  allowRespawn = 1;
+
+  class AllPlayers {
+    ...
+  };
+};
 
 Options
 -------
@@ -110,7 +122,7 @@ The loadout options are completely modular, just use what you need and nothing m
 - All options default to removing the item(s) in question, if you leave the field empty, where it makes sense ( ie. `uniform = "";` ).
 - `linkedItems[]` is used in conjunction with the arsenal export and should be avoided if inputting a loadout manually.
 - `uniform`, `backpack` and `vest` options will try and preserve the items inside them, even if you change or completely remove them. 
-	If you delete a backpack for example, the system will try and move them to the rest of your inventory, as long as there's space for them.
+  If you delete a backpack for example, the system will try and move them to the rest of your inventory, as long as there's space for them.
 - `items[]` and `magazines[]` options will replace items / magazines from the _entire_ inventory.
 - `addItems[]` and `addMagazines[]` options will add items / magazines without removing anything. This can be combined with `items[]` and `magazines[]`.
 - `weapons[]` is used in conjunction with the arsenal export and should be avoided if inputting a loadout manually.
@@ -118,4 +130,4 @@ The loadout options are completely modular, just use what you need and nothing m
 - `secondaryWeapon` refers to a launcher, not a handgun. Refer to `handgunWeapon` for the latter.
 - `secondaryWeaponAttachments[]` is not capable of removing attachments due to the lack of a proper scripting command for it.
 - There is no option to replace the radio item. This is intentional, because both popular radio systems ( ACRE and TFR ) both need to change these items dynamically at 
-	mission start. We want to avoid messing with these.
+  mission start. We want to avoid messing with these.
