@@ -84,6 +84,7 @@ class CfgLoadouts {
     ...
   };
 };
+```
 
 Options
 -------
