@@ -6,10 +6,10 @@ _loadoutTarget = _this select 1;
 _backUpItems = vestItems _loadoutTarget;
 
 if(getText _configPath == "") then {
-	removeVest _loadoutTarget;
-	{ _loadoutTarget addItem _x; } forEach _backUpItems;
+  removeVest _loadoutTarget;
+  { _loadoutTarget addItem _x; } forEach _backUpItems;
 } else {
-	_loadoutTarget addVest getText (_configPath);
-	// Reapply items
-	{ _loadoutTarget addItemToVest _x; } forEach _backUpItems;
+  _loadoutTarget addVest getText (_configPath);
+  // Reapply items
+  { _loadoutTarget addItemToVest _x; } forEach _backUpItems;
 };

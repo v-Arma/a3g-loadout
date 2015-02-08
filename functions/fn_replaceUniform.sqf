@@ -6,10 +6,10 @@ _loadoutTarget = _this select 1;
 _backUpItems = uniformItems _loadoutTarget;
 
 if(getText _configPath == "") then {
-	removeUniform _loadoutTarget;
-	{ _loadoutTarget addItem _x; } forEach _backUpItems;
+  removeUniform _loadoutTarget;
+  { _loadoutTarget addItem _x; } forEach _backUpItems;
 } else {
-	_loadoutTarget forceAddUniform getText (_configPath);
-	// Reapply items
-	{ _loadoutTarget addItemToUniform _x; } forEach _backUpItems;
+  _loadoutTarget forceAddUniform getText (_configPath);
+  // Reapply items
+  { _loadoutTarget addItemToUniform _x; } forEach _backUpItems;
 };

@@ -3,7 +3,7 @@ _configPath = _this select 0;
 _loadoutTarget = _this select 1;
 
 if(getText _configPath == "") then {
-	removeGoggles _loadoutTarget;
+  removeGoggles _loadoutTarget;
 } else {
-	_loadoutTarget addGoggles getText (_configPath);
+  _loadoutTarget addGoggles getText (_configPath);
 };

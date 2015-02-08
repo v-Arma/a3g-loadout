@@ -3,7 +3,7 @@ _configPath = _this select 0;
 _loadoutTarget = _this select 1;
 
 if(getText _configPath == "") then {
-	_loadoutTarget unlinkItem "ItemGPS";
+  _loadoutTarget unlinkItem "ItemGPS";
 } else {
-	_loadoutTarget linkItem getText (_configPath);
+  _loadoutTarget linkItem getText (_configPath);
 };
