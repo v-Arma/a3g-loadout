@@ -27,7 +27,7 @@ Loadouts
 Loadouts are defined directly inside the `description.ext`. This has vast advantages over the commonly accepted method of scripting them on a per-unit basis. Loadouts are applied on mission start and when you respawn. It should work completely seamless in every situation. This is an example on how a loadout looks like with this system:
 ``` c++
 class CfgLoadouts {
-  class My_Cool_Unit {
+  class My_Unit {
     primaryWeapon = "RH_m4a1_ris";
     primaryWeaponAttachments[] = {"RH_ta31rco"};
   };
