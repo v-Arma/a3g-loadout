@@ -16,7 +16,7 @@ if( _respawn ) then {
 };
 
 {
-  // General
+  // General --------------------------------------------------------------------------------------
   // Every single unit
   if(isClass (_configFile >> "AllUnits")) then {
     [_configFile, "AllUnits", _x] call A3G_Loadout_fnc_DoLoadout;
@@ -32,28 +32,70 @@ if( _respawn ) then {
     [_configFile, "AllPlayers", _x] call A3G_Loadout_fnc_DoLoadout;
   };
 
-  // Sides
+  // General sides --------------------------------------------------------------------------------
   // All blufor units
-  if(isClass (_configFile >> "AllBlufor") && side _x == blufor) then {
-    [_configFile, "AllBlufor", _x] call A3G_Loadout_fnc_DoLoadout;
+  if(isClass (_configFile >> "Blufor") && side _x == blufor) then {
+    [_configFile, "Blufor", _x] call A3G_Loadout_fnc_DoLoadout;
   };
 
   // All opfor units
-  if(isClass (_configFile >> "AllOpfor") && side _x == opfor) then {
-    [_configFile, "AllOpfor", _x] call A3G_Loadout_fnc_DoLoadout;
+  if(isClass (_configFile >> "Opfor") && side _x == opfor) then {
+    [_configFile, "Opfor", _x] call A3G_Loadout_fnc_DoLoadout;
   };
 
   // All independent units
-  if(isClass (_configFile >> "AllIndependent") && side _x == independent) then {
-    [_configFile, "AllIndependent", _x] call A3G_Loadout_fnc_DoLoadout;
+  if(isClass (_configFile >> "Independent") && side _x == independent) then {
+    [_configFile, "Independent", _x] call A3G_Loadout_fnc_DoLoadout;
   };
 
   // All civilian units
-  if(isClass (_configFile >> "AllCivilians") && side _x == civilian) then {
-    [_configFile, "AllCivilians", _x] call A3G_Loadout_fnc_DoLoadout;
+  if(isClass (_configFile >> "Civilian") && side _x == civilian) then {
+    [_configFile, "Civilian", _x] call A3G_Loadout_fnc_DoLoadout;
   };
 
-  // Class & Unique
+  // AI sides -------------------------------------------------------------------------------------
+  // All blufor AI units
+  if(isClass (_configFile >> "BluforAi") && !isPlayer _x && side _x == blufor) then {
+    [_configFile, "BluforAi", _x] call A3G_Loadout_fnc_DoLoadout;
+  };
+
+  // All opfor AI units
+  if(isClass (_configFile >> "OpforAi") && !isPlayer _x && side _x == opfor) then {
+    [_configFile, "OpforAi", _x] call A3G_Loadout_fnc_DoLoadout;
+  };
+
+  // All independent AI units
+  if(isClass (_configFile >> "IndependentAi") && !isPlayer _x && side _x == independent) then {
+    [_configFile, "IndependentAi", _x] call A3G_Loadout_fnc_DoLoadout;
+  };
+
+  // All civilian AI units
+  if(isClass (_configFile >> "CivilianAi") && !isPlayer _x && side _x == civilian) then {
+    [_configFile, "CivilianAi", _x] call A3G_Loadout_fnc_DoLoadout;
+  };
+
+  // Player sides ---------------------------------------------------------------------------------
+  // All blufor units
+  if(isClass (_configFile >> "BluforPlayers") && isPlayer _x && side _x == blufor) then {
+    [_configFile, "BluforPlayers", _x] call A3G_Loadout_fnc_DoLoadout;
+  };
+
+  // All opfor units
+  if(isClass (_configFile >> "OpforPlayers") && isPlayer _x && side _x == opfor) then {
+    [_configFile, "OpforPlayers", _x] call A3G_Loadout_fnc_DoLoadout;
+  };
+
+  // All independent units
+  if(isClass (_configFile >> "IndependentPlayers") && isPlayer _x && side _x == independent) then {
+    [_configFile, "IndependentPlayers", _x] call A3G_Loadout_fnc_DoLoadout;
+  };
+
+  // All civilian units
+  if(isClass (_configFile >> "CivilianPlayers") && isPlayer _x && side _x == civilian) then {
+    [_configFile, "CivilianPlayers", _x] call A3G_Loadout_fnc_DoLoadout;
+  };
+
+  // Class & Unique -------------------------------------------------------------------------------
   // Class based loadouts
   if(isClass (_configFile >> typeof _x)) then {
     [_configFile, typeof _x, _x] call A3G_Loadout_fnc_DoLoadout;
