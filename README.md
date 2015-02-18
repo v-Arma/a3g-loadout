@@ -16,7 +16,7 @@ class CfgFunctions {
   #include "a3g-loadout\CfgFunctions.hpp" 
 };
 ```
-6. Done
+That's it!
 
 I'm too dumb, give me the easy way!
 -----------------------------------
