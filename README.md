@@ -1,6 +1,8 @@
 a3g-loadout
 ===========
-Superheroic loadout script!
+> An **almost** okay loadout system
+
+-Trusty Arabian
 
 Setup
 -----
