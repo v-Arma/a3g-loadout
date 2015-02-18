@@ -17,27 +17,50 @@ if( _respawn ) then {
 };
 
 {
-  // Find out if there's a loadout for this unit from AllUnits.
+  // General
+  // Every single unit
   if(isClass (_configFile >> "AllUnits")) then {
     [_configFile, "AllUnits", _x] call A3G_Loadout_fnc_DoLoadout;
   };
 
-  // Find out if there's a loadout for this unit from AllAi.
+  // All AI units
   if(isClass (_configFile >> "AllAi") && !isPlayer _x) then {
     [_configFile, "AllAi", _x] call A3G_Loadout_fnc_DoLoadout;
   };
 
-  // Find out if there's a loadout for this unit from AllPlayers.
+  // All players
   if(isClass (_configFile >> "AllPlayers") && isPlayer _x) then {
     [_configFile, "AllPlayers", _x] call A3G_Loadout_fnc_DoLoadout;
   };
 
-  // Find out if there's a loadout for this unit from Class.
+  // Sides
+  // All blufor units
+  if(isClass (_configFile >> "AllBlufor") && side _x == blufor) then {
+    [_configFile, "AllBlufor", _x] call A3G_Loadout_fnc_DoLoadout;
+  };
+
+  // All opfor units
+  if(isClass (_configFile >> "AllOpfor") && side _x == opfor) then {
+    [_configFile, "AllOpfor", _x] call A3G_Loadout_fnc_DoLoadout;
+  };
+
+  // All independent units
+  if(isClass (_configFile >> "AllIndependent") && side _x == independent) then {
+    [_configFile, "AllIndependent", _x] call A3G_Loadout_fnc_DoLoadout;
+  };
+
+  // All civilian units
+  if(isClass (_configFile >> "AllCivilians") && side _x == civilian) then {
+    [_configFile, "AllCivilians", _x] call A3G_Loadout_fnc_DoLoadout;
+  };
+
+  // Class & Unique
+  // Class based loadouts
   if(isClass (_configFile >> typeof _x)) then {
     [_configFile, typeof _x, _x] call A3G_Loadout_fnc_DoLoadout;
   };
 
-  // Find out if there's a loadout for this unit from Unique.
+  // Name based loadouts
   if(isClass (_configFile >> str _x)) then {
     [_configFile, str _x, _x] call A3G_Loadout_fnc_DoLoadout;
   };
