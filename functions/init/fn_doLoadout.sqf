@@ -1,6 +1,9 @@
+private ["_configPath", "_loadoutTarget", "_handgunBackup", "_handgunMagazineBackup"];
+
 // Get config entry
 _configPath = _this select 0;
 _loadoutTarget = _this select 1;
+
 
 // ========================================== Arsenal =============================================
 // This is being done first, so it can be overwritten at a later time, when it is needed.

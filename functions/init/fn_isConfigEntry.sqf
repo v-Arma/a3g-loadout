@@ -1,3 +1,5 @@
+private ["_configPath", "_entryName", "_exists"];
+
 _configPath = _this select 0;
 _entryName = _this select 1;
 

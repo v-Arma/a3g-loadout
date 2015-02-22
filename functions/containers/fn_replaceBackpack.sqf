@@ -1,4 +1,4 @@
-private ["_configPath", "_loadoutTarget"];
+private ["_configPath", "_loadoutTarget", "_backUpItems"];
 
 // Get config entry
 _configPath = _this select 0;

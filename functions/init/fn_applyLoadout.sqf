@@ -1,3 +1,5 @@
+private ["_configPath", "_missionStart"];
+
 _configPath = missionConfigFile >> "CfgLoadouts";
 _missionStart = if ( !isNil { _this select 0 } && { _this select 0 == "postInit" }) then { true } else { false };
 
@@ -14,12 +16,19 @@ if( !_missionStart ) then {
   } forEach allUnits;
 };
 
+Counter = 0;
+
 {
   // General --------------------------------------------------------------------------------------
   // Every single unit
   if( isClass ( _configPath >> "AllUnits" )) then {
     [_configPath >> "AllUnits", _x] call A3G_Loadout_fnc_DoLoadout;
   };
+
+      Counter = Counter + 1;
+      player sideChat str Counter;
+      player sidechat str (!isPlayer _x);
+      player sideChat str _configPath;
 
   // All AI units
   if( !isPlayer _x && { isClass ( _configPath >> "AllAi" )}) then {
