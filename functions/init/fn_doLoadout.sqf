@@ -41,6 +41,23 @@ if ( [_configPath, "magazines"] call A3G_Loadout_fnc_IsConfigEntry ) then {
   [_configPath >> "magazines", _loadoutTarget] call A3G_Loadout_fnc_ReplaceMagazines;
 };
 
+// Sorted items
+// Uniform items & magazines
+if ( [_configPath, "addItemsToUniform"] call A3G_Loadout_fnc_IsConfigEntry ) then {
+  [_configPath >> "addItemsToUniform", _loadoutTarget] call A3G_Loadout_fnc_AddItemsToUniform;
+};
+
+// Vest items & magazines
+if ( [_configPath, "addItemsToVest"] call A3G_Loadout_fnc_IsConfigEntry ) then {
+  [_configPath >> "addItemsToVest", _loadoutTarget] call A3G_Loadout_fnc_AddItemsToVest;
+};
+
+// Backpack items & magazines
+if ( [_configPath, "addItemsToBackpack"] call A3G_Loadout_fnc_IsConfigEntry ) then {
+  [_configPath >> "addItemsToBackpack", _loadoutTarget] call A3G_Loadout_fnc_AddItemsToBackpack;
+};
+
+// Unsorted items
 // Added items
 if ( [_configPath, "addItems"] call A3G_Loadout_fnc_IsConfigEntry ) then {
   [_configPath >> "addItems", _loadoutTarget] call A3G_Loadout_fnc_AddItems;

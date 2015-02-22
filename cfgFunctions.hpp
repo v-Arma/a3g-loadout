@@ -24,6 +24,9 @@ class A3G_Loadout {
     file = "a3g-loadout\functions\general";
     class AddItems {};
     class AddMagazines {};
+    class AddItemsToUniform {};
+    class AddItemsToVest {};
+    class AddItemsToBackpack {};
     class ReplaceItems {};
     class ReplaceMagazines {};
   };
