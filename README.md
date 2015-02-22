@@ -97,6 +97,9 @@ The loadout options are completely modular, just use what you need and nothing m
 | `magazines[]`                  | Replaces magazines.                        |
 | `addItems[]`                   | Adds items.                                |
 | `addMagazines[]`               | Adds magazines.                            |
+| `addItemsToUniform[]`          | Adds items/magazines to the uniform.       |
+| `addItemsToVest[]`             | Adds items/magazines to the vest.          |
+| `addItemsToBackpack[]`         | Adds items/magazines to the backpack.      |
 | `weapons[]`                    | Replaces weapons. ( Arsenal export ).      |
 | `primaryWeapon`                | Replaces primary weapon.                   |
 | `secondaryWeapon`              | Replaces secondary weapon.                 |
@@ -120,6 +123,7 @@ The loadout options are completely modular, just use what you need and nothing m
 - `uniform`, `backpack` and `vest` options will try and preserve the items inside them, even if you change or completely remove them. If you delete a backpack for example, the system will try and move them to the rest of your inventory, as long as there's space for them. This obviously has its limit. If you remove almost all containers, then some items will be lost. This is your own responsibility. 
 - `items[]` and `magazines[]` options will replace items / magazines from the _entire_ inventory, backpacks included.
 - `addItems[]` and `addMagazines[]` options will add items / magazines without removing anything. This can be combined with `items[]` and `magazines[]`, even though it doesn't make much sense.
+- `addItemsToUniform[]`, `addItemsToVest[]` and `addItemsToBackpack[]` are executed _before_ the general options for `addItems[]` and `addMagazines[]`. This is because I assume that you don't care where items end up being when you use the latter and that way, the sorted options have more room to work with. They are however executed _after_ the replacement options `items[]` and `magazines[]`.
 - `goggles` do _not_ replace nightvision goggles. There is a seperate option for it: `nvgoggles`. This is because nightvision goggles are their own independent slot.
 - `secondaryWeapon` refers to a launcher, not a handgun. Refer to `handgunWeapon` for the latter.
 - There is no option to replace the radio item. This is intentional, because both popular radio systems ( ACRE and TFR ) need to change these items dynamically at mission start. We want to avoid messing with these.
