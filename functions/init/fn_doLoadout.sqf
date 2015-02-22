@@ -11,10 +11,6 @@ if ( [_configPath, "linkedItems"] call A3G_Loadout_fnc_IsConfigEntry ) then {
   [_configPath >> "linkedItems", _loadoutTarget] call A3G_Loadout_fnc_ReplaceLinkedItems;
 };
 
-if ( [_configPath, "weapons"] call A3G_Loadout_fnc_IsConfigEntry ) then {
-  [_configPath >> "weapons", _loadoutTarget] call A3G_Loadout_fnc_ReplaceWeapons;
-};
-
 
 // ======================================== Containers ============================================
 // Uniform
@@ -73,6 +69,10 @@ if ( [_configPath, "addMagazines"] call A3G_Loadout_fnc_IsConfigEntry ) then {
 
 
 // ========================================= Weapons ==============================================
+// Arsenal weapons
+if ( [_configPath, "weapons"] call A3G_Loadout_fnc_IsConfigEntry ) then {
+  [_configPath >> "weapons", _loadoutTarget] call A3G_Loadout_fnc_ReplaceWeapons;
+};
 
 // Workaround to prevent weapon switching when replacing the primary weapon, remove pistol first, add it later after the primary weapon was changed
 // Second workaround because for some reason "hgun_P07_F" cannot be removed via removeWeapon

@@ -16,19 +16,12 @@ if( !_missionStart ) then {
   } forEach allUnits;
 };
 
-Counter = 0;
-
 {
   // General --------------------------------------------------------------------------------------
   // Every single unit
   if( isClass ( _configPath >> "AllUnits" )) then {
     [_configPath >> "AllUnits", _x] call A3G_Loadout_fnc_DoLoadout;
   };
-
-      Counter = Counter + 1;
-      player sideChat str Counter;
-      player sidechat str (!isPlayer _x);
-      player sideChat str _configPath;
 
   // All AI units
   if( !isPlayer _x && { isClass ( _configPath >> "AllAi" )}) then {
