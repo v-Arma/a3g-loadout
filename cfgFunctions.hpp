@@ -1,27 +1,27 @@
 class A3G_Loadout {
 
   class Arsenal {
-    file = "a3g-loadout\functions\arsenal";
+    file = "modules\a3g-loadout\functions\arsenal";
     class ReplaceLinkedItems {};
     class ReplaceWeapons {};
   };
 
   class Attachments {
-    file = "a3g-loadout\functions\attachments";
+    file = "modules\a3g-loadout\functions\attachments";
     class ReplacePrimaryAttachments {};
     class ReplaceSecondaryAttachments {};
     class ReplaceHandgunAttachments {};
   };
 
   class Containers {
-    file = "a3g-loadout\functions\containers";
+    file = "modules\a3g-loadout\functions\containers";
     class ReplaceUniform {};
     class ReplaceBackpack {};
     class ReplaceVest {};
   };
 
   class General {
-    file = "a3g-loadout\functions\general";
+    file = "modules\a3g-loadout\functions\general";
     class AddItems {};
     class AddMagazines {};
     class AddItemsToUniform {};
@@ -32,7 +32,7 @@ class A3G_Loadout {
   };
 
   class Init {
-    file = "a3g-loadout\functions\init";
+    file = "modules\a3g-loadout\functions\init";
     class ApplyLoadout {
       postInit = 1;
     };
@@ -44,7 +44,7 @@ class A3G_Loadout {
   };
 
   class LinkedItems {
-    file = "a3g-loadout\functions\linkedItems";
+    file = "modules\a3g-loadout\functions\linkedItems";
     class ReplaceBinoculars {};
     class ReplaceCompass {};
     class ReplaceGoggles {};
@@ -56,7 +56,7 @@ class A3G_Loadout {
   };
 
   class Weapons {
-    file = "a3g-loadout\functions\weapons";
+    file = "modules\a3g-loadout\functions\weapons";
     class ReplaceHandgunWeapon {};
     class ReplacePrimaryWeapon {};
     class ReplaceSecondaryWeapon {};
