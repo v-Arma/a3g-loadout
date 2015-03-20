@@ -1,30 +1,29 @@
-a3g-loadout
-===========
+# A3G Loadout
 > An **almost** okay loadout system
 
 -Trusty Arabian
 
-Setup
------
-1. Create a folder in your mission root folder and name it `modules`. Then create one inside there and call it `a3g-loadout`. If you change the name you will have to adjust some things.
+## Setup
+1. Create a folder in your mission root folder and name it `modules`. Then create one inside there and call it `a3g-loadout`. If you change the name you will have to adjust some folder paths.
 2. Download the contents of this repository ( there's a download link at the side ) and put it into the folder you just created.
 3. Make a `description.ext` file and put it into your mission root folder. If you don't know what a description.ext is, you can read about it [here](https://community.bistudio.com/wiki/Description.ext).
-4. It should look like this: ![](http://puu.sh/dKbtn/1dd8caad6e.png)
+4. It should look like this: <NEEDS NEW PICTURE>
 5. Add the following lines of code to the `description.ext`:
+
 ``` c++ 
 class CfgFunctions { 
   #include "a3g-loadout\CfgFunctions.hpp" 
 };
 ```
+
 That's it!
 
-I'm too dumb, give me the easy way!
------------------------------------
+## I'm too dumb, give me the easy way!
 Go to the virtual arsenal and make a loadout there to your liking. Then use the export function `CTRL`+`SHIFT`+`C` to export the loadout into the format that this script understands. Read the section called `Classes` below, because you still need to tell the script who should get the loadout you just made, but other than that, you're done.
 
-Loadouts
---------
+# Loadouts
 Loadouts are defined directly inside the `description.ext`. This has vast advantages over the commonly accepted method of scripting them on a per-unit basis. Loadouts are applied on mission start and when you respawn. It should work completely seamless in every situation. This is an example on how a loadout looks like with this system:
+
 ``` c++
 class CfgLoadouts {
   class My_Unit {
@@ -33,9 +32,11 @@ class CfgLoadouts {
   };
 };
 ```
+
 As you can see, they can be extremely simple, and contain only the information necessary to create the loadout. Due to the modular nature of the script, we're keeping most of the original loadout intact and are just changing the rifle and its weapon attachments. The simplest way of creating a loadout is to give units a name in the editor, ie. `My_Unit` and define a class with the same name in the loadout section. Any changes done in that section now apply to that unit. The example above demonstrates this behavior, by reserving a loadout for a unit that carries the name `My_Unit`.
 
 The real power of this system becomes apparent when you start combining different features for the desired effect. The modular nature of the script means you don't have to change anything that you don't actually want to change. If you just want to change a units uniform, you can just define a different uniform and everything else stays the same. Of course defining a loadout on a per-unit-basis would still be pretty lengthy and annoying. Instead you have the ability to use certain magical and not so magical classes to simplify the process. You can for example use the class of a unit, such as a Rifleman for example, which will then change the loadout of every unit that is of this class. The example below demonstrates this:
+
 ``` c++
 class CfgLoadouts {
   class AllPlayers {
@@ -50,6 +51,7 @@ class CfgLoadouts {
   };
 };
 ```
+
 This simple block of code changes and applies the loadout of 18 units at once, based on a few key instructions. Since the `AllPlayers` class is done first ( the actual order inside the block plays no role, the loadout for `AllPlayers` is always applied first ), followed by the class based loadouts and finally the individual loadouts, you can combine the different priority layers for some extremely tight loadout descriptions. We don't have to redefine a different primary weapon for the individual soldiers because the `AllPlayers` class already gives them each one. Note that the marksman class `AV_IndUs_Marksman_M14_Des` gets a different primary weapon, which is why we redefine it in his loadout, which overwrites the generic behavior of `AllPlayers`.
 
 ### Notes
@@ -63,8 +65,7 @@ This simple block of code changes and applies the loadout of 18 units at once, b
 ### Important
 There's a caveat to using this system: You have to reload the mission everytime you change something inside the `description.ext` mission config file. Repeated previews do _not_ refresh it. In order to do it correctly, save the mission, then click the load mission button from the editor and select the mission you're currently editing, essentially loading the mission you're already editing. Due to caching this will typically take less than a second after the first time. The reason is because Bohemia Interactive made it this way. There's nothing that can be done about it. Sorry.
 
-Classes
--------
+## Classes
 Loadouts are written inside classes. There are a couple of generic classes for you to use, ontop of being able to specifiy a unit classname and just designating a unit name. The priority in order is this:
 
 1. AllUnits
