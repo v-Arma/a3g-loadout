@@ -1,4 +1,4 @@
-#ifdef A3G_Framework_state_Module
+#ifdef A3GFramework_state_Module
 class A3G_Loadout {
   name = "A3G Loadout";
   description = "Superheroic Arma 3 loadout script!";
@@ -6,6 +6,6 @@ class A3G_Loadout {
 };
 #endif
 
-#ifdef A3G_Framework_state_Functions
+#ifdef A3GFramework_state_Functions
   #include "cfgFunctions.hpp"
 #endif
