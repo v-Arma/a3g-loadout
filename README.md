@@ -3,7 +3,7 @@
 
 -Trusty Arabian
 
-## Setup
+## Installation
 1. Create a folder in your mission root folder and name it `modules`. Then create one inside there and call it `a3g-loadout`. If you change the name you will have to adjust some folder paths.
 2. Download the contents of this repository ( there's a download link at the side ) and put it into the folder you just created.
 3. Make a `description.ext` file and put it into your mission root folder. If you don't know what a description.ext is, you can read about it [here](https://community.bistudio.com/wiki/Description.ext).
@@ -12,7 +12,7 @@
 
 ``` c++ 
 class CfgFunctions { 
-  #include "a3g-loadout\CfgFunctions.hpp" 
+  #include "modules\a3g-loadout\CfgFunctions.hpp" 
 };
 ```
 
