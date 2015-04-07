@@ -3,6 +3,10 @@
 
 -Trusty Arabian
 
+> Splendid :^)
+
+-Jay Crowe
+
 ## Installation
 1. Create a folder in your mission root folder and name it `modules`. Then create one inside there and call it `a3g-loadout`. If you change the name you will have to adjust some folder paths.
 2. Download the contents of this repository ( there's a download link at the side ) and put it into the folder you just created.
