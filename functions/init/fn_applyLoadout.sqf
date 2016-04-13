@@ -103,7 +103,14 @@ if( !_missionStart ) then {
   };
 
   // Name based loadouts
-  if( isClass ( _configPath >> str _x )) then {
-    [_configPath >> str _x, _x] call A3G_Loadout_fnc_DoLoadout;
+  _str = str _x splitString "_" select 0;
+  if( isClass ( _configPath >> _str )) then {
+    [_configPath >> _str, _x] call A3G_Loadout_fnc_DoLoadout;
   };
+
+  _role = roleDescription _x splitString " " joinString "";
+  if( isClass ( _configPath >> _role )) then {
+	[_configPath >> _role, _x] call A3G_Loadout_fnc_DoLoadout;
+  };
+
 } forEach _units;
