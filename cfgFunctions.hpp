@@ -33,14 +33,17 @@ class A3G_Loadout {
 
   class Init {
     file = "node_modules\a3g-loadout\functions\init";
-    class ApplyLoadout {
-      postInit = 1;
-    };
+
+    class ApplyLoadout {};
     class AssignRespawn {
       postInit = 1;
     };
+
     class DoLoadout {};
     class IsConfigEntry {};
+    class ScheduleLoadout {
+      postInit = 1;
+    };
   };
 
   class LinkedItems {
