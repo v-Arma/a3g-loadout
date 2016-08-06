@@ -8,19 +8,32 @@
 -Jay Crowe
 
 ## Installation
-1. Create a folder in your mission root folder and name it `node_modules`. Then create one inside there and call it `a3g-loadout`. If you change the name you will have to adjust some folder paths.
+1. Create a folder in your mission root folder and name it `modules`. Then create one inside there and call it `a3g-loadout`. If you change the name you will have to adjust some folder paths.
 2. Download the contents of this repository ( there's a download link at the side ) and put it into the folder you just created.
 3. Make a `description.ext` file and put it into your mission root folder. If you don't know what a description.ext is, you can read about it [here](https://community.bistudio.com/wiki/Description.ext).
 4. It should look like this: <NEEDS NEW PICTURE>
 5. Add the following lines of code to the `description.ext`:
 
-``` c++ 
-class CfgFunctions { 
-  #include "node_modules\a3g-loadout\CfgFunctions.hpp" 
+``` c++
+class CfgFunctions {
+  #include "modules\a3g-loadout\CfgFunctions.hpp"
 };
 ```
 
 That's it!
+
+## Configuration
+
+* You may `#define MODULES_DIRECTORY <directory name>` to be able to change your a3g-loadout from the default "modules" directory
+* Also, for large numbers of players that may overload the server with simultaneous loadout assignments, you may configure a custom delay for applying the loadout:
+
+```
+class CfgLoadouts {
+    baseDelay = 10; // minimum time to wait after connect before applying loadout
+    perPersonDelay = 1; // added random delay based on number of players
+};
+
+```
 
 ## I'm too dumb, give me the easy way!
 Go to the virtual arsenal and make a loadout there to your liking. Then use the export function `CTRL`+`SHIFT`+`C` to export the loadout into the format that this script understands. Read the section called `Classes` below, because you still need to tell the script who should get the loadout you just made, but other than that, you're done.
@@ -89,7 +102,7 @@ Works out of the box, 100% of the time, everytime.
 
 Options
 -------
-These are the different options can use for making a loadout, with a bit of an explanation of how they behave. 
+These are the different options can use for making a loadout, with a bit of an explanation of how they behave.
 The loadout options are completely modular, just use what you need and nothing more:
 
 | Option                         | Explanation                                |
@@ -125,7 +138,7 @@ The loadout options are completely modular, just use what you need and nothing m
 - Array entries ( denoted with a `[]` ) require the array syntax, even when they are only used with a single item. The correct usage looks like this: `magazines[] = {"some_magazine_classname"};`.
 - Single entries on the contrary look like this: `vest = "some_vest_classname";`. It is imperative that you do this right, because the editor crashes if you mess this up. You can thank Bohemia Interactive for that.
 - All options default to removing the item(s) in question, if you leave the field empty ( ie. `uniform = "";` ). This only works where it makes sense. An empty `addItems[]` array makes no sense.
-- `uniform`, `backpack` and `vest` options will try and preserve the items inside them, even if you change or completely remove them. If you delete a backpack for example, the system will try and move them to the rest of your inventory, as long as there's space for them. This obviously has its limit. If you remove almost all containers, then some items will be lost. This is your own responsibility. 
+- `uniform`, `backpack` and `vest` options will try and preserve the items inside them, even if you change or completely remove them. If you delete a backpack for example, the system will try and move them to the rest of your inventory, as long as there's space for them. This obviously has its limit. If you remove almost all containers, then some items will be lost. This is your own responsibility.
 - `items[]` and `magazines[]` options will replace items / magazines from the _entire_ inventory, backpacks included.
 - `addItems[]` and `addMagazines[]` options will add items / magazines without removing anything. This can be combined with `items[]` and `magazines[]`, even though it doesn't make much sense.
 - `addItemsToUniform[]`, `addItemsToVest[]` and `addItemsToBackpack[]` are executed _before_ the general options for `addItems[]` and `addMagazines[]`. This is because I assume that you don't care where items end up being when you use the latter and that way, the sorted options have more room to work with. They are however executed _after_ the replacement options `items[]` and `magazines[]`.

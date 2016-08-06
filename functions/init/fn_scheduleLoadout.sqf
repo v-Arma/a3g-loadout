@@ -1,13 +1,24 @@
-private ["_delay"];
+#define PREFIX a3g
+#define COMPONENT loadout
+#include "\x\cba\addons\main\script_macros_mission.hpp"
 
-_delay = 10 + floor( random (count allPlayers));
+private ["_delay", "_getDelay"];
 
-hint format ["waiting %1 seconds to loadout", _delay];
-[format ["waiting %1 s for loadout for %2...", _delay], "GRAD_mission_debug", [false, true, false] ] call CBA_fnc_debug;
+_getDelay = {
+    _baseDelay = [(missionConfigFile >> "CfgLoadouts"), "baseDelay", 10] call BIS_fnc_returnConfigEntry;
+    _perPlayerDelay = [(missionConfigFile >> "CfgLoadouts"), "perPlayerDelay", 1] call BIS_fnc_returnConfigEntry;
+
+    _baseDelay + floor(_perPlayerDelay * random (count allPlayers));
+};
+
+_delay = [] call _getDelay;
+
+_msg = format ["waiting %1 s for loadout.", _delay];
+LOG(_msg);
 
 [
 	{
-		["triggering loadout", "GRAD_mission_debug", [true, true, true] ] call CBA_fnc_debug;
+		LOG("triggering loadout.");
 		[_this select 0] call A3G_Loadout_fnc_ApplyLoadout;
 	},
 	[_this select 0],
