@@ -1,5 +1,17 @@
 {
-    "name": "a3g-loadout",
+    "name": "grad-loadout",
+    "contributors": [
+        {
+            "name": "Cephei"
+        },
+        {
+            "name": "BaerMitUmlaut"
+        },
+        {
+            "name": "Moritz Schmidt",
+            "email": "fusselwurm@gmail.com"
+        }
+    ],
     "description": "Declarative loadout script for Arma3",
     "version": "1.0.0"
 }
