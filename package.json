@@ -6,6 +6,9 @@
         },
         {
             "name": "BaerMitUmlaut"
+        },        
+        {
+            "name": "Steven Koeberich"
         },
         {
             "name": "Moritz Schmidt",
@@ -13,5 +16,5 @@
         }
     ],
     "description": "Declarative loadout script for Arma3",
-    "version": "1.0.0"
+    "version": "1.0.1"
 }
