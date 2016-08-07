@@ -2,30 +2,32 @@
     #define MODULES_DIRECTORY modules
 #endif
 
+#define PROJECT_NAME grad-loadout
+
 class A3G_Loadout {
 
   class Arsenal {
-    file = MODULES_DIRECTORY\a3g-loadout\functions\arsenal;
+    file = MODULES_DIRECTORY\PROJECT_NAME\functions\arsenal;
     class ReplaceLinkedItems {};
     class ReplaceWeapons {};
   };
 
   class Attachments {
-    file = MODULES_DIRECTORY\a3g-loadout\functions\attachments;
+    file = MODULES_DIRECTORY\PROJECT_NAME\functions\attachments;
     class ReplacePrimaryAttachments {};
     class ReplaceSecondaryAttachments {};
     class ReplaceHandgunAttachments {};
   };
 
   class Containers {
-    file = MODULES_DIRECTORY\a3g-loadout\functions\containers;
+    file = MODULES_DIRECTORY\PROJECT_NAME\functions\containers;
     class ReplaceUniform {};
     class ReplaceBackpack {};
     class ReplaceVest {};
   };
 
   class General {
-    file = MODULES_DIRECTORY\a3g-loadout\functions\general;
+    file = MODULES_DIRECTORY\PROJECT_NAME\functions\general;
     class AddItems {};
     class AddMagazines {};
     class AddItemsToUniform {};
@@ -36,7 +38,7 @@ class A3G_Loadout {
   };
 
   class Init {
-    file = MODULES_DIRECTORY\a3g-loadout\functions\init;
+    file = MODULES_DIRECTORY\PROJECT_NAME\functions\init;
 
     class ApplyLoadout {};
     class AssignRespawn {
@@ -51,7 +53,7 @@ class A3G_Loadout {
   };
 
   class LinkedItems {
-    file = MODULES_DIRECTORY\a3g-loadout\functions\linkedItems;
+    file = MODULES_DIRECTORY\PROJECT_NAME\functions\linkedItems;
     class ReplaceBinoculars {};
     class ReplaceCompass {};
     class ReplaceGoggles {};
@@ -63,7 +65,7 @@ class A3G_Loadout {
   };
 
   class Weapons {
-    file = MODULES_DIRECTORY\a3g-loadout\functions\weapons;
+    file = MODULES_DIRECTORY\PROJECT_NAME\functions\weapons;
     class ReplaceHandgunWeapon {};
     class ReplacePrimaryWeapon {};
     class ReplaceSecondaryWeapon {};
