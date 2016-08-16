@@ -1,7 +1,3 @@
-private ["_configPath", "_loadoutTarget"];
+params ["_configValue", "_loadoutTarget"];
 
-// Get config entry
-_configPath = _this select 0;
-_loadoutTarget = _this select 1;
-
-{ _loadoutTarget addItemToBackpack _x; } forEach getArray (_configPath);
+{ _loadoutTarget addItemToBackpack _x; } forEach _configValue;

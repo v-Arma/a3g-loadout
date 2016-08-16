@@ -1,0 +1,20 @@
+{
+    "name": "grad-loadout",
+    "contributors": [
+        {
+            "name": "Cephei"
+        },
+        {
+            "name": "BaerMitUmlaut"
+        },
+        {
+            "name": "Steven Koeberich"
+        },
+        {
+            "name": "Moritz Schmidt",
+            "email": "fusselwurm@gmail.com"
+        }
+    ],
+    "description": "Declarative loadout script for Arma3",
+    "version": "3.0.0"
+}

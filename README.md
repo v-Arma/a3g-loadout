@@ -1,26 +1,39 @@
-# A3G Loadout
-> An **almost** okay loadout system
+# GRAD Loadout, an improved [A3G Loadout](https://github.com/v-Arma/a3g-loadout)
 
--Trusty Arabian
+Declarative loadout system for Arma3
 
-> Splendid :^)
+## Acknowledgment
 
--Jay Crowe
+*As mentioned above, this is a continuation of mostly [Cephei](https://github.com/Cephel)'s work.*
+*However, that project seems so dead and I changed so much that I saw it fit to rename repo & project. –– Fusselwurm, 2016-08-16*
 
 ## Installation
-1. Create a folder in your mission root folder and name it `modules`. Then create one inside there and call it `a3g-loadout`. If you change the name you will have to adjust some folder paths.
+1. Create a folder in your mission root folder and name it `modules`. Then create one inside there and call it `grad-loadout`. If you change the name you will have to adjust some folder paths.
 2. Download the contents of this repository ( there's a download link at the side ) and put it into the folder you just created.
 3. Make a `description.ext` file and put it into your mission root folder. If you don't know what a description.ext is, you can read about it [here](https://community.bistudio.com/wiki/Description.ext).
 4. It should look like this: <NEEDS NEW PICTURE>
 5. Add the following lines of code to the `description.ext`:
 
-``` c++ 
-class CfgFunctions { 
-  #include "modules\a3g-loadout\CfgFunctions.hpp" 
+```sqf
+class CfgFunctions {
+  #include "modules\grad-loadout\CfgFunctions.hpp"
 };
 ```
 
 That's it!
+
+## Configuration
+
+* You may `#define MODULES_DIRECTORY <directory name>` to be able to change your grad-loadout from the default "modules" directory
+* Also, for large numbers of players that may overload the server with simultaneous loadout assignments, you may configure a custom delay for applying the loadout:
+
+```sqf
+class Loadouts {
+    baseDelay = 10; // minimum time to wait after connect before applying loadout
+    perPersonDelay = 1; // added random delay based on number of players
+};
+
+```
 
 ## I'm too dumb, give me the easy way!
 Go to the virtual arsenal and make a loadout there to your liking. Then use the export function `CTRL`+`SHIFT`+`C` to export the loadout into the format that this script understands. Read the section called `Classes` below, because you still need to tell the script who should get the loadout you just made, but other than that, you're done.
@@ -28,31 +41,35 @@ Go to the virtual arsenal and make a loadout there to your liking. Then use the 
 # Loadouts
 Loadouts are defined directly inside the `description.ext`. This has vast advantages over the commonly accepted method of scripting them on a per-unit basis. Loadouts are applied on mission start and when you respawn. It should work completely seamless in every situation. This is an example on how a loadout looks like with this system:
 
-``` c++
-class CfgLoadouts {
-  class My_Unit {
-    primaryWeapon = "RH_m4a1_ris";
-    primaryWeaponAttachments[] = {"RH_ta31rco"};
-  };
+```sqf
+class Loadouts {
+    class Name {
+        class My_Unit {
+            primaryWeapon = "RH_m4a1_ris";
+            primaryWeaponAttachments[] = {"RH_ta31rco"};
+        };
+    };
 };
 ```
 
-As you can see, they can be extremely simple, and contain only the information necessary to create the loadout. Due to the modular nature of the script, we're keeping most of the original loadout intact and are just changing the rifle and its weapon attachments. The simplest way of creating a loadout is to give units a name in the editor, ie. `My_Unit` and define a class with the same name in the loadout section. Any changes done in that section now apply to that unit. The example above demonstrates this behavior, by reserving a loadout for a unit that carries the name `My_Unit`.
+As you can see, they can be extremely simple, and contain only the information necessary to create the loadout. Due to the modular nature of the script, we're keeping most of the original loadout intact and are just changing the rifle and its weapon attachments. The simplest way of creating a loadout is to give units a name in the editor, ie. `My_Unit` and define a class with the same name in the loadout section in the `Name` subclass. Any changes done in that section now apply to that unit. The example above demonstrates this behavior, by reserving a loadout for a unit that carries the name `My_Unit`.
 
 The real power of this system becomes apparent when you start combining different features for the desired effect. The modular nature of the script means you don't have to change anything that you don't actually want to change. If you just want to change a units uniform, you can just define a different uniform and everything else stays the same. Of course defining a loadout on a per-unit-basis would still be pretty lengthy and annoying. Instead you have the ability to use certain magical and not so magical classes to simplify the process. You can for example use the class of a unit, such as a Rifleman for example, which will then change the loadout of every unit that is of this class. The example below demonstrates this:
 
-``` c++
-class CfgLoadouts {
-  class AllPlayers {
-    primaryWeapon = "RH_m4a1_ris";
-  };
-  class AV_IndUs_SL_Des {
-    primaryWeaponAttachments[] = {"RH_ta31rco"};
-  };
-  class AV_IndUs_Marksman_M14_Des {
-    primaryWeapon = "RH_mk12mod1";
-    primaryWeaponAttachments[] = {"RH_ta31rco"};
-  };
+```sqf
+class Loadouts {
+    class AllPlayers {
+        primaryWeapon = "RH_m4a1_ris";
+    };
+    class Type {
+        class AV_IndUs_SL_Des {
+            primaryWeaponAttachments[] = {"RH_ta31rco"};
+        };
+        class AV_IndUs_Marksman_M14_Des {
+            primaryWeapon = "RH_mk12mod1";
+            primaryWeaponAttachments[] = {"RH_ta31rco"};
+        };
+    };
 };
 ```
 
@@ -72,14 +89,18 @@ There's a caveat to using this system: You have to reload the mission everytime 
 ## Classes
 Loadouts are written inside classes. There are a couple of generic classes for you to use, ontop of being able to specifiy a unit classname and just designating a unit name. The priority in order is this:
 
-1. AllUnits
-2. AllAi
-3. AllPlayers
-4. Side classes ( Blufor, Opfor, Independent and Civilian )
-5. Side AI classes ( BluforAi, OpforAi, IndependentAi and CivilianAi )
-6. Side player classes ( BluforPlayer, OpforPlayer, IndependentPlayer and CivilianPlayer )
-7. Unit classnames
-8. Editor names
+1. all units, directly in class Loadouts
+    1.1 AllUnits
+    1.2 AllAi
+    1.3 AllPlayers
+2. by side, in Loadouts/Side:
+    2.1 Side classes ( Blufor, Opfor, Independent and Civilian )
+    2.2 Side AI classes ( BluforAi, OpforAi, IndependentAi and CivilianAi )
+    2.3 Side player classes ( BluforPlayer, OpforPlayer, IndependentPlayer and CivilianPlayer )
+3. by class name, define in Loadouts/Type
+4. by editor name, define in Loadouts/Name
+5. by unit role, define in Loadouts/Role
+
 
 Every priority class will override the class above it, in a nondestructive way. If you define a `primaryWeapon` inside `AllUnits`, then define a different one inside `Blufor`, all blufor players will get the one from `Blufor` and the `AllUnits` one will be overridden. But if you define `addItems[] = "AGM_Bandage"` inside `AllUnits` and a `primaryWeapon` inside `Blufor` _all_ blufor players will get a Bandage from `AllUnits` and a primary weapon from `primaryWeapon`.
 
@@ -89,7 +110,7 @@ Works out of the box, 100% of the time, everytime.
 
 Options
 -------
-These are the different options can use for making a loadout, with a bit of an explanation of how they behave. 
+These are the different options can use for making a loadout, with a bit of an explanation of how they behave.
 The loadout options are completely modular, just use what you need and nothing more:
 
 | Option                         | Explanation                                |
@@ -125,7 +146,7 @@ The loadout options are completely modular, just use what you need and nothing m
 - Array entries ( denoted with a `[]` ) require the array syntax, even when they are only used with a single item. The correct usage looks like this: `magazines[] = {"some_magazine_classname"};`.
 - Single entries on the contrary look like this: `vest = "some_vest_classname";`. It is imperative that you do this right, because the editor crashes if you mess this up. You can thank Bohemia Interactive for that.
 - All options default to removing the item(s) in question, if you leave the field empty ( ie. `uniform = "";` ). This only works where it makes sense. An empty `addItems[]` array makes no sense.
-- `uniform`, `backpack` and `vest` options will try and preserve the items inside them, even if you change or completely remove them. If you delete a backpack for example, the system will try and move them to the rest of your inventory, as long as there's space for them. This obviously has its limit. If you remove almost all containers, then some items will be lost. This is your own responsibility. 
+- `uniform`, `backpack` and `vest` options will try and preserve the items inside them, even if you change or completely remove them. If you delete a backpack for example, the system will try and move them to the rest of your inventory, as long as there's space for them. This obviously has its limit. If you remove almost all containers, then some items will be lost. This is your own responsibility.
 - `items[]` and `magazines[]` options will replace items / magazines from the _entire_ inventory, backpacks included.
 - `addItems[]` and `addMagazines[]` options will add items / magazines without removing anything. This can be combined with `items[]` and `magazines[]`, even though it doesn't make much sense.
 - `addItemsToUniform[]`, `addItemsToVest[]` and `addItemsToBackpack[]` are executed _before_ the general options for `addItems[]` and `addMagazines[]`. This is because I assume that you don't care where items end up being when you use the latter and that way, the sorted options have more room to work with. They are however executed _after_ the replacement options `items[]` and `magazines[]`.
