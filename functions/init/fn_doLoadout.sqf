@@ -1,77 +1,84 @@
-private ["_configPath", "_loadoutTarget", "_handgunBackup", "_handgunMagazineBackup"];
-
-// Get config entry
-_configPath = _this select 0;
-_loadoutTarget = _this select 1;
-
+params  ["_loadoutHash", "_loadoutTarget"];
+private ["_handgunBackup", "_handgunMagazineBackup"];
 
 // ========================================== Arsenal =============================================
 // This is being done first, so it can be overwritten at a later time, when it is needed.
-if ( [_configPath, "linkedItems"] call A3G_Loadout_fnc_IsConfigEntry ) then {
-  [_configPath >> "linkedItems", _loadoutTarget] call A3G_Loadout_fnc_ReplaceLinkedItems;
+if ( [_loadoutHash, "linkedItems"] call CBA_fnc_hashHasKey ) then {
+    _xxx = [_loadoutHash, "linkedItems"] call CBA_fnc_hashGet;
+    [_xxx, _loadoutTarget] call A3G_Loadout_fnc_ReplaceLinkedItems;
 };
-
 
 // ======================================== Containers ============================================
 // Uniform
-if ( [_configPath, "uniform"] call A3G_Loadout_fnc_IsConfigEntry ) then {
-  [_configPath >> "uniform", _loadoutTarget] call A3G_Loadout_fnc_ReplaceUniform;
+if ( [_loadoutHash, "uniform"] call CBA_fnc_hashHasKey ) then {
+    _xxx = [_loadoutHash, "uniform"] call CBA_fnc_hashGet;
+    [_xxx, _loadoutTarget] call A3G_Loadout_fnc_ReplaceUniform;
 };
 
 // Vest
-if ( [_configPath, "vest"] call A3G_Loadout_fnc_IsConfigEntry ) then {
-  [_configPath >> "vest", _loadoutTarget] call A3G_Loadout_fnc_ReplaceVest;
+if ( [_loadoutHash, "vest"] call CBA_fnc_hashHasKey ) then {
+    _xxx = [_loadoutHash, "vest"] call CBA_fnc_hashGet;
+    [_xxx, _loadoutTarget] call A3G_Loadout_fnc_ReplaceVest;
 };
 
 // Backpack
-if ( [_configPath, "backpack"] call A3G_Loadout_fnc_IsConfigEntry ) then {
-  [_configPath >> "backpack", _loadoutTarget] call A3G_Loadout_fnc_ReplaceBackpack;
+if ( [_loadoutHash, "backpack"] call CBA_fnc_hashHasKey ) then {
+    _xxx = [_loadoutHash, "backpack"] call CBA_fnc_hashGet;
+	[_xxx, _loadoutTarget] call A3G_Loadout_fnc_ReplaceBackpack;
 };
 
 
 // ==================================== Items & Magazines =========================================
 // Items
-if ( [_configPath, "items"] call A3G_Loadout_fnc_IsConfigEntry ) then {
-  [_configPath >> "items", _loadoutTarget] call A3G_Loadout_fnc_ReplaceItems;
+if ( [_loadoutHash, "items"] call CBA_fnc_hashHasKey ) then {
+    _xxx = [_loadoutHash, "items"] call CBA_fnc_hashGet;
+	[_xxx, _loadoutTarget] call A3G_Loadout_fnc_ReplaceItems;
 };
 
 // Magazines
-if ( [_configPath, "magazines"] call A3G_Loadout_fnc_IsConfigEntry ) then {
-  [_configPath >> "magazines", _loadoutTarget] call A3G_Loadout_fnc_ReplaceMagazines;
+if ( [_loadoutHash, "magazines"] call CBA_fnc_hashHasKey ) then {
+    _xxx = [_loadoutHash, "magazines"] call CBA_fnc_hashGet;
+	[_xxx, _loadoutTarget] call A3G_Loadout_fnc_ReplaceMagazines;
 };
 
 // Sorted items
 // Uniform items & magazines
-if ( [_configPath, "addItemsToUniform"] call A3G_Loadout_fnc_IsConfigEntry ) then {
-  [_configPath >> "addItemsToUniform", _loadoutTarget] call A3G_Loadout_fnc_AddItemsToUniform;
+if ( [_loadoutHash, "addItemsToUniform"] call CBA_fnc_hashHasKey ) then {
+    _xxx = [_loadoutHash, "addItemsToUniform"] call CBA_fnc_hashGet;
+	[_xxx, _loadoutTarget] call A3G_Loadout_fnc_AddItemsToUniform;
 };
 
 // Vest items & magazines
-if ( [_configPath, "addItemsToVest"] call A3G_Loadout_fnc_IsConfigEntry ) then {
-  [_configPath >> "addItemsToVest", _loadoutTarget] call A3G_Loadout_fnc_AddItemsToVest;
+if ( [_loadoutHash, "addItemsToVest"] call CBA_fnc_hashHasKey ) then {
+    _xxx = [_loadoutHash, "addItemsToVest"] call CBA_fnc_hashGet;
+	[_xxx, _loadoutTarget] call A3G_Loadout_fnc_AddItemsToVest;
 };
 
 // Backpack items & magazines
-if ( [_configPath, "addItemsToBackpack"] call A3G_Loadout_fnc_IsConfigEntry ) then {
-  [_configPath >> "addItemsToBackpack", _loadoutTarget] call A3G_Loadout_fnc_AddItemsToBackpack;
+if ( [_loadoutHash, "addItemsToBackpack"] call CBA_fnc_hashHasKey ) then {
+    _xxx = [_loadoutHash, "addItemsToBackpack"] call CBA_fnc_hashGet;
+	[_xxx, _loadoutTarget] call A3G_Loadout_fnc_AddItemsToBackpack;
 };
 
 // Unsorted items
 // Added items
-if ( [_configPath, "addItems"] call A3G_Loadout_fnc_IsConfigEntry ) then {
-  [_configPath >> "addItems", _loadoutTarget] call A3G_Loadout_fnc_AddItems;
+if ( [_loadoutHash, "addItems"] call CBA_fnc_hashHasKey ) then {
+    _xxx = [_loadoutHash, "addItems"] call CBA_fnc_hashGet;
+	[_xxx, _loadoutTarget] call A3G_Loadout_fnc_AddItems;
 };
 
 // Added magazines
-if ( [_configPath, "addMagazines"] call A3G_Loadout_fnc_IsConfigEntry ) then {
-  [_configPath >> "addMagazines", _loadoutTarget] call A3G_Loadout_fnc_AddMagazines;
+if ( [_loadoutHash, "addMagazines"] call CBA_fnc_hashHasKey ) then {
+    _xxx = [_loadoutHash, "addMagazines"] call CBA_fnc_hashGet;
+	[_xxx, _loadoutTarget] call A3G_Loadout_fnc_AddMagazines;
 };
 
 
 // ========================================= Weapons ==============================================
 // Arsenal weapons
-if ( [_configPath, "weapons"] call A3G_Loadout_fnc_IsConfigEntry ) then {
-  [_configPath >> "weapons", _loadoutTarget] call A3G_Loadout_fnc_ReplaceWeapons;
+if ( [_loadoutHash, "weapons"] call CBA_fnc_hashHasKey ) then {
+    _xxx = [_loadoutHash, "weapons"] call CBA_fnc_hashGet;
+	[_xxx, _loadoutTarget] call A3G_Loadout_fnc_ReplaceWeapons;
 };
 
 // Workaround to prevent weapon switching when replacing the primary weapon, remove pistol first, add it later after the primary weapon was changed
@@ -90,92 +97,106 @@ if (handgunWeapon _loadoutTarget == "hgun_P07_F") then {
 };
 
 // Primary weapon
-if ( [_configPath, "primaryWeapon"] call A3G_Loadout_fnc_IsConfigEntry ) then {
-  [_configPath >> "primaryWeapon", _loadoutTarget] call A3G_Loadout_fnc_ReplacePrimaryWeapon;
+if ( [_loadoutHash, "primaryWeapon"] call CBA_fnc_hashHasKey ) then {
+    _xxx = [_loadoutHash, "primaryWeapon"] call CBA_fnc_hashGet;
+	[_xxx, _loadoutTarget] call A3G_Loadout_fnc_ReplacePrimaryWeapon;
 };
 
 // Launcher
-if ( [_configPath, "secondaryWeapon"] call A3G_Loadout_fnc_IsConfigEntry ) then {
-  [_configPath >> "secondaryWeapon", _loadoutTarget] call A3G_Loadout_fnc_ReplaceSecondaryWeapon;
+if ( [_loadoutHash, "secondaryWeapon"] call CBA_fnc_hashHasKey ) then {
+    _xxx = [_loadoutHash, "secondaryWeapon"] call CBA_fnc_hashGet;
+	[_xxx, _loadoutTarget] call A3G_Loadout_fnc_ReplaceSecondaryWeapon;
 };
 
 // Sidearm
-if ( [_configPath, "handgunWeapon"] call A3G_Loadout_fnc_IsConfigEntry ) then {
-  [_configPath >> "handgunWeapon", _loadoutTarget] call A3G_Loadout_fnc_ReplaceHandgunWeapon;
+if ( [_loadoutHash, "handgunWeapon"] call CBA_fnc_hashHasKey ) then {
+    _xxx = [_loadoutHash, "handgunWeapon"] call CBA_fnc_hashGet;
+	[_xxx, _loadoutTarget] call A3G_Loadout_fnc_ReplaceHandgunWeapon;
 } else {
-  // Add handgun back to complete the workaround above
-  // Complete retard shit here, but basically it is required to replace the default handgun with something else, as neither adding nor removing it works
-  // That's why you get a different pistol here
-  if(_handgunBackup == "hgun_P07_F") then {
-    // We're only adding extra magazines if they were not removed under the magazine category above, for consistency sake.
-    // ie. If someone replaced all magazines already, they'd have to add them manually.
-    if( !( [_configPath, "magazines"] call A3G_Loadout_fnc_IsConfigEntry )) then {
-      _loadoutTarget addMagazine "11Rnd_45ACP_Mag";
-      _loadoutTarget addMagazine "11Rnd_45ACP_Mag";
+    // Add handgun back to complete the workaround above
+    // Complete retard shit here, but basically it is required to replace the default handgun with something else, as neither adding nor removing it works
+    // That's why you get a different pistol here
+    if(_handgunBackup == "hgun_P07_F") then {
+        // We're only adding extra magazines if they were not removed under the magazine category above, for consistency sake.
+        // ie. If someone replaced all magazines already, they'd have to add them manually.
+        if( !( [_loadoutHash, "magazines"] call CBA_fnc_hashHasKey )) then {
+            _loadoutTarget addMagazine "11Rnd_45ACP_Mag";
+            _loadoutTarget addMagazine "11Rnd_45ACP_Mag";
+        };
+        _loadoutTarget addMagazine "11Rnd_45ACP_Mag";
+        _loadoutTarget addWeapon "hgun_Pistol_heavy_01_F";
+    } else {
+        _loadoutTarget addMagazine (_handgunMagazineBackup select 0);
+        _loadoutTarget addWeapon _handgunBackup;
     };
-    _loadoutTarget addMagazine "11Rnd_45ACP_Mag";
-    _loadoutTarget addWeapon "hgun_Pistol_heavy_01_F";
-  } else {
-    _loadoutTarget addMagazine (_handgunMagazineBackup select 0);
-    _loadoutTarget addWeapon _handgunBackup;
-  };
 };
 
 
 // ======================================= Attachments ============================================
 // Primary weapon attachments
-if ( [_configPath, "primaryWeaponAttachments"] call A3G_Loadout_fnc_IsConfigEntry ) then {
-  [_configPath >> "primaryWeaponAttachments", _loadoutTarget] call A3G_Loadout_fnc_ReplacePrimaryAttachments;
+if ( [_loadoutHash, "primaryWeaponAttachments"] call CBA_fnc_hashHasKey ) then {
+    _xxx = [_loadoutHash, "primaryWeaponAttachments"] call CBA_fnc_hashGet;
+    [_xxx, _loadoutTarget] call A3G_Loadout_fnc_ReplacePrimaryAttachments;
 };
 
 // Secondary weapon attachments
-if ( [_configPath, "secondaryWeaponAttachments"] call A3G_Loadout_fnc_IsConfigEntry ) then {
-  [_configPath >> "secondaryWeaponAttachments", _loadoutTarget] call A3G_Loadout_fnc_ReplaceSecondaryAttachments;
+if ( [_loadoutHash, "secondaryWeaponAttachments"] call CBA_fnc_hashHasKey ) then {
+    _xxx = [_loadoutHash, "secondaryWeaponAttachments"] call CBA_fnc_hashGet;
+	[_xxx, _loadoutTarget] call A3G_Loadout_fnc_ReplaceSecondaryAttachments;
 };
 
 // Handgun weapon attachments
-if ( [_configPath, "handgunWeaponAttachments"] call A3G_Loadout_fnc_IsConfigEntry ) then {
-  [_configPath >> "handgunWeaponAttachments", _loadoutTarget] call A3G_Loadout_fnc_ReplaceHandgunAttachments;
+if ( [_loadoutHash, "handgunWeaponAttachments"] call CBA_fnc_hashHasKey ) then {
+    _xxx = [_loadoutHash, "handgunWeaponAttachments"] call CBA_fnc_hashGet;
+	[_xxx, _loadoutTarget] call A3G_Loadout_fnc_ReplaceHandgunAttachments;
 };
 
 
 // ======================================= Linked Items ===========================================
 // Headgear
-if ( [_configPath, "headgear"] call A3G_Loadout_fnc_IsConfigEntry ) then {
-  [_configPath >> "headgear", _loadoutTarget] call A3G_Loadout_fnc_ReplaceHeadgear;
+if ( [_loadoutHash, "headgear"] call CBA_fnc_hashHasKey ) then {
+    _xxx = [_loadoutHash, "headgear"] call CBA_fnc_hashGet;
+	[_xxx, _loadoutTarget] call A3G_Loadout_fnc_ReplaceHeadgear;
 };
 
 // Goggles ( No, this is NOT Night Vision Goggles )
-if ( [_configPath, "goggles"] call A3G_Loadout_fnc_IsConfigEntry ) then {
-  [_configPath >> "goggles", _loadoutTarget] call A3G_Loadout_fnc_ReplaceGoggles;
+if ( [_loadoutHash, "goggles"] call CBA_fnc_hashHasKey ) then {
+    _xxx = [_loadoutHash, "goggles"] call CBA_fnc_hashGet;
+	[_xxx, _loadoutTarget] call A3G_Loadout_fnc_ReplaceGoggles;
 };
 
 // Nightvision goggles
-if ( [_configPath, "nvgoggles"] call A3G_Loadout_fnc_IsConfigEntry ) then {
-  [_configPath >> "nvgoggles", _loadoutTarget] call A3G_Loadout_fnc_ReplaceNVGoggles;
+if ( [_loadoutHash, "nvgoggles"] call CBA_fnc_hashHasKey ) then {
+    _xxx = [_loadoutHash, "nvgoggles"] call CBA_fnc_hashGet;
+	[_xxx, _loadoutTarget] call A3G_Loadout_fnc_ReplaceNVGoggles;
 };
 
 // Binoculars
-if ( [_configPath, "binoculars"] call A3G_Loadout_fnc_IsConfigEntry ) then {
-  [_configPath >> "binoculars", _loadoutTarget] call A3G_Loadout_fnc_ReplaceBinoculars;
+if ( [_loadoutHash, "binoculars"] call CBA_fnc_hashHasKey ) then {
+    _xxx = [_loadoutHash, "binoculars"] call CBA_fnc_hashGet;
+	[_xxx, _loadoutTarget] call A3G_Loadout_fnc_ReplaceBinoculars;
 };
 
 // Map
-if ( [_configPath, "map"] call A3G_Loadout_fnc_IsConfigEntry ) then {
-  [_configPath >> "map", _loadoutTarget] call A3G_Loadout_fnc_ReplaceMap;
+if ( [_loadoutHash, "map"] call CBA_fnc_hashHasKey ) then {
+    _xxx = [_loadoutHash, "map"] call CBA_fnc_hashGet;
+	[_xxx, _loadoutTarget] call A3G_Loadout_fnc_ReplaceMap;
 };
 
 // GPS
-if ( [_configPath, "gps"] call A3G_Loadout_fnc_IsConfigEntry ) then {
-  [_configPath >> "gps", _loadoutTarget] call A3G_Loadout_fnc_ReplaceGPS;
+if ( [_loadoutHash, "gps"] call CBA_fnc_hashHasKey ) then {
+    _xxx = [_loadoutHash, "gps"] call CBA_fnc_hashGet;
+	[_xxx, _loadoutTarget] call A3G_Loadout_fnc_ReplaceGPS;
 };
 
 // Compass
-if ( [_configPath, "compass"] call A3G_Loadout_fnc_IsConfigEntry ) then {
-  [_configPath >> "compass", _loadoutTarget] call A3G_Loadout_fnc_ReplaceCompass;
+if ( [_loadoutHash, "compass"] call CBA_fnc_hashHasKey ) then {
+    _xxx = [_loadoutHash, "compass"] call CBA_fnc_hashGet;
+	[_xxx, _loadoutTarget] call A3G_Loadout_fnc_ReplaceCompass;
 };
 
 // Watch
-if ( [_configPath, "watch"] call A3G_Loadout_fnc_IsConfigEntry ) then {
-  [_configPath >> "watch", _loadoutTarget] call A3G_Loadout_fnc_ReplaceWatch;
+if ( [_loadoutHash, "watch"] call CBA_fnc_hashHasKey ) then {
+    _xxx = [_loadoutHash, "watch"] call CBA_fnc_hashGet;
+	[_xxx, _loadoutTarget] call A3G_Loadout_fnc_ReplaceWatch;
 };

@@ -1,11 +1,7 @@
-private ["_configPath", "_loadoutTarget"];
+params ["_configValue", "_loadoutTarget"];
 
-// Get config entry
-_configPath = _this select 0;
-_loadoutTarget = _this select 1;
-
-if(getText _configPath == "") then {
+if(_configValue == "") then {
   _loadoutTarget unlinkItem "ItemGPS";
 } else {
-  _loadoutTarget linkItem getText (_configPath);
+  _loadoutTarget linkItem _configValue;
 };

@@ -1,17 +1,14 @@
-private ["_configPath", "_loadoutTarget", "_backUpItems"];
-
-// Get config entry
-_configPath = _this select 0;
-_loadoutTarget = _this select 1;
+params ["_configValue", "_loadoutTarget"];
+private ["_backUpItems"];
 
 // Backup items ( contains magazines )
 _backUpItems = vestItems _loadoutTarget;
 
-if(getText _configPath == "") then {
+if(_configValue == "") then {
   removeVest _loadoutTarget;
   { _loadoutTarget addItem _x; } forEach _backUpItems;
 } else {
-  _loadoutTarget addVest getText (_configPath);
+  _loadoutTarget addVest _configValue;
   // Reapply items
   { _loadoutTarget addItemToVest _x; } forEach _backUpItems;
 };
