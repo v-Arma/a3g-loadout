@@ -1,6 +1,6 @@
 private ["_configPath", "_missionStart"];
 
-_configPath = missionConfigFile >> "CfgLoadouts";
+_configPath = missionConfigFile >> "Loadouts";
 _missionStart = if ( !isNil { _this select 0 } && { _this select 0 == "postInit" }) then { true } else { false };
 
 // Make sure that only local player is considered as target on respawn.
