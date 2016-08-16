@@ -1,4 +1,4 @@
-private ["_configPath", "_missionStart"];
+private ["_configPath", "_missionStart", "_sidePath", "_getSidePath", "_rolePath", "_namePath", "_typePath"];
 
 _configPath = missionConfigFile >> "Loadouts";
 _missionStart = if ( !isNil { _this select 0 } && { _this select 0 == "postInit" }) then { true } else { false };
@@ -14,6 +14,10 @@ if( !_missionStart ) then {
 			_units pushBack _x;
 		};
 	} forEach allUnits;
+};
+
+_getSidePath = {
+    _configPath >> "Side" >> _this;
 };
 
 {
@@ -36,78 +40,89 @@ if( !_missionStart ) then {
 	};
 
 	// General sides --------------------------------------------------------------------------------
-	// All blufor units
-	if( side _x == blufor && { isClass ( _configPath >> "Blufor" )}) then {
-        _loadoutHierarchy pushBack ([_configPath >> "Blufor"] call A3G_Loadout_fnc_ExtractLoadoutFromConfig);
+
+    _sidePath = "Blufor" call _getSidePath;
+	if( side _x == blufor && { isClass (_sidePath)}) then {
+        _loadoutHierarchy pushBack ([_sidePath] call A3G_Loadout_fnc_ExtractLoadoutFromConfig);
 	};
 
-	// All opfor units
-	if( side _x == opfor && { isClass ( _configPath >> "Opfor" )}) then {
-        _loadoutHierarchy pushBack ([_configPath >> "Opfor"] call A3G_Loadout_fnc_ExtractLoadoutFromConfig);
+    _sidePath = "Opfor" call _getSidePath;
+	if( side _x == opfor && { isClass (_sidePath)}) then {
+        _loadoutHierarchy pushBack ([_sidePath] call A3G_Loadout_fnc_ExtractLoadoutFromConfig);
 	};
 
-	// All independent units
-	if( side _x == independent && { isClass ( _configPath >> "Independent" )}) then {
-        _loadoutHierarchy pushBack ([_configPath >> "Independent"] call A3G_Loadout_fnc_ExtractLoadoutFromConfig);
+    _sidePath = "Independent" call _getSidePath;
+	if( side _x == independent && { isClass (_sidePath)}) then {
+        _loadoutHierarchy pushBack ([_sidePath] call A3G_Loadout_fnc_ExtractLoadoutFromConfig);
 	};
 
 	// All civilian units
-	if( side _x == civilian && { isClass ( _configPath >> "Civilian" )}) then {
-        _loadoutHierarchy pushBack ([_configPath >> "Civilian"] call A3G_Loadout_fnc_ExtractLoadoutFromConfig);
+    _sidePath = "Civilian" call _getSidePath;
+	if( side _x == civilian && { isClass (_sidePath)}) then {
+        _loadoutHierarchy pushBack ([_sidePath] call A3G_Loadout_fnc_ExtractLoadoutFromConfig);
 	};
 
 	// AI sides -------------------------------------------------------------------------------------
-	// All blufor AI units
-	if( side _x == blufor && { !isPlayer _x } && { isClass ( _configPath >> "BluforAi" )}) then {
-		_loadoutHierarchy pushBack ([_configPath >> "BluforAi"] call A3G_Loadout_fnc_ExtractLoadoutFromConfig);
+	if( side _x == blufor && { !isPlayer _x } && { isClass (_sidePath)}) then {
+        _sidePath = "BluforAi" call _getSidePath;
+		_loadoutHierarchy pushBack ([_sidePath] call A3G_Loadout_fnc_ExtractLoadoutFromConfig);
 	};
 
-	// All opfor AI units
-	if( side _x == opfor && { !isPlayer _x } && { isClass ( _configPath >> "OpforAi" )}) then {
-		_loadoutHierarchy pushBack ([_configPath >> "OpforAi"] call A3G_Loadout_fnc_ExtractLoadoutFromConfig);
+	_sidePath = "OpforAi" call _getSidePath;
+	if( side _x == opfor && { !isPlayer _x } && { isClass (_sidePath)}) then {
+		_loadoutHierarchy pushBack ([_sidePath] call A3G_Loadout_fnc_ExtractLoadoutFromConfig);
 	};
 
-	// All independent AI units
-	if( side _x == independent && { !isPlayer _x } && { isClass ( _configPath >> "IndependentAi" )}) then {
-		_loadoutHierarchy pushBack ([_configPath >> "IndependentAi"] call A3G_Loadout_fnc_ExtractLoadoutFromConfig);
+	_sidePath = "IndependentAi" call _getSidePath;
+	if( side _x == independent && { !isPlayer _x } && { isClass (_sidePath)}) then {
+		_loadoutHierarchy pushBack ([_sidePath] call A3G_Loadout_fnc_ExtractLoadoutFromConfig);
 	};
 
-	// All civilian AI units
-	if( side _x == civilian && { !isPlayer _x } && { isClass ( _configPath >> "CivilianAi" )}) then {
-		_loadoutHierarchy pushBack ([_configPath >> "CivilianAi"] call A3G_Loadout_fnc_ExtractLoadoutFromConfig);
+	_sidePath = "CivilianAi" call _getSidePath;
+	if( side _x == civilian && { !isPlayer _x } && { isClass (_sidePath)}) then {
+		_loadoutHierarchy pushBack ([_sidePath] call A3G_Loadout_fnc_ExtractLoadoutFromConfig);
 	};
 
 	// Player sides ---------------------------------------------------------------------------------
-	// All blufor units
-	if( side _x == blufor && { isPlayer _x } && { isClass ( _configPath >> "BluforPlayers" )}) then {
-		_loadoutHierarchy pushBack ([_configPath >> "BluforPlayers"] call A3G_Loadout_fnc_ExtractLoadoutFromConfig);
+	_sidePath = "BluforPlayers" call _getSidePath;
+	if( side _x == blufor && { isPlayer _x } && { isClass (_sidePath)}) then {
+		_loadoutHierarchy pushBack ([_sidePath] call A3G_Loadout_fnc_ExtractLoadoutFromConfig);
 	};
 
-	// All opfor units
-	if( side _x == opfor && { isPlayer _x } && { isClass ( _configPath >> "OpforPlayers" )}) then {
-		_loadoutHierarchy pushBack ([_configPath >> "OpforPlayers"] call A3G_Loadout_fnc_ExtractLoadoutFromConfig);
+	_sidePath = "OpforPlayers" call _getSidePath;
+	if( side _x == opfor && { isPlayer _x } && { isClass (_sidePath)}) then {
+		_loadoutHierarchy pushBack ([_sidePath] call A3G_Loadout_fnc_ExtractLoadoutFromConfig);
 	};
 
-	// All independent units
-	if( side _x == independent && { isPlayer _x } && { isClass ( _configPath >> "IndependentPlayers" )}) then {
-		_loadoutHierarchy pushBack ([_configPath >> "IndependentPlayers"] call A3G_Loadout_fnc_ExtractLoadoutFromConfig);
+	_sidePath = "IndependentPlayers" call _getSidePath;
+	if( side _x == independent && { isPlayer _x } && { isClass (_sidePath)}) then {
+		_loadoutHierarchy pushBack ([_sidePath] call A3G_Loadout_fnc_ExtractLoadoutFromConfig);
 	};
 
-	// All civilian units
-	if( side _x == civilian && { isPlayer _x } && { isClass ( _configPath >> "CivilianPlayers" )}) then {
-		_loadoutHierarchy pushBack ([_configPath >> "CivilianPlayers"] call A3G_Loadout_fnc_ExtractLoadoutFromConfig);
+	_sidePath = "CivilianPlayers" call _getSidePath;
+	if( side _x == civilian && { isPlayer _x } && { isClass (_sidePath)}) then {
+		_loadoutHierarchy pushBack ([_sidePath] call A3G_Loadout_fnc_ExtractLoadoutFromConfig);
 	};
 
 	// Class & Unique -------------------------------------------------------------------------------
 	// Class based loadouts
-	if( isClass ( _configPath >> typeof _x )) then {
-		_loadoutHierarchy pushBack ([_configPath >> typeof _x] call A3G_Loadout_fnc_ExtractLoadoutFromConfig);
+    _typePath = _configPath >> "Type" >> typeof _x;
+	if( isClass (_typePath)) then {
+		_loadoutHierarchy pushBack ([_typePath] call A3G_Loadout_fnc_ExtractLoadoutFromConfig);
 	};
 
-	// Roledescription based loadouts
+    // Name based loadouts
+    _str = str _x splitString "_" select 0;
+    _namePath = _configPath >> "Name" >> _str;
+    if( isClass (_namePath)) then {
+      _loadoutHierarchy pushBack ([_namePath] call A3G_Loadout_fnc_ExtractLoadoutFromConfig);
+    };
+
+    // Roledescription based loadouts
 	_role = [roleDescription _x] call BIS_fnc_filterString;
-	if( isClass ( _configPath >> _role )) then {
-		_loadoutHierarchy pushBack ([_configPath >> _role] call A3G_Loadout_fnc_ExtractLoadoutFromConfig);
+    _rolePath = _configPath >> "Role" >> _role;
+	if( isClass (_rolePath)) then {
+		_loadoutHierarchy pushBack ([_rolePath] call A3G_Loadout_fnc_ExtractLoadoutFromConfig);
 	};
 
     _actualLoadout = [_loadoutHierarchy] call A3G_Loadout_fnc_mergeLoadoutHierarchy;
