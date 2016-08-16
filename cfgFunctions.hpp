@@ -46,7 +46,8 @@ class A3G_Loadout {
     };
 
     class DoLoadout {};
-    class IsConfigEntry {};
+    class ExtractLoadoutFromConfig {};
+    class MergeLoadoutHierarchy {};
     class ScheduleLoadout {
       postInit = 1;
     };
