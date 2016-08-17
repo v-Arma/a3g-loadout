@@ -7,6 +7,10 @@ Declarative loadout system for Arma3
 *As mentioned above, this is a continuation of mostly [Cephei](https://github.com/Cephel)'s work.*
 *However, that project seems so dead and I changed so much that I saw it fit to rename repo & project. –– Fusselwurm, 2016-08-16*
 
+## Dependencies
+
+[CBA_A3](https://github.com/CBATeam/CBA_A3) is required
+
 ## Installation
 1. Create a folder in your mission root folder and name it `modules`. Then create one inside there and call it `grad-loadout`. If you change the name you will have to adjust some folder paths.
 2. Download the contents of this repository ( there's a download link at the side ) and put it into the folder you just created.
@@ -33,6 +37,22 @@ class Loadouts {
     perPersonDelay = 1; // added random delay based on number of players
 };
 
+```
+
+* Besides that – if your mission offers parameters for different loadouts, you can define a global var `GRAD_Loadout_Chosen_Prefix` – this will lead to grad-layout reading from a subclass of `Loadouts`, like this
+
+```sqf
+// init.sqf:
+`GRAD_Loadout_Chosen_Prefix = "Something_Something_Chosen_Prefix";`
+
+// description.ext:
+class Loadouts {
+    Something_Something_Chosen_Prefix {
+        AllUnits {
+            // loadout value
+        };
+    };
+};
 ```
 
 ## I'm too dumb, give me the easy way!
@@ -103,6 +123,37 @@ Loadouts are written inside classes. There are a couple of generic classes for y
 
 
 Every priority class will override the class above it, in a nondestructive way. If you define a `primaryWeapon` inside `AllUnits`, then define a different one inside `Blufor`, all blufor players will get the one from `Blufor` and the `AllUnits` one will be overridden. But if you define `addItems[] = "AGM_Bandage"` inside `AllUnits` and a `primaryWeapon` inside `Blufor` _all_ blufor players will get a Bandage from `AllUnits` and a primary weapon from `primaryWeapon`.
+
+## More complete example
+
+```sqf
+class Loadouts {
+    baseDelay = 1;
+    perPersonDelay = 0;
+
+    class AllPlayers {
+        primaryWeapon = "RH_m4a1_ris";
+    };
+    class Side {
+        class Opfor {
+            nvg = "";
+        };
+        class BluforAi {
+            items[] = "";
+        };
+    };
+    class Type {
+        class AV_IndUs_SL_Des {
+            primaryWeaponAttachments[] = {"RH_ta31rco"};
+        };
+    };
+    class Name {
+        class My_Unit {
+            gps = "";
+        };
+    };
+};
+```
 
 Respawn
 -------

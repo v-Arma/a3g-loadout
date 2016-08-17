@@ -2,7 +2,7 @@
 class A3G_Loadout {
   name = "A3G Loadout";
   description = "Superheroic Arma 3 loadout script!";
-  authors[] = {"Cephei"};
+  authors[] = {"Cephei", "Fusselwurm"};
 };
 #endif
 

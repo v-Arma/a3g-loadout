@@ -1,6 +1,10 @@
 private ["_configPath", "_missionStart", "_sidePath", "_getSidePath", "_rolePath", "_namePath", "_typePath"];
 
 _configPath = missionConfigFile >> "Loadouts";
+if (!isNil GRAD_Loadout_Chosen_Prefix) then {
+    _configPath = _configPath >> GRAD_Loadout_Chosen_Prefix;
+};
+
 _missionStart = if ( !isNil { _this select 0 } && { _this select 0 == "postInit" }) then { true } else { false };
 
 // Make sure that only local player is considered as target on respawn.
