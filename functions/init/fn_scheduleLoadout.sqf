@@ -13,13 +13,19 @@ _getDelay = {
 
 _delay = [] call _getDelay;
 
-_msg = format ["waiting %1 s for loadout.", _delay];
+_msg = format ["waiting %1 s for loadout...", _delay];
 LOG(_msg);
+systemChat _msg;
 
 [
 	{
-		LOG("triggering loadout.");
+        _msg = "triggering loadout...";
+		LOG(_msg);
+        systemChat _msg;
 		[_this select 0] call A3G_Loadout_fnc_ApplyLoadout;
+        _msg = "loadout was applied.";
+        LOG(_msg);
+        systemChat _msg;
 	},
 	[_this select 0],
 	_delay
