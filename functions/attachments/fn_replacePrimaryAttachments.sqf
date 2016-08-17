@@ -1,8 +1,4 @@
-private ["_configPath", "_loadoutTarget"];
-
-// Get config entry
-_configPath = _this select 0;
-_loadoutTarget = _this select 1;
+params ["_configValue", "_loadoutTarget"];
 
 removeAllPrimaryWeaponItems _loadoutTarget;
-{ _loadoutTarget addPrimaryWeaponItem _x; } forEach getArray (_configPath);
+{ _loadoutTarget addPrimaryWeaponItem _x; } forEach _configValue;
