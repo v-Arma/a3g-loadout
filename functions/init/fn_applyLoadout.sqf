@@ -1,24 +1,15 @@
-private ["_configPath", "_missionStart", "_sidePath", "_getSidePath", "_rolePath", "_namePath", "_typePath"];
+private ["_configPath", "_isMissionStart", "_sidePath", "_getSidePath", "_rolePath", "_namePath", "_typePath"];
 
 _configPath = missionConfigFile >> "Loadouts";
 if (!isNil "GRAD_Loadout_Chosen_Prefix") then {
     _configPath = _configPath >> GRAD_Loadout_Chosen_Prefix;
 };
 
-_missionStart = if ( !isNil { _this select 0 } && { _this select 0 == "postInit" }) then { true } else { false };
+_isMissionStart = if ( !isNil { _this select 0 } && { _this select 0 == "postInit" }) then { true } else { false };
 
 // Make sure that only local player is considered as target on respawn.
 // This is because AI don't respawn, and we especially don't want to have local AI go through an entire loadout loop again, everytime the player respawns that the AI belongs to.
-_units = [];
-if( !_missionStart ) then {
-	_units pushBack player;
-} else {
-	{
-		if ( local _x ) then {
-			_units pushBack _x;
-		};
-	} forEach allUnits;
-};
+_units = [_isMissionStart] call A3G_Loadout_fnc_GetApplicableUnits;
 
 _getSidePath = {
     _configPath >> "Side" >> _this;

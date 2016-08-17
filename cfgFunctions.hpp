@@ -47,7 +47,11 @@ class A3G_Loadout {
 
     class DoLoadout {};
     class ExtractLoadoutFromConfig {};
+    class GetApplicableUnits {};
     class MergeLoadoutHierarchy {};
+    class RemoveRadios {
+        preinit = 1;
+    };
     class ScheduleLoadout {
       postInit = 1;
     };
@@ -62,6 +66,7 @@ class A3G_Loadout {
     class ReplaceHeadgear {};
     class ReplaceMap {};
     class ReplaceNVGoggles {};
+    class ReplaceRadio {};
     class ReplaceWatch {};
   };
 

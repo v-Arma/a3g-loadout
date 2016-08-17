@@ -77,3 +77,4 @@ if ( [_loadoutHash, ""] call CBA_fnc_hashHasKey ) then {
 ["gps", A3G_Loadout_fnc_ReplaceGPS] call _assign;
 ["compass",A3G_Loadout_fnc_ReplaceCompass ] call _assign;
 ["watch", A3G_Loadout_fnc_ReplaceWatch] call _assign;
+["radio", A3G_Loadout_fnc_ReplaceRadio] call _assign;

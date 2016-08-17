@@ -21,7 +21,8 @@ _configValues = [] call CBA_fnc_hashCreate;
     "map",
     "gps",
     "compass",
-    "watch"
+    "watch",
+    "radio"
 ];
 
 {

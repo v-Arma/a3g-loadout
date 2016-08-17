@@ -25,6 +25,7 @@ _mergedLoadout = [] call CBA_fnc_hashCreate;
         "gps",
         "compass",
         "watch",
+        "radio",
         // arrays
         "linkedItems",
         "items",
