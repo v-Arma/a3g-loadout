@@ -1,7 +1,7 @@
 private ["_configPath", "_missionStart", "_sidePath", "_getSidePath", "_rolePath", "_namePath", "_typePath"];
 
 _configPath = missionConfigFile >> "Loadouts";
-if (!isNil GRAD_Loadout_Chosen_Prefix) then {
+if (!isNil "GRAD_Loadout_Chosen_Prefix") then {
     _configPath = _configPath >> GRAD_Loadout_Chosen_Prefix;
 };
 

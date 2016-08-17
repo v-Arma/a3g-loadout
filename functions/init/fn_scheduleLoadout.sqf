@@ -5,8 +5,8 @@
 private ["_delay", "_getDelay"];
 
 _getDelay = {
-    _baseDelay = [(missionConfigFile >> "CfgLoadouts"), "baseDelay", 10] call BIS_fnc_returnConfigEntry;
-    _perPlayerDelay = [(missionConfigFile >> "CfgLoadouts"), "perPlayerDelay", 1] call BIS_fnc_returnConfigEntry;
+    _baseDelay = [(missionConfigFile >> "Loadouts"), "baseDelay", 10] call BIS_fnc_returnConfigEntry;
+    _perPlayerDelay = [(missionConfigFile >> "Loadouts"), "perPlayerDelay", 1] call BIS_fnc_returnConfigEntry;
 
     _baseDelay + floor(_perPlayerDelay * random (count allPlayers));
 };
