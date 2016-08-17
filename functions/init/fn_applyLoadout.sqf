@@ -29,14 +29,35 @@ _getSidePath = {
         _loadoutHierarchy pushBack ([_configPath >> "AllAi"] call A3G_Loadout_fnc_ExtractLoadoutFromConfig);
 	};
 
-  // All playable AI units
-  if (!isPlayer _x && _x in playableUnits && { isClass ( _configPath >> "AllPlayableAi")}) then {
-        _loadoutHierarchy pushBack ([_configPath >> "AllPlayableAi"] call A3G_Loadout_fnc_ExtractLoadoutFromConfig);
-  };
+	// All playable units
+	if (_x in playableUnits && { isClass ( _configPath >> "AllPlayable")}) then {
+	      _loadoutHierarchy pushBack ([_configPath >> "AllPlayable"] call A3G_Loadout_fnc_ExtractLoadoutFromConfig);
+	};
 
 	// All players
 	if( isPlayer _x && { isClass ( _configPath >> "AllPlayers" )}) then {
         _loadoutHierarchy pushBack ([_configPath >> "AllPlayers"] call A3G_Loadout_fnc_ExtractLoadoutFromConfig);
+	};
+
+	// General of certain Type ---------------------------------------------------------------------
+	// Every single unit
+	if (isClass (_configPath >> "AllUnits" >> "Type" >> typeof _x)) then {
+        _loadoutHierarchy pushBack ([_configPath >> "AllUnits"  >> "Type" >> typeof _x] call A3G_Loadout_fnc_ExtractLoadoutFromConfig);
+	};
+
+	// All AI units
+	if( !isPlayer _x && { isClass ( _configPath >> "AllAi" >> "Type" >> typeof _x )}) then {
+        _loadoutHierarchy pushBack ([_configPath >> "AllAi"  >> "Type" >> typeof _x] call A3G_Loadout_fnc_ExtractLoadoutFromConfig);
+	};
+
+	// All playable units
+	if (_x in playableUnits && { isClass ( _configPath >> "AllPlayable" >> "Type" >> typeof _x)}) then {
+	      _loadoutHierarchy pushBack ([_configPath >> "AllPlayable"  >> "Type" >> typeof _x] call A3G_Loadout_fnc_ExtractLoadoutFromConfig);
+	};
+
+	// All players
+	if( isPlayer _x && { isClass ( _configPath >> "AllPlayers" >> "Type" >> typeof _x)}) then {
+        _loadoutHierarchy pushBack ([_configPath >> "AllPlayers"  >> "Type" >> typeof _x] call A3G_Loadout_fnc_ExtractLoadoutFromConfig);
 	};
 
 	// General sides --------------------------------------------------------------------------------

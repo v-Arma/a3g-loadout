@@ -113,7 +113,7 @@ Loadouts are written inside classes. There are a couple of generic classes for y
 1. all units, directly in class Loadouts
     1.1 AllUnits
     1.2 AllAi
-    1.3 AllPlayableAi
+    1.3 AllPlayable
     1.4 AllPlayers
 2. by side, in Loadouts/Side:
     2.1 Side classes ( Blufor, Opfor, Independent and Civilian )
