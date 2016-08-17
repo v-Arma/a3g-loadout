@@ -29,8 +29,8 @@ _getSidePath = {
         _loadoutHierarchy pushBack ([_configPath >> "AllAi"] call A3G_Loadout_fnc_ExtractLoadoutFromConfig);
 	};
 
-	// All playable AI units
-	if (!isPlayer _x && _x in playableUnits && { isClass ( _configPath >> "AllPlayableAi")}) then {
+	// All playable units
+	if (_x in playableUnits && { isClass ( _configPath >> "AllPlayableAi")}) then {
 	      _loadoutHierarchy pushBack ([_configPath >> "AllPlayableAi"] call A3G_Loadout_fnc_ExtractLoadoutFromConfig);
 	};
 
@@ -50,8 +50,8 @@ _getSidePath = {
         _loadoutHierarchy pushBack ([_configPath >> "AllAi"  >> "Type" >> typeof _x] call A3G_Loadout_fnc_ExtractLoadoutFromConfig);
 	};
 
-	// All playable AI units
-	if (!isPlayer _x && _x in playableUnits && { isClass ( _configPath >> "AllPlayableAi" >> "Type" >> typeof _x)}) then {
+	// All playable units
+	if (_x in playableUnits && { isClass ( _configPath >> "AllPlayableAi" >> "Type" >> typeof _x)}) then {
 	      _loadoutHierarchy pushBack ([_configPath >> "AllPlayableAi"  >> "Type" >> typeof _x] call A3G_Loadout_fnc_ExtractLoadoutFromConfig);
 	};
 
