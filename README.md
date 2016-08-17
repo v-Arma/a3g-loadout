@@ -193,6 +193,7 @@ The loadout options are completely modular, just use what you need and nothing m
 | `gps`                          | Replaces gps.                              |
 | `compass`                      | Replaces compass.                          |
 | `watch`                        | Replaces watch.                            |
+| `radio`                        | Replaces radio (set also `handleRadios`!)  |
 
 ### Notes
 - Array entries ( denoted with a `[]` ) require the array syntax, even when they are only used with a single item. The correct usage looks like this: `magazines[] = {"some_magazine_classname"};`.
