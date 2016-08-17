@@ -39,7 +39,7 @@ _getSidePath = {
         _loadoutHierarchy pushBack ([_configPath >> "AllPlayers"] call A3G_Loadout_fnc_ExtractLoadoutFromConfig);
 	};
 
-  // General of certain Type ---------------------------------------------------------------------
+	// General of certain Type ---------------------------------------------------------------------
 	// Every single unit
 	if (isClass (_configPath >> "AllUnits" >> "Type" >> typeof _x)) then {
         _loadoutHierarchy pushBack ([_configPath >> "AllUnits"  >> "Type" >> typeof _x] call A3G_Loadout_fnc_ExtractLoadoutFromConfig);
