@@ -29,6 +29,11 @@ _getSidePath = {
         _loadoutHierarchy pushBack ([_configPath >> "AllAi"] call A3G_Loadout_fnc_ExtractLoadoutFromConfig);
 	};
 
+  // All playable AI units
+  if (!isPlayer _x && _x in playableUnits && { isClass ( _configPath >> "AllPlayableAi")}) then {
+        _loadoutHierarchy pushBack ([_configPath >> "AllPlayableAi"] call A3G_Loadout_fnc_ExtractLoadoutFromConfig);
+  };
+
 	// All players
 	if( isPlayer _x && { isClass ( _configPath >> "AllPlayers" )}) then {
         _loadoutHierarchy pushBack ([_configPath >> "AllPlayers"] call A3G_Loadout_fnc_ExtractLoadoutFromConfig);
