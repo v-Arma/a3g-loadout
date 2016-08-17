@@ -108,14 +108,16 @@ _getSidePath = {
 		_loadoutHierarchy pushBack ([_sidePath] call A3G_Loadout_fnc_ExtractLoadoutFromConfig);
 	};
 
-	// Class & Unique -------------------------------------------------------------------------------
-	// Class based loadouts
     _typePath = _configPath >> "Type" >> typeof _x;
 	if( isClass (_typePath)) then {
 		_loadoutHierarchy pushBack ([_typePath] call A3G_Loadout_fnc_ExtractLoadoutFromConfig);
 	};
 
-    // Name based loadouts
+    _rankPath = _configPath >> "Rank" >> rank _x;
+	if( isClass (_rankPath)) then {
+		_loadoutHierarchy pushBack ([_rankPath] call A3G_Loadout_fnc_ExtractLoadoutFromConfig);
+	};
+
     _str = str _x splitString "_" select 0;
     _namePath = _configPath >> "Name" >> _str;
     if( isClass (_namePath)) then {
