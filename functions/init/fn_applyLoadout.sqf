@@ -1,11 +1,12 @@
 private ["_configPath", "_isMissionStart", "_sidePath", "_getSidePath", "_rolePath", "_namePath", "_typePath"];
+params [["_mode", ""]];
 
 _configPath = missionConfigFile >> "Loadouts";
 if (!isNil "GRAD_Loadout_Chosen_Prefix") then {
     _configPath = _configPath >> GRAD_Loadout_Chosen_Prefix;
 };
 
-_isMissionStart = if (typeName (_this select 0) == "STRING") then {if ((_this select 0) == "postInit") then {true} else {false}} else {false};
+_isMissionStart = if (typeName _mode == "STRING") then {if (_mode == "postInit") then {true} else {false}} else {false};
 
 // Make sure that only local player is considered as target on respawn.
 // This is because AI don't respawn, and we especially don't want to have local AI go through an entire loadout loop again, everytime the player respawns that the AI belongs to.
