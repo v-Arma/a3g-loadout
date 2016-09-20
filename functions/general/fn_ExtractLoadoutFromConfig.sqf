@@ -31,15 +31,9 @@ _configValues = [] call CBA_fnc_hashCreate;
         [_configValues, _x, _value] call CBA_fnc_hashSet;
     };
 } forEach [
-    "linkedItems",
-    "items",
-    "magazines",
     "addItemsToUniform",
     "addItemsToVest",
     "addItemsToBackpack",
-    "addItems",
-    "addMagazines",
-    "weapons",
     "primaryWeaponAttachments",
     "secondaryWeaponAttachments",
     "handgunWeaponAttachments"

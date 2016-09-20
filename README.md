@@ -46,6 +46,8 @@ For large numbers of players that may overload the server with simultaneous load
 class Loadouts {
     baseDelay = 10; // minimum time to wait after connect before applying loadout
     perPersonDelay = 1; // added random delay based on number of players
+    handleRadios = 0; // if radios should be handled. defaults to 0
+    resetLoadout = 1; // start with empty loadouts instead of modifying existing loadout
 };
 ```
 
@@ -159,6 +161,7 @@ Every priority class will override the class above it, in a nondestructive way. 
 class Loadouts {
     baseDelay = 1;
     perPersonDelay = 0;
+    resetLoadout = 0;
 
     class AllPlayers {
         primaryWeapon = "RH_m4a1_ris";
@@ -195,18 +198,12 @@ The loadout options are completely modular, just use what you need and nothing m
 
 | Option                         | Explanation                                |
 | ------------------------------ | ------------------------------------------ |
-| `linkedItems[]`                | Replaces linked items. ( Arsenal export ). |
 | `uniform`                      | Replaces uniform.                          |
 | `backpack`                     | Replaces backpack.                         |
 | `vest`                         | Replaces vest.                             |
-| `items[]`                      | Replaces items.                            |
-| `magazines[]`                  | Replaces magazines.                        |
-| `addItems[]`                   | Adds items.                                |
-| `addMagazines[]`               | Adds magazines.                            |
 | `addItemsToUniform[]`          | Adds items/magazines to the uniform.       |
 | `addItemsToVest[]`             | Adds items/magazines to the vest.          |
 | `addItemsToBackpack[]`         | Adds items/magazines to the backpack.      |
-| `weapons[]`                    | Replaces weapons. ( Arsenal export ).      |
 | `primaryWeapon`                | Replaces primary weapon.                   |
 | `secondaryWeapon`              | Replaces secondary weapon.                 |
 | `handgunWeapon`                | Replaces handgun.                          |
