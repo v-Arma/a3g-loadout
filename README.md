@@ -7,41 +7,68 @@ Declarative loadout system for Arma3
 *As mentioned above, this is a continuation of mostly [Cephei](https://github.com/Cephel)'s work.*
 *However, that project seems so dead and I changed so much that I saw it fit to rename repo & project. –– Fusselwurm, 2016-08-16*
 
+## Prerequisites
+
+* You should know what the `description.ext` is. If you don't, you can read about it [here](https://community.bistudio.com/wiki/Description.ext).
+* You should know how to install mods.
+
 ## Dependencies
 
-[CBA_A3](https://github.com/CBATeam/CBA_A3) is required
+The [CBA_A3](https://github.com/CBATeam/CBA_A3) mod is required.
 
 ## Installation
-1. Create a folder in your mission root folder and name it `modules`. Then create one inside there and call it `grad-loadout`. If you change the name you will have to adjust the MODULES_DIRECTORY definition.
-2. Download the contents of this repository ( there's a download link at the side ) and put it into the folder you just created.
-3. Make a `description.ext` file and put it into your mission root folder. If you don't know what a description.ext is, you can read about it [here](https://community.bistudio.com/wiki/Description.ext).
-4. It should look like this: <NEEDS NEW PICTURE>
-5. Add the following lines of code to the `description.ext`:
+
+### Manually
+
+1. Create a folder in your mission root folder and name it `modules`. Then create one inside there and call it `grad-loadout`. If you want change the containing directory name you will have to adjust the MODULES_DIRECTORY definition, see [Configuration](#configuration)
+2. Download the contents of this repository ( there's a download link at the side ) and put it into the directory you just created.
+3. see step 3 below in the npm part
+
+### Via `npm`
+
+_for details about what npm is and how to use it, look it up on [npmjs.com](https://www.npmjs.com/)_
+
+1. Install package `grad-loadout` : `npm install --save grad-loadout`
+2. Prepend your mission's `description.ext` with `#define MODULES_DIRECTORY node_modules` 
+3. Append the following lines of code to the `description.ext`:
 
 ```sqf
-#define MODULES_DIRECTORY modules
 class CfgFunctions {
   #include "MODULES_DIRECTORY\grad-loadout\CfgFunctions.hpp"
 };
 ```
 
-That's it!
-
 ## Configuration
 
-* You may `#define MODULES_DIRECTORY <directory name>` to be able to change your grad-loadout from the default "modules" directory
-* Also, for large numbers of players that may overload the server with simultaneous loadout assignments, you may configure a custom delay for applying the loadout:
+For large numbers of players that may overload the server with simultaneous loadout assignments, you may configure a custom delay for applying the loadout:
 
 ```sqf
 class Loadouts {
     baseDelay = 10; // minimum time to wait after connect before applying loadout
     perPersonDelay = 1; // added random delay based on number of players
-    handleRadios = 0; // if radios should be handled. defaults to 0
 };
-
 ```
 
-* Besides that – if your mission offers parameters for different loadouts, you can define a global var `GRAD_Loadout_Chosen_Prefix` – this will lead to grad-layout reading from a subclass of `Loadouts`, like this
+Also, to avoid problems with radio mods, you may choose to not let grad-loadout touch any radios:
+
+```sqf
+class Loadouts {
+    handleRadios = 0; // if radios should be handled. defaults to 0
+}
+```
+
+Normally, loadouts are read from the Loadouts class:
+
+```sqf
+// description.ext:
+class Loadouts {
+    class AllUnits {
+        // loadout value
+    };
+};
+```
+
+You can, however, define a global var `GRAD_Loadout_Chosen_Prefix` – this will lead to grad-layout reading from a *subclass* of `Loadouts`, like this
 
 ```sqf
 // init.sqf:
@@ -49,24 +76,22 @@ class Loadouts {
 
 // description.ext:
 class Loadouts {
-    Something_Something_Chosen_Prefix {
-        AllUnits {
+    class Something_Something_Chosen_Prefix {
+        class AllUnits {
             // loadout value
         };
     };
 };
 ```
 
-## I'm too dumb, give me the easy way!
-Go to the virtual arsenal and make a loadout there to your liking. Then use the export function `CTRL`+`SHIFT`+`C` to export the loadout into the format that this script understands. Read the section called `Classes` below, because you still need to tell the script who should get the loadout you just made, but other than that, you're done.
+## Loadouts
 
-# Loadouts
-Loadouts are defined directly inside the `description.ext`. This has vast advantages over the commonly accepted method of scripting them on a per-unit basis. Loadouts are applied on mission start and when you respawn. It should work completely seamless in every situation. This is an example on how a loadout looks like with this system:
+Loadouts are defined directly inside the `description.ext`. They are applied on mission start and when you respawn. This is an example on how a loadout looks like with this system:
 
 ```sqf
 class Loadouts {
-    class Name {
-        class My_Unit {
+    class Rank {
+        class Corporal {
             primaryWeapon = "RH_m4a1_ris";
             primaryWeaponAttachments[] = {"RH_ta31rco"};
         };
@@ -121,8 +146,9 @@ Loadouts are written inside classes. There are a couple of generic classes for y
     2.2 Side AI classes ( BluforAi, OpforAi, IndependentAi and CivilianAi )
     2.3 Side player classes ( BluforPlayer, OpforPlayer, IndependentPlayer and CivilianPlayer )
 3. by class name, define in Loadouts/Type
-4. by editor name, define in Loadouts/Name
-5. by unit role, define in Loadouts/Role
+4. by rank, define in Loadouts/Rank
+5. by editor name, define in Loadouts/Name
+6. by unit role, define in Loadouts/Role
 
 
 Every priority class will override the class above it, in a nondestructive way. If you define a `primaryWeapon` inside `AllUnits`, then define a different one inside `Blufor`, all blufor players will get the one from `Blufor` and the `AllUnits` one will be overridden. But if you define `addItems[] = "AGM_Bandage"` inside `AllUnits` and a `primaryWeapon` inside `Blufor` _all_ blufor players will get a Bandage from `AllUnits` and a primary weapon from `primaryWeapon`.
@@ -212,3 +238,6 @@ The loadout options are completely modular, just use what you need and nothing m
 ### Important
 - `linkedItems[]` is used in conjunction with the arsenal export and should be avoided if inputting a loadout manually.
 - `weapons[]` is used in conjunction with the arsenal export and should be avoided if inputting a loadout manually.
+
+### I'm too dumb, give me the easy way!
+Go to the virtual arsenal and make a loadout there to your liking. Then use the export function `CTRL`+`SHIFT`+`C` to export the loadout into the format that this script understands. Read the section called `Classes`, because you still need to tell the script who should get the loadout you just made, but other than that, you're done.
