@@ -27,10 +27,6 @@ _mergedLoadout = [] call CBA_fnc_hashCreate;
         "watch",
         "radio",
         // arrays
-        "linkedItems",
-        "items",
-        "magazines",
-        "weapons",
         "primaryWeaponAttachments",
         "secondaryWeaponAttachments",
         "handgunWeaponAttachments"
@@ -49,9 +45,7 @@ _mergedLoadout = [] call CBA_fnc_hashCreate;
     } forEach [
         "addItemsToUniform",
         "addItemsToVest",
-        "addItemsToBackpack",
-        "addItems",
-        "addMagazines"
+        "addItemsToBackpack"
     ];
 
 } forEach _loadoutHierarchy;
