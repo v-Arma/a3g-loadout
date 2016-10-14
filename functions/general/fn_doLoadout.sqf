@@ -29,3 +29,5 @@ if (_loadoutTarget == player) then {
 };
 
 _loadoutTarget setUnitLoadout [_unitLoadout, true];
+
+_loadoutTarget setVariable ["GRAD_loadout_applicationCount", (_loadoutTarget getVariable ["GRAD_loadout_applicationCount", 0]) + 1];
