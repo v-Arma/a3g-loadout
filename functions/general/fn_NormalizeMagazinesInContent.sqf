@@ -17,17 +17,19 @@ private _magazines = [] call CBA_fnc_hashCreate;
 private _contentForLoadout = [];
 
 {
-    if (_x isKindof ["CA_Magazine", configfile >> "CfgMagazines"]) then {
-        [_magazines, _x] call _CBA_fnc_hashIncr;
-    } else {
-        _contentForLoadout pushBack _x;
-    };
+    [_magazines, _x] call _CBA_fnc_hashIncr;
 } forEach _contentFromConfig;
 
 [
     _magazines,
     {
-        _contentForLoadout pushBack [_key, _value, 1];
+        _className = _key;
+
+        if (_className isKindof ["CA_Magazine", configfile >> "CfgMagazines"]) then {
+            _contentForLoadout pushBack [_key, _value, 1];
+        } else {
+            _contentForLoadout pushBack [_key, _value];
+        };
     }
 ] call CBA_fnc_hashEachPair;
 
