@@ -15,6 +15,7 @@ _assign = {
     };
 };
 
+// CBA_fnc_findTypeName ? CBA_fnc_findTypeOf ?
 _getFirstOfType = {
     params ["_array", "_classPath"];
 
@@ -85,6 +86,29 @@ _setEmptyParentArrayIfEmptyString = {
     };
 };
 
+_normalizeWeaponArray = {
+    _weaponArray = _this;
+    if ((count _weaponArray) > 0) then {
+        _weaponValue = _weaponArray select 0;
+        if ((isNil "_weaponValue") || (_weaponValue == "")) then {
+            _weaponArray resize 0;
+        } else {
+            _weaponArray resize 7;
+            {
+                _defaultValue = "";
+                if (_forEachIndex >= 4 && _forEachIndex <= 5) then {
+                    _defaultValue = [];
+                };
+                if (isNil "_x") then {
+                    _weaponArray set [_forEachIndex, _defaultValue];
+                };
+            } forEach _weaponArray;
+        };
+    };
+   _weaponArray
+};
+
+
 _defaultValueForItemCarriers = {
     _targetArray = _unitLoadout select _this;
     _carrierClassName = _targetArray select 0;
@@ -97,49 +121,40 @@ _defaultValueForItemCarriers = {
 };
 
 [[0, 0], "primaryWeapon"] call _assignFromLoadoutHash;
-[[0, 1], "primaryWeaponAttachments", configfile >> "CfgWeapons" >> "muzzle_snds_H"] call _assignFromLoadoutHash;
-[[0, 2], "primaryWeaponAttachments", configfile >> "CfgWeapons" >> "acc_flashlight"] call _assignFromLoadoutHash;
-[[0, 3], "primaryWeaponAttachments", configfile >> "CfgWeapons" >> "acc_pointer_IR"] call _assignFromLoadoutHash;
-if (!isNil((_unitLoadout select 0) select 0)) then { // else we'd implicitly set NULL for indices 0..3 // FIXME set empty strings
-    (_unitLoadout select 0) set [4, []]; // currentMagazine
-    (_unitLoadout select 0) set [5, []]; // currentGLMagazine
-};
-[[0, 6], "primaryWeaponAttachments", configfile >> "CfgWeapons" >> "bipod_01_F_snd"] call _assignFromLoadoutHash;
+[[0, 1], "primaryWeaponMuzzle"] call _assignFromLoadoutHash;
+[[0, 2], "primaryWeaponPointer"] call _assignFromLoadoutHash;
+[[0, 3], "primaryWeaponOptics"] call _assignFromLoadoutHash;
+[[0, 6], "primaryWeaponUnderbarrel"] call _assignFromLoadoutHash;
+(_unitLoadout select 0) call _normalizeWeaponArray;
 
 // launcherShit
 [[1, 0], "secondaryWeapon"] call _assignFromLoadoutHash;
-[[1, 1], "secondaryWeaponAttachments", configfile >> "CfgWeapons" >> "muzzle_snds_H"] call _assignFromLoadoutHash;
-[[1, 2], "secondaryWeaponAttachments", configfile >> "CfgWeapons" >>  "acc_flashlight"] call _assignFromLoadoutHash;
-[[1, 3], "secondaryWeaponAttachments", configfile >> "CfgWeapons" >> "acc_pointer_IR"] call _assignFromLoadoutHash;
-if (!isNil((_unitLoadout select 1) select 0)) then { // else we'd implicitly set NULL for indices 0..3 // FIXME set empty strings
-    (_unitLoadout select 1) set [4, []]; // currentMagazine
-    (_unitLoadout select 1) set [5, []]; // currentGLMagazine
-};
-[[1, 6], "secondaryWeaponAttachments", "bipod_01_F_snd"] call _assignFromLoadoutHash;
+[[1, 1], "secondaryWeaponMuzzle"] call _assignFromLoadoutHash;
+[[1, 2], "secondaryWeaponPointer"] call _assignFromLoadoutHash;
+[[1, 3], "secondaryWeaponOptics"] call _assignFromLoadoutHash;
+[[1, 6], "secondaryWeaponUnderbarrel"] call _assignFromLoadoutHash;
+(_unitLoadout select 1) call _normalizeWeaponArray;
 
 // handgun
 [[2, 0], "handgunWeapon"] call _assignFromLoadoutHash;
-[[2, 1], "handgunWeaponAttachments", configfile >> "CfgWeapons" >> "muzzle_snds_H"] call _assignFromLoadoutHash;
-[[2, 2], "handgunWeaponAttachments", configfile >> "CfgWeapons" >> "acc_flashlight"] call _assignFromLoadoutHash;
-[[2, 3], "handgunWeaponAttachments", configfile >> "CfgWeapons" >> "acc_pointer_IR"] call _assignFromLoadoutHash;
-if (!isNil((_unitLoadout select 2) select 0)) then { // else we'd implicitly set NULL for indices 0..3 // FIXME set empty strings
-    (_unitLoadout select 2) set [4, []]; // currentMagazine
-    (_unitLoadout select 2) set [5, []]; // currentGLMagazine
-};
-[[2, 6], "handgunWeaponAttachments", configfile >> "CfgWeapons" >> "bipod_01_F_snd"] call _assignFromLoadoutHash;
+[[2, 1], "handgunWeaponMuzzle"] call _assignFromLoadoutHash;
+[[2, 2], "handgunWeaponPointer"] call _assignFromLoadoutHash;
+[[2, 3], "handgunWeaponOptics"] call _assignFromLoadoutHash;
+[[2, 6], "handgunWeaponUnderbarrel"] call _assignFromLoadoutHash;
+(_unitLoadout select 2) call _normalizeWeaponArray;
 
 [[3, 0], "uniform"] call _assignFromLoadoutHash;
-[[3, 1], "addItemsToUniform", A3G_Loadout_fnc_NormalizeMagazinesInContent] call _assignFromLoadoutHash;
+[[3, 1], "addItemsToUniform", GRAD_Loadout_fnc_NormalizeMagazinesInContent] call _assignFromLoadoutHash;
 3 call _defaultValueForItemCarriers;
 [3, 0] call _setEmptyParentArrayIfEmptyString;
 
 [[4, 0], "vest"] call _assignFromLoadoutHash;
-[[4, 1], "addItemsToVest", A3G_Loadout_fnc_NormalizeMagazinesInContent] call _assignFromLoadoutHash;
+[[4, 1], "addItemsToVest", GRAD_Loadout_fnc_NormalizeMagazinesInContent] call _assignFromLoadoutHash;
 4 call _defaultValueForItemCarriers;
 [4, 0] call _setEmptyParentArrayIfEmptyString;
 
 [[5, 0], "backpack"] call _assignFromLoadoutHash;
-[[5, 1], "addItemsToBackpack", A3G_Loadout_fnc_NormalizeMagazinesInContent] call _assignFromLoadoutHash;
+[[5, 1], "addItemsToBackpack", GRAD_Loadout_fnc_NormalizeMagazinesInContent] call _assignFromLoadoutHash;
 5 call _defaultValueForItemCarriers;
 [5, 0] call _setEmptyParentArrayIfEmptyString;
 
@@ -147,7 +162,7 @@ if (!isNil((_unitLoadout select 2) select 0)) then { // else we'd implicitly set
 [[7], "goggles" ] call _assignFromLoadoutHash;
 
 [[8, 0], "binoculars"] call _assignFromLoadoutHash; // dont be surprised: it's ... the quaternary weapon, so to speak.
-[8, 0] call _setEmptyParentArrayIfEmptyString;
+(_unitLoadout select 8) call _normalizeWeaponArray;
 
 [[9, 0], "map"] call _assignFromLoadoutHash;
 [[9, 1], "gps"] call _assignFromLoadoutHash;

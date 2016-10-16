@@ -23,7 +23,7 @@ systemChat _msg;
         _msg = "triggering loadout...";
 		LOG(_msg);
         systemChat _msg;
-		[_this select 0] call A3G_Loadout_fnc_ApplyLoadout;
+		[_this select 0] call GRAD_Loadout_fnc_ApplyLoadout;
         _msg = "loadout was applied.";
         LOG(_msg);
         systemChat _msg;

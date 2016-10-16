@@ -15,6 +15,10 @@ _mergedLoadout = [] call CBA_fnc_hashCreate;
         "vest",
         "backpack",
         "primaryWeapon",
+        "primaryWeaponMuzzle",        
+        "primaryWeaponOptics",
+        "primaryWeaponPointer",
+        "primaryWeaponUnderbarrel",
         "secondaryWeapon",
         "handgunWeapon",
         "headgear",
@@ -25,11 +29,7 @@ _mergedLoadout = [] call CBA_fnc_hashCreate;
         "gps",
         "compass",
         "watch",
-        "radio",
-        // arrays
-        "primaryWeaponAttachments",
-        "secondaryWeaponAttachments",
-        "handgunWeaponAttachments"
+        "radio"
     ];
 
     // add* values must be appended

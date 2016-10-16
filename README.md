@@ -29,12 +29,12 @@ The [CBA_A3](https://github.com/CBATeam/CBA_A3) mod is required.
 _for details about what npm is and how to use it, look it up on [npmjs.com](https://www.npmjs.com/)_
 
 1. Install package `grad-loadout` : `npm install --save grad-loadout`
-2. Prepend your mission's `description.ext` with `#define MODULES_DIRECTORY node_modules` 
+2. Prepend your mission's `description.ext` with `#define MODULES_DIRECTORY node_modules`
 3. Append the following lines of code to the `description.ext`:
 
 ```sqf
 class CfgFunctions {
-  #include "MODULES_DIRECTORY\grad-loadout\CfgFunctions.hpp"
+  #include "node_modules\grad-loadout\CfgFunctions.hpp"
 };
 ```
 
@@ -95,7 +95,7 @@ class Loadouts {
     class Rank {
         class Corporal {
             primaryWeapon = "RH_m4a1_ris";
-            primaryWeaponAttachments[] = {"RH_ta31rco"};
+            primaryWeaponOptics = "RH_ta31rco";
         };
     };
 };
@@ -112,11 +112,11 @@ class Loadouts {
     };
     class Type {
         class AV_IndUs_SL_Des {
-            primaryWeaponAttachments[] = {"RH_ta31rco"};
+            primaryWeaponOptics = "RH_ta31rco";
         };
         class AV_IndUs_Marksman_M14_Des {
             primaryWeapon = "RH_mk12mod1";
-            primaryWeaponAttachments[] = {"RH_ta31rco"};
+            primaryWeaponOptics = "RH_ta31rco";
         };
     };
 };
@@ -176,7 +176,7 @@ class Loadouts {
     };
     class Type {
         class AV_IndUs_SL_Des {
-            primaryWeaponAttachments[] = {"RH_ta31rco"};
+            primaryWeaponOptics = "RH_ta31rco";
         };
     };
     class Name {
@@ -207,9 +207,12 @@ The loadout options are completely modular, just use what you need and nothing m
 | `primaryWeapon`                | Replaces primary weapon.                   |
 | `secondaryWeapon`              | Replaces secondary weapon.                 |
 | `handgunWeapon`                | Replaces handgun.                          |
-| `primaryWeaponAttachments[]`   | Replaces attachments of primary weapon.    |
-| `secondaryWeaponAttachments[]` | Replaces attachments of secondary weapon.  |
-| `handgunWeaponAttachments[]`   | Replaces attachments of handgun.           |
+| `primaryWeaponMuzzle`          | Set muzzle attachment of primary weapon.   |
+| `primaryWeaponOptics`          | Set scope of primary weapon.               |
+| `primaryWeaponPointer`         | Set flashlight attachment of primary weapon|
+| `primaryWeaponUnderbarrel`     | Set bipod/GL attachment of primary weapon. |
+| `secondaryWeapon...`           | same as with primary weapon attachments.   |
+| `handgunWeapon...`             | same as with primary weapon attachments.   |
 | `headgear`                     | Replaces headgear.                         |
 | `goggles`                      | Replaces goggles.                          |
 | `nvgoggles`                    | Replaces nightvision goggles.              |
@@ -221,9 +224,9 @@ The loadout options are completely modular, just use what you need and nothing m
 | `radio`                        | Replaces radio (set also `handleRadios`!)  |
 
 ### Notes
-- Array entries ( denoted with a `[]` ) require the array syntax, even when they are only used with a single item. The correct usage looks like this: `handgunWeaponAttachments[] = {"some_classname"};`.
+- Array entries ( denoted with a `[]` ) require the array syntax, even when they are only used with a single item. The correct usage looks like this: `addItemsToUniform[] = {"some_classname"};`.
 - Single entries on the contrary look like this: `vest = "some_vest_classname";`. It is imperative that you do this right, because the editor crashes if you mess this up. You can thank Bohemia Interactive for that.
-- All options default to removing the item(s) in question, if you leave the field empty ( ie. `uniform = "";` ). 
+- All options default to removing the item(s) in question, if you leave the field empty ( ie. `uniform = "";` ).
 - `uniform`, `backpack` and `vest` options will try and preserve the items inside them, even if you change or completely remove them. If you delete a backpack for example, the system will try and move them to the rest of your inventory, as long as there's space for them. This obviously has its limit. If you remove almost all containers, then some items will be lost. This is your own responsibility.
 - `goggles` do _not_ replace nightvision goggles. There is a seperate option for it: `nvgoggles`. This is because nightvision goggles are their own independent slot.
 - `secondaryWeapon` refers to a launcher, not a handgun. Refer to `handgunWeapon` for the latter.

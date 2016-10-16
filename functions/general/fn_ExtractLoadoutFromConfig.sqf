@@ -5,14 +5,16 @@
 
 params ['_configPath'];
 
+GRAD_Loadout_usedConfigs pushBack _configPath;
+
 {
     _value = [_configPath >> _x, "array", false] call CBA_fnc_getConfigEntry;
     if (_value isEqualTo false) then {
         _value = [_configPath >> _x, "text", false] call CBA_fnc_getConfigEntry;
     };
     if (!(_value isEqualTo false)) then {
-        _msg = format ["Config property '%1' is not supported anymore, was found in %2", _x, _configPath];
-        ERROR(_msg);
+        // "Unsupported loadout value",  // TODO use the TITLE variant added 2016-10
+        ERROR_2("Config property %1 is not supported anymore, was found in %2. Please see README", _x, _configPath);
     };
 } forEach [
     "magazines",
@@ -20,9 +22,11 @@ params ['_configPath'];
     "addMagazines",
     "addItems",
     "weapons",
-    "linkedItems"
+    "linkedItems",
+    "primaryWeaponAttachments",
+    "secondaryWeaponAttachments",
+    "handgunWeaponAttachments"
 ];
-
 
 _configValues = [] call CBA_fnc_hashCreate;
 
@@ -36,8 +40,20 @@ _configValues = [] call CBA_fnc_hashCreate;
     "vest",
     "backpack",
     "primaryWeapon",
+    "primaryWeaponMuzzle",
+    "primaryWeaponOptics",
+    "primaryWeaponPointer",
+    "primaryWeaponUnderbarrel",
     "secondaryWeapon",
+    "secondaryWeaponMuzzle",
+    "secondaryWeaponOptics",
+    "secondaryWeaponPointer",
+    "secondaryWeaponUnderbarrel",
     "handgunWeapon",
+    "handgunWeaponMuzzle",
+    "handgunWeaponOptics",
+    "handgunWeaponPointer",
+    "handgunWeaponUnderbarrel",
     "headgear",
     "goggles",
     "nvgoggles",
@@ -57,10 +73,7 @@ _configValues = [] call CBA_fnc_hashCreate;
 } forEach [
     "addItemsToUniform",
     "addItemsToVest",
-    "addItemsToBackpack",
-    "primaryWeaponAttachments",
-    "secondaryWeaponAttachments",
-    "handgunWeaponAttachments"
+    "addItemsToBackpack"
 ];
 
 _configValues
