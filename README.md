@@ -51,26 +51,10 @@ class Loadouts {
 };
 ```
 
-Also, to avoid problems with radio mods, you may choose to not let grad-loadout touch any radios:
+## Dynamic configuration
 
-```sqf
-class Loadouts {
-    handleRadios = 0; // if radios should be handled. defaults to 0
-}
-```
+You can, define a global var `GRAD_Loadout_Chosen_Prefix` – this will lead to grad-layout reading from a *subclass* of `Loadouts`. Example:
 
-Normally, loadouts are read from the Loadouts class:
-
-```sqf
-// description.ext:
-class Loadouts {
-    class AllUnits {
-        // loadout value
-    };
-};
-```
-
-You can, however, define a global var `GRAD_Loadout_Chosen_Prefix` – this will lead to grad-layout reading from a *subclass* of `Loadouts`, like this
 
 ```sqf
 // init.sqf:
@@ -81,6 +65,22 @@ class Loadouts {
     class Something_Something_Chosen_Prefix {
         class AllUnits {
             // loadout value
+        };
+    };
+};
+```
+
+You can dynamically alias a faction name:
+
+`["BLU_F", "USMC"] call GRAD_Loadout_FactionSetLoadout;` – thus, you can change loadout presets for your factions. In this example, this would work now:
+
+```
+class Loadouts {
+    class Faction {
+        class USMC {
+            class AllUnits {
+                backpack = "";
+            };
         };
     };
 };
@@ -133,27 +133,40 @@ This simple block of code changes and applies the loadout of 18 units at once, b
 - The order of classes doesn't matter either.
 
 ### Important
+
 There's a caveat to using this system: You have to reload the mission everytime you change something inside the `description.ext` mission config file. Repeated previews do _not_ refresh it. In order to do it correctly, save the mission, then click the load mission button from the editor and select the mission you're currently editing, essentially loading the mission you're already editing. Due to caching this will typically take less than a second after the first time. The reason is because Bohemia Interactive made it this way. There's nothing that can be done about it. Sorry.
 
 ## Classes
+
 Loadouts are written inside classes. There are a couple of generic classes for you to use, ontop of being able to specifiy a unit classname and just designating a unit name. The priority in order is this:
 
-1. all units, directly in class Loadouts
-    1.1 AllUnits
-    1.2 AllAi
-    1.3 AllPlayable
-    1.4 AllPlayers
-2. by side, in Loadouts/Side:
-    2.1 Side classes ( Blufor, Opfor, Independent and Civilian )
-    2.2 Side AI classes ( BluforAi, OpforAi, IndependentAi and CivilianAi )
-    2.3 Side player classes ( BluforPlayer, OpforPlayer, IndependentPlayer and CivilianPlayer )
-3. by class name, define in Loadouts/Type
-4. by rank, define in Loadouts/Rank
-5. by editor name, define in Loadouts/Name
-6. by unit role, define in Loadouts/Role
+* Loadouts/
+    * AllUnits
+    * AllAi
+    * AllPlayable
+    * AllPlayers
+    * Side/
+        * Blufor|Opfor|Independent|Civilian
+        * BluforAi|OpforAi|IndependentAi|CivilianAi
+        * BluforPlayer|OpforPlayer|IndependentPlayer|CivilianPlayer
+    * Type/
+        * class name, e.g. B_Soldier_F
+    * Rank/
+        * rank, e.g. CAPTAIN
+    * Name/
+        * editor name
+    * Role/
+        * unit role
+    * Faction/
+        * faction name, e.g. BLU_F . Aliasing possible, see`GRAD_Loadout_fncFactionSetLoadout`!
+            * AllUnits
+            * AllAi
+            * AllPlayers
+            * Type – here, the de-factionized type name, e.g. Soldier_F
+            * Rank
+            * Name
 
-
-Every priority class will override the class above it, in a nondestructive way. If you define a `primaryWeapon` inside `AllUnits`, then define a different one inside `Blufor`, all blufor players will get the one from `Blufor` and the `AllUnits` one will be overridden. But if you define `addItems[] = "AGM_Bandage"` inside `AllUnits` and a `primaryWeapon` inside `Blufor` _all_ blufor players will get a Bandage from `AllUnits` and a primary weapon from `primaryWeapon`.
+Loadout is read from top to bottom, and augemented/overwritten along the way.
 
 ## More complete example
 
@@ -236,3 +249,55 @@ The loadout options are completely modular, just use what you need and nothing m
 ### Important
 
 Support for `linkedItems[]` , `weapons[]` , `items[]`,  `magazines[]`, `addItems[]` and `addMagazines[]` has been dropped with version 4.x , due to the amount of work it would've required to make it work with `getUnitLoadout/setUnitLoadout` .
+
+# Roadmap
+
+There's some changes I want to change, chiefly reduce the number of config classes that are being read:
+
+## Old selectors
+
+* AllUnits
+* AllAi {!(isPlayer _unit)}
+* AllPlayable {_unit in playableUnits}
+* AllPlayers {isPlayer _unit}
+* AllUnits >> Type >> typeof _unit
+* AllAi >> Type >> typeof _unit
+* AllPlayable >> Type >> typeof _unit
+* AllPlayers >> Type >> typeof _unit
+* Blufor {side _unit == blufor}
+* Opfor {side _unit == opfor}
+* Independent {side _unit == independent}
+* Civilian {side _unit == civilian}
+* BluforAi { side _unit == blufor && { !isPlayer _unit }}
+* OpforAi { side _unit == opfor && { !isPlayer _unit }}
+* IndependentAi { side _unit == independent && { !isPlayer _unit }}
+* CivilianAi { side _unit == civilian && { !isPlayer _unit }}
+* BluforPlayers { side _unit == blufor && { isPlayer _unit }}
+* OpforPlayers { side _unit == opfor && { isPlayer _unit }}
+* IndependentPlayers { side _unit == independent && { isPlayer _unit }}
+* CivilianPlayers { side _unit == civilian && { isPlayer _unit }}
+* Type >> typeof _unit
+* Rank >> rank _unit
+* Name >> (str _unit splitString "_" select 0)
+* Role >> ([roleDescription _unit] call BIS_fnc_filterString);
+
+## New selectors
+
+* AllUnits
+* AllAi
+* AllPlayers
+* Blufor {side _unit == blufor}
+* Opfor {side _unit == opfor}
+* Independent {side _unit == independent}
+* Civilian {side _unit == civilian}
+* Type >> typeof _unit
+* Rank >> rank _unit
+* Name >> (str _unit splitString "_" select 0)
+* Role >> ([roleDescription _unit] call BIS_fnc_filterString);
+* Faction >> ([_unit] call GRAD_Loadout_FactionGetLoadout)
+	* AllUnits
+	* AllAi
+	* AllPlayers
+	* Type >> ([typeof _unit] call GRAD_Loadout_DeFactionizeType)
+	* Rank >> rank _unit
+	* Role >> ([roleDescription _unit] call BIS_fnc_filterString);

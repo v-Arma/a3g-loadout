@@ -3,14 +3,21 @@
 #endif
 
 class GRAD_Loadout {
+    class Extract {
+        file = MODULES_DIRECTORY\grad-loadout\functions\extract;
+        class GetPathExtractor {};
+        class ExtractLoadoutFromConfig {};
+    };
     class General {
         file = MODULES_DIRECTORY\grad-loadout\functions\general;
         class ApplyLoadout {};
         class AssignRespawn {
           postInit = 1;
         };
+        class DefactionizeType {};
         class DoLoadout {};
-        class ExtractLoadoutFromConfig {};
+        class FactionGetLoadout {};
+        class FactionSetLoadout {};
         class GetApplicableUnits {};
         class GetLoadoutConfigPath {};
         class GetUnusedConfigs {};
