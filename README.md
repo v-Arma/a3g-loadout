@@ -224,18 +224,15 @@ The loadout options are completely modular, just use what you need and nothing m
 | `radio`                        | Replaces radio (set also `handleRadios`!)  |
 
 ### Notes
+
 - Array entries ( denoted with a `[]` ) require the array syntax, even when they are only used with a single item. The correct usage looks like this: `addItemsToUniform[] = {"some_classname"};`.
 - Single entries on the contrary look like this: `vest = "some_vest_classname";`. It is imperative that you do this right, because the editor crashes if you mess this up. You can thank Bohemia Interactive for that.
 - All options default to removing the item(s) in question, if you leave the field empty ( ie. `uniform = "";` ).
 - `uniform`, `backpack` and `vest` options will try and preserve the items inside them, even if you change or completely remove them. If you delete a backpack for example, the system will try and move them to the rest of your inventory, as long as there's space for them. This obviously has its limit. If you remove almost all containers, then some items will be lost. This is your own responsibility.
 - `goggles` do _not_ replace nightvision goggles. There is a seperate option for it: `nvgoggles`. This is because nightvision goggles are their own independent slot.
 - `secondaryWeapon` refers to a launcher, not a handgun. Refer to `handgunWeapon` for the latter.
-
 - You can get the amount of times a loadout has been applied to a specific unit using `unit getVariable ["GRAD_loadout_applicationCount", 0];`
 
 ### Important
 
 Support for `linkedItems[]` , `weapons[]` , `items[]`,  `magazines[]`, `addItems[]` and `addMagazines[]` has been dropped with version 4.x , due to the amount of work it would've required to make it work with `getUnitLoadout/setUnitLoadout` .
-
-### I'm too dumb, give me the easy way!
-Go to the virtual arsenal and make a loadout there to your liking. Then use the export function `CTRL`+`SHIFT`+`C` to export the loadout into the format that this script understands. Read the section called `Classes`, because you still need to tell the script who should get the loadout you just made, but other than that, you're done.
