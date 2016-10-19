@@ -70,7 +70,6 @@ rl.on('line', function(line) {
 
 rl.on('close', function () {
     var inputString: string = input.join('');
-
     let inputArray: Array<any> = JSON.parse(inputString);
 
     var loadout: Loadout = {};
@@ -83,18 +82,13 @@ rl.on('close', function () {
 
     loadout.uniform = inputArray[3][0] || "";
     loadout.addItemsToUniform =  inputArray[3][1];
-
     loadout.vest = inputArray[4][0] || "";
     loadout.addItemsToVest = inputArray[4][1];
-
     loadout.backpack = inputArray[5][0];
     loadout.addItemsToBackpack = inputArray[5][1];
-
     loadout.headgear = inputArray[6];
     loadout.goggles = inputArray[7];
-
     loadout.binoculars = inputArray[8][0] || "";
-
     loadout.map = inputArray[9][0] || "";
     loadout.gps = inputArray[9][1] || "";
     loadout.radio = inputArray[9][2] || "";
