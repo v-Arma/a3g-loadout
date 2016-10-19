@@ -44,7 +44,6 @@ interface Loadout {
 
 
 function augmentWeapon(weaponName: string, weaponArray: Array<any>): Object {
-
     let result = {};
     result[weaponName] = weaponArray[0] || "";
     result[weaponName + 'Muzzle'] = weaponArray[1] || "";
@@ -63,6 +62,9 @@ var rl = readline.createInterface({
 });
 
 var input = [];
+var useListNMacro = true;
+
+var depth = 0;
 
 rl.on('line', function(line) {
     input.push(line);
@@ -75,17 +77,23 @@ rl.on('close', function () {
     var loadout: Loadout = {};
     
     assign(loadout, 
-        augmentWeapon('primary', inputArray[0]),
-        augmentWeapon('secondary', inputArray[0]),
-        augmentWeapon('handgun', inputArray[0])
+        augmentWeapon('primaryWeapon', inputArray[0]),
+        augmentWeapon('secondaryWeapon', inputArray[0]),
+        augmentWeapon('handgunWeapon', inputArray[0])
     );
 
     loadout.uniform = inputArray[3][0] || "";
-    loadout.addItemsToUniform =  inputArray[3][1];
+    if (loadout.uniform) {
+        loadout.addItemsToUniform = transformContainerContents(inputArray[3][1]);
+    }
     loadout.vest = inputArray[4][0] || "";
-    loadout.addItemsToVest = inputArray[4][1];
-    loadout.backpack = inputArray[5][0];
-    loadout.addItemsToBackpack = inputArray[5][1];
+    if (loadout.vest) {
+        loadout.addItemsToVest = transformContainerContents(inputArray[4][1]);
+    }
+    loadout.backpack = inputArray[5][0] || "";
+    if (loadout.backpack) {
+        loadout.addItemsToBackpack = transformContainerContents(inputArray[5][1]);
+    }
     loadout.headgear = inputArray[6];
     loadout.goggles = inputArray[7];
     loadout.binoculars = inputArray[8][0] || "";
@@ -98,8 +106,35 @@ rl.on('close', function () {
 
     cleanupGradLoadoutConfig(loadout);
 
-    process.stdout.write(JSON.stringify(loadout, null, '\t'));
+    const out = stringifyToConfig('', loadout);
+
+    process.stdout.write(out + "\n");
 });
+
+function transformContainerContents(contents: Array<string|Array<string>>): Array<string> {
+    const result = [];
+
+    contents.forEach(function (contentItem: string|Array<any>) {
+        if (typeof  contentItem === 'string') {
+            contentItem = [contentItem, 1];
+        }
+        if (Array.isArray(contentItem)) {
+            result.push(...expandContents(contentItem));
+        }
+    });
+
+    return result;
+}
+
+function asListNExpression(arr: Array<any>): string {
+    let [className, count] = arr;
+    return `LIST_${count}(${className})`;
+}
+
+function expandContents(arr: Array<any>): Array<string> {
+    let [classname, count] = arr;
+    return new Array(...(new Array(count))).map(() => classname)
+}
 
 function cleanupGradLoadoutConfig(loadout: Loadout) {
     Object.getOwnPropertyNames(loadout).forEach(function (key: string) {
@@ -108,3 +143,55 @@ function cleanupGradLoadoutConfig(loadout: Loadout) {
         }
     });
 }
+
+function stringifyToConfig(name: string, object: Object): string {
+
+    depth += 1;
+
+    let contents = Object.getOwnPropertyNames(object).map(function (key: string): string {
+        const subject = object[key];
+        if (Array.isArray(subject)) {
+            return stringifyArray(key, subject);
+        }
+        if (subject && typeof subject === 'object') {
+            return stringifyToConfig(key, subject);
+        }
+
+        if (typeof subject === 'boolean') {
+            return stringifyScalar(key, subject ? 1 : 0);
+        }
+        if (typeof subject === 'string' || typeof subject === 'number') {
+            return stringifyScalar(key, subject);
+        }
+
+        process.stderr.write('unexpected value ' + subject);
+    });
+
+    depth -= 1;
+
+    return formatClass(name || 'NAME', contents.join('\n'));
+}
+
+interface Formatter {
+    (name: string, subject: any): string;
+}
+
+function addIndentationDecorator(fn: Formatter): Formatter {
+    const maxIndent = (new Array(...(new Array(10)))).map(() => '\t').join('');
+    return function (name: string, subject: any): string {
+        return maxIndent.substr(0, depth) + fn.apply(this, arguments);
+    };
+}
+
+let stringifyScalar = addIndentationDecorator(function stringifyScalar(name: string, value: number|string): string {
+    const valAsString = JSON.stringify(value);
+    return `${name} = ${valAsString};`;
+});
+
+let stringifyArray = addIndentationDecorator(function (name: string, arr: Array<any>) {
+    return JSON.stringify(arr).replace(/^\[(.*)]$/, `${name}[] = {$1};`);
+});
+
+let formatClass = addIndentationDecorator(function (name: string, contents: string) {
+    return `class ${name} {\n${contents}\n};\n`;
+});
