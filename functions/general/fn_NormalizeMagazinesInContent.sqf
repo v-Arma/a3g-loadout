@@ -1,6 +1,6 @@
 // normalize magazines in content.
 // input: ["stanag_foo", "stanag_blub", "handgrenade", "something_else"]
-// outpuit: [["stanag_foo", 2], ["handgrenade", 1],  "something_else"]
+// output: [["stanag_foo", 2], ["handgrenade", 1],  "something_else"]
 
 params ["_contentFromConfig"];
 

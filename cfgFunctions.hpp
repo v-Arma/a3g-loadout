@@ -34,5 +34,6 @@ class GRAD_Loadout {
         class ScheduleLoadout {
           postInit = 1;
         };
+        class WeaponIsCompatibleMagazine {};
     };
 };
