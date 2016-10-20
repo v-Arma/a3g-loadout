@@ -3,6 +3,7 @@
 #define COMPONENT loadout
 #include "\x\cba\addons\main\script_macros_mission.hpp"
 
+
 private ["_delay", "_getDelay"];
 
 _getDelay = {
@@ -23,7 +24,7 @@ systemChat _msg;
         _msg = "triggering loadout...";
 		LOG(_msg);
         systemChat _msg;
-		[_this select 0] call GRAD_Loadout_fnc_ApplyLoadout;
+		[_this select 0] call FUNC(ApplyLoadout);
         _msg = "loadout was applied.";
         LOG(_msg);
         systemChat _msg;

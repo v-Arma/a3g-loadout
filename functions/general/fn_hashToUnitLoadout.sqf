@@ -1,4 +1,11 @@
+
+#define PREFIX grad
+#define COMPONENT loadout
+#include "\x\cba\addons\main\script_macros_mission.hpp"
+
+
 params  ["_loadoutHash", "_unitLoadout"];
+
 
 if (typeName _loadoutHash != "ARRAY") then {
     throw "loadoutHash is not of type array (and thus, no cba hash) :(("
@@ -103,7 +110,7 @@ _normalizeWeaponArray = {
                     _weaponArray set [_forEachIndex, _defaultValue];
                 } else {
                     if ((_forEachIndex >= 4 && _forEachIndex <= 5) && (typeName _x == "ARRAY") && (count _x > 0)) then {
-                        if (!([_weaponValue, _x select 0] call GRAD_Loadout_fnc_WeaponIsCompatibleMagazine)) then {
+                        if (!([_weaponValue, _x select 0] call FUNC(WeaponIsCompatibleMagazine))) then {
                             _weaponArray set [_forEachIndex, _defaultValue];
                         };
                     };
@@ -150,17 +157,17 @@ _defaultValueForItemCarriers = {
 (_unitLoadout select 2) call _normalizeWeaponArray;
 
 [[3, 0], "uniform"] call _assignFromLoadoutHash;
-[[3, 1], "addItemsToUniform", GRAD_Loadout_fnc_NormalizeMagazinesInContent] call _assignFromLoadoutHash;
+[[3, 1], "addItemsToUniform", FUNC(NormalizeMagazinesInContent)] call _assignFromLoadoutHash;
 3 call _defaultValueForItemCarriers;
 [3, 0] call _setEmptyParentArrayIfEmptyString;
 
 [[4, 0], "vest"] call _assignFromLoadoutHash;
-[[4, 1], "addItemsToVest", GRAD_Loadout_fnc_NormalizeMagazinesInContent] call _assignFromLoadoutHash;
+[[4, 1], "addItemsToVest", FUNC(NormalizeMagazinesInContent)] call _assignFromLoadoutHash;
 4 call _defaultValueForItemCarriers;
 [4, 0] call _setEmptyParentArrayIfEmptyString;
 
 [[5, 0], "backpack"] call _assignFromLoadoutHash;
-[[5, 1], "addItemsToBackpack", GRAD_Loadout_fnc_NormalizeMagazinesInContent] call _assignFromLoadoutHash;
+[[5, 1], "addItemsToBackpack", FUNC(NormalizeMagazinesInContent)] call _assignFromLoadoutHash;
 5 call _defaultValueForItemCarriers;
 [5, 0] call _setEmptyParentArrayIfEmptyString;
 

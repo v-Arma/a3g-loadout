@@ -14,7 +14,7 @@ TRACE_2("finding config values for %1 in path %2 ...", _unit, _configPath);
 
 _loadoutHierarchy = [];
 
-_extractor = [_unit, _loadoutHierarchy] call GRAD_Loadout_fnc_GetPathExtractor;
+_extractor = [_unit, _loadoutHierarchy] call FUNC(GetPathExtractor);
 
 [_configPath >> "AllUnits", {true}] call _extractor;
 [_configPath >> "AllAi", {!isPlayer _unit}] call _extractor;
@@ -52,7 +52,7 @@ _role = [roleDescription _unit] call BIS_fnc_filterString;
 _rolePath = _configPath >> "Role" >> _role;
 [_rolePath, {true}] call _extractor; // Roledescription based loadouts
 
-_factionPathBit = ([faction _unit] call GRAD_Loadout_fnc_FactionGetLoadout);
+_factionPathBit = ([faction _unit] call FUNC(FactionGetLoadout));
 _factionPath = _configPath >> "Faction" >> _factionPathBit;
 
 [_factionPath >> "AllUnits", {true}] call _extractor;
@@ -60,7 +60,7 @@ _factionPath = _configPath >> "Faction" >> _factionPathBit;
 
 [_factionPath >> "AllPlayers", {isPlayer _unit}] call _extractor;
 
-_typeBit = [_unit] call GRAD_Loadout_fnc_DefactionizeType;
+_typeBit = [_unit] call FUNC(DefactionizeType);
 if (_typeBit != "") then {
     [_factionPath >> "Type" >> _typeBit, {true}] call _extractor;
 };
@@ -74,6 +74,6 @@ if (count _loadoutHierarchy == 0) then {
 };
 #endif
 
-_actualLoadout = [_loadoutHierarchy] call GRAD_Loadout_fnc_mergeLoadoutHierarchy;
+_actualLoadout = [_loadoutHierarchy] call FUNC(mergeLoadoutHierarchy);
 
 _actualLoadout

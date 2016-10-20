@@ -22,7 +22,7 @@ if (_resetLoadout == 0) then {
     _unitLoadout = getUnitLoadout _loadoutTarget;
 };
 
-_unitLoadout = [_loadoutHash, _unitLoadout] call GRAD_Loadout_fnc_hashToUnitLoadout;
+_unitLoadout = [_loadoutHash, _unitLoadout] call FUNC(hashToUnitLoadout);
 
 if (_loadoutTarget == player) then {
     diag_log _unitLoadout;

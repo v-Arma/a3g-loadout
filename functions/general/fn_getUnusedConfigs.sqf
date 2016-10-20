@@ -1,9 +1,13 @@
 // GRAD_Loadout_usedConfigs
 
+#define PREFIX grad
+#define COMPONENT loadout
+#include "\x\cba\addons\main\script_macros_mission.hpp"
+
 
 // get all config Classes within Loadouts, array diff with GRAD_Loadout_usedConfigs
 
-_configPath = [] call GRAD_Loadout_fnc_getLoadoutConfigPath;
+_configPath = [] call FUNC(getLoadoutConfigPath);
 _maxConfigDepth = 10; // err on high side :P
 
 _allLoadoutClasses = ([_configPath, _maxConfigDepth, true] call BIS_fnc_returnChildren);
