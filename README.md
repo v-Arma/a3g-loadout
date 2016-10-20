@@ -72,7 +72,7 @@ class Loadouts {
 
 You can dynamically alias a faction name:
 
-`["BLU_F", "USMC"] call GRAD_Loadout_FactionSetLoadout;` – thus, you can change loadout presets for your factions. In this example, this would work now:
+`["BLU_F", "USMC"] call GRAD_Loadout_fnc_FactionSetLoadout;` – thus, you can change loadout presets for your factions. In this example, this would work now:
 
 ```
 class Loadouts {
@@ -158,7 +158,7 @@ Loadouts are written inside classes. There are a couple of generic classes for y
     * Role/
         * unit role
     * Faction/
-        * faction name, e.g. BLU_F . Aliasing possible, see`GRAD_Loadout_fncFactionSetLoadout`!
+        * faction name, e.g. BLU_F . Aliasing possible, see`GRAD_Loadout_fnc_FactionSetLoadout`!
             * AllUnits
             * AllAi
             * AllPlayers
