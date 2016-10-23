@@ -58,6 +58,9 @@ rl.on('close', function () {
     loadout.nvgoggles = inputArray[9][5] || "";
     cleanupGradLoadoutConfig(loadout);
     var out = stringifyToConfig('', loadout);
+    if (useListNMacro) {
+        out = out.replace(/"LIST_(\d)+\(\\"([^\)]+)\\"\)"/g, 'LIST_$1("$2")');
+    }
     process.stdout.write(out + "\n");
 });
 function transformContainerContents(contents) {
@@ -67,14 +70,21 @@ function transformContainerContents(contents) {
             contentItem = [contentItem, 1];
         }
         if (Array.isArray(contentItem)) {
-            result.push.apply(result, expandContents(contentItem));
+            if (useListNMacro && contentItem[1] > 1) {
+                result.push(asListNExpression(contentItem));
+            }
+            else {
+                result.push.apply(result, expandContents(contentItem));
+            }
         }
     });
     return result;
 }
 function asListNExpression(arr) {
     var className = arr[0], count = arr[1];
-    return "LIST_" + count + "(" + className + ")";
+    if (count > 1) {
+        return "LIST_" + count + "(\"" + className + "\")";
+    }
 }
 function expandContents(arr) {
     var classname = arr[0], count = arr[1];

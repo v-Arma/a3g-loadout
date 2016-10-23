@@ -106,7 +106,11 @@ rl.on('close', function () {
 
     cleanupGradLoadoutConfig(loadout);
 
-    const out = stringifyToConfig('', loadout);
+    let out = stringifyToConfig('', loadout);
+
+    if (useListNMacro) {
+        out = out.replace(/"LIST_(\d)+\(\\"([^\)]+)\\"\)"/g, 'LIST_$1("$2")');
+    }
 
     process.stdout.write(out + "\n");
 });
@@ -119,7 +123,11 @@ function transformContainerContents(contents: Array<string|Array<string>>): Arra
             contentItem = [contentItem, 1];
         }
         if (Array.isArray(contentItem)) {
-            result.push(...expandContents(contentItem));
+            if (useListNMacro && contentItem[1] > 1) {
+                result.push(asListNExpression(contentItem));
+            } else {
+                result.push(...expandContents(contentItem));
+            }
         }
     });
 
@@ -128,7 +136,9 @@ function transformContainerContents(contents: Array<string|Array<string>>): Arra
 
 function asListNExpression(arr: Array<any>): string {
     let [className, count] = arr;
-    return `LIST_${count}(${className})`;
+    if (count > 1) {
+        return `LIST_${count}("${className}")`;
+    }
 }
 
 function expandContents(arr: Array<any>): Array<string> {
