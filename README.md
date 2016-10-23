@@ -168,6 +168,9 @@ Loadouts are written inside classes. There are a couple of generic classes for y
 
 Loadout is read from top to bottom, and augemented/overwritten along the way.
 
+## Generator getUnitLoadout-> grad-loadout
+http://gruppe-adler.de/api/grad-loadout/
+
 ## More complete example
 
 ```sqf
