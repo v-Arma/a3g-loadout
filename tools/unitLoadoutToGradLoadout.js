@@ -1,3 +1,4 @@
+"use strict";
 function assign(target) {
     var sources = [];
     for (var _i = 1; _i < arguments.length; _i++) {
@@ -18,23 +19,11 @@ function augmentWeapon(weaponName, weaponArray) {
     result[weaponName + 'Underbarrel'] = weaponArray[6] || "";
     return result;
 }
-var readline = require('readline');
-var rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout,
-    terminal: false
-});
-var input = [];
 var useListNMacro = true;
 var depth = 0;
-rl.on('line', function (line) {
-    input.push(line);
-});
-rl.on('close', function () {
-    var inputString = input.join('');
-    var inputArray = JSON.parse(inputString);
+function unitLoadoutToGradLoadout(inputArray) {
     var loadout = {};
-    assign(loadout, augmentWeapon('primaryWeapon', inputArray[0]), augmentWeapon('secondaryWeapon', inputArray[0]), augmentWeapon('handgunWeapon', inputArray[0]));
+    assign(loadout, augmentWeapon('primaryWeapon', inputArray[0]), augmentWeapon('secondaryWeapon', inputArray[1]), augmentWeapon('handgunWeapon', inputArray[2]));
     loadout.uniform = inputArray[3][0] || "";
     if (loadout.uniform) {
         loadout.addItemsToUniform = transformContainerContents(inputArray[3][1]);
@@ -61,8 +50,9 @@ rl.on('close', function () {
     if (useListNMacro) {
         out = out.replace(/"LIST_(\d)+\(\\"([^\)]+)\\"\)"/g, 'LIST_$1("$2")');
     }
-    process.stdout.write(out + "\n");
-});
+    return out;
+}
+exports.unitLoadoutToGradLoadout = unitLoadoutToGradLoadout;
 function transformContainerContents(contents) {
     var result = [];
     contents.forEach(function (contentItem) {
@@ -113,7 +103,7 @@ function stringifyToConfig(name, object) {
         if (typeof subject === 'string' || typeof subject === 'number') {
             return stringifyScalar(key, subject);
         }
-        process.stderr.write('unexpected value ' + subject);
+        throw new Error('unexpected value ' + subject);
     });
     depth -= 1;
     return formatClass(name || 'NAME', contents.join('\n'));

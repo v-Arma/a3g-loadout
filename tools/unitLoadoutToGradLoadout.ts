@@ -1,5 +1,3 @@
-declare function require(module: string): any;
-declare var process: any;
 
 function assign(target: Object, ...sources: Array<Object>) {
     sources.forEach(function (source: Object) {
@@ -54,32 +52,18 @@ function augmentWeapon(weaponName: string, weaponArray: Array<any>): Object {
     return result;
 }
 
-var readline = require('readline');
-var rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout,
-  terminal: false
-});
-
-var input = [];
 var useListNMacro = true;
 
 var depth = 0;
 
-rl.on('line', function(line) {
-    input.push(line);
-});
-
-rl.on('close', function () {
-    var inputString: string = input.join('');
-    let inputArray: Array<any> = JSON.parse(inputString);
+export function unitLoadoutToGradLoadout(inputArray: Array<any>) {
 
     var loadout: Loadout = {};
     
     assign(loadout, 
         augmentWeapon('primaryWeapon', inputArray[0]),
-        augmentWeapon('secondaryWeapon', inputArray[0]),
-        augmentWeapon('handgunWeapon', inputArray[0])
+        augmentWeapon('secondaryWeapon', inputArray[1]),
+        augmentWeapon('handgunWeapon', inputArray[2])
     );
 
     loadout.uniform = inputArray[3][0] || "";
@@ -112,8 +96,8 @@ rl.on('close', function () {
         out = out.replace(/"LIST_(\d)+\(\\"([^\)]+)\\"\)"/g, 'LIST_$1("$2")');
     }
 
-    process.stdout.write(out + "\n");
-});
+    return out;
+}
 
 function transformContainerContents(contents: Array<string|Array<string>>): Array<string> {
     const result = [];
@@ -174,7 +158,7 @@ function stringifyToConfig(name: string, object: Object): string {
             return stringifyScalar(key, subject);
         }
 
-        process.stderr.write('unexpected value ' + subject);
+        throw new Error('unexpected value ' + subject);
     });
 
     depth -= 1;
