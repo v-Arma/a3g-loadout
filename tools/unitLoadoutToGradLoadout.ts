@@ -93,7 +93,7 @@ export function unitLoadoutToGradLoadout(inputArray: Array<any>) {
     let out = stringifyToConfig('', loadout);
 
     if (useListNMacro) {
-        out = out.replace(/"LIST_(\d)+\(\\"([^\)]+)\\"\)"/g, 'LIST_$1("$2")');
+        out = out.replace(/"LIST_(\d+)\(\\"([^\)]+)\\"\)"/g, 'LIST_$1("$2")');
     }
 
     return out;
