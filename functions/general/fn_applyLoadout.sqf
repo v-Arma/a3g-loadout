@@ -20,5 +20,6 @@ systemChat _msg;
 
 {
     _loadoutHash = [_x, _configPath] call FUNC(GetUnitLoadoutFromConfig);
+    _loadoutHash = [_loadoutHash] call FUNC(ApplyRevivers);
     [_loadoutHash, _x] call FUNC(doLoadout);
 } forEach _units;
