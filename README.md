@@ -53,6 +53,8 @@ class Loadouts {
 
 ## Dynamic configuration
 
+### GRAD_Loadout_Chosen_Prefix
+
 You can, define a global var `GRAD_Loadout_Chosen_Prefix` – this will lead to grad-layout reading from a *subclass* of `Loadouts`. Example:
 
 
@@ -70,6 +72,8 @@ class Loadouts {
 };
 ```
 
+### GRAD_Loadout_fnc_FactionSetLoadout
+
 You can dynamically alias a faction name:
 
 `["BLU_F", "USMC"] call GRAD_Loadout_fnc_FactionSetLoadout;` – thus, you can change loadout presets for your factions. In this example, this would work now:
@@ -84,6 +88,23 @@ class Loadouts {
         };
     };
 };
+```
+
+### GRAD_Loadout_fnc_AddReviver
+
+dynamically adjust loadout values. This example adds a bit of randomization to Russian helmets: 
+
+```
+[
+    {
+        _value = param [0];
+        if (_value == "rhs_6b27m_digi") then {
+            _value = selectRandom ["rhs_6b27m_digi", "rhs_6b27m_digi_bala"];
+        };
+        _value
+    },
+    "headgear"
+] call GRAD_Loadout_fnc_addReviver;
 ```
 
 ## Loadouts
