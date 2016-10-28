@@ -36,4 +36,10 @@ class GRAD_Loadout {
         };
         class WeaponIsCompatibleMagazine {};
     };
+    class Revivers {
+        file = MODULES_DIRECTORY\grad-loadout\functions\revivers;
+        class GetRevivers {};
+        class AddReviver {};
+        class ApplyRevivers {};
+    };
 };
