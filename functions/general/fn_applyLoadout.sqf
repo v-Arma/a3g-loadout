@@ -16,7 +16,6 @@ _isMissionStart = if (typeName _mode == "STRING") then {if (_mode == "postInit")
 _units = ([_isMissionStart] call FUNC(GetApplicableUnits));
 
 LOG_2("applying loadouts from mission config file path '%1' to %2 units...", _configPath, count _units);
-systemChat _msg;
 
 {
     _loadoutHash = [_x, _configPath] call FUNC(GetUnitLoadoutFromConfig);

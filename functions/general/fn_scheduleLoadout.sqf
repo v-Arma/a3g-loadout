@@ -15,19 +15,18 @@ _getDelay = {
 
 _delay = [] call _getDelay;
 
-_msg = format ["waiting %1 s for loadout...", _delay];
-LOG(_msg);
-systemChat _msg;
+INFO_1("waiting %1 s for loadout...", _delay);
+systemChat format ["grad-loadout: waiting %1 s for loadout...", _delay];
 
 [
 	{
         _msg = "triggering loadout...";
-		LOG(_msg);
-        systemChat _msg;
+		INFO(_msg);
+        systemChat ("grad-loadout: " + _msg);
 		[_this select 0] call FUNC(ApplyLoadout);
         _msg = "loadout was applied.";
-        LOG(_msg);
-        systemChat _msg;
+        INFO(_msg);
+        systemChat ("grad-loadout: " +  _msg);
 	},
 	[_this select 0],
 	_delay
