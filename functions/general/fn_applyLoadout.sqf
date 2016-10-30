@@ -8,8 +8,8 @@ params [["_mode", ""]];
 
 _configPath = missionConfigFile >> "Loadouts";
 
-if (GRAD_Loadout_Chosen_Prefix != "") then {
-    _configPath = _configPath >> GRAD_Loadout_Chosen_Prefix;
+if (GVAR(Chosen_Prefix) != "") then {
+    _configPath = _configPath >> GVAR(Chosen_Prefix);
 };
 
 _isMissionStart = if (typeName _mode == "STRING") then {if (_mode == "postInit") then {true} else {false}} else {false};
@@ -20,6 +20,6 @@ systemChat _msg;
 
 {
     _loadoutHash = [_x, _configPath] call FUNC(GetUnitLoadoutFromConfig);
-    _loadoutHash = [_loadoutHash] call FUNC(ApplyRevivers);
+    _loadoutHash = [_loadoutHash, _x] call FUNC(ApplyRevivers);
     [_loadoutHash, _x] call FUNC(doLoadout);
 } forEach _units;
