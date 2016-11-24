@@ -21,6 +21,7 @@ _resetLoadout = [(missionConfigFile >> "Loadouts"), "resetLoadout", 0] call BIS_
 if (_resetLoadout == 0) then {
     _unitLoadout = getUnitLoadout _loadoutTarget;
 };
+if (count _unitLoadout == 0) exitWith {};
 
 _unitLoadout = [_loadoutHash, _unitLoadout] call FUNC(hashToUnitLoadout);
 
