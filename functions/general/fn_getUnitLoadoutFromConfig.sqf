@@ -73,6 +73,11 @@ if (count _loadoutHierarchy == 0) then {
     INFO_1("no loadout config values could be found for %1", _unit);
 };
 #endif
+#ifdef DEBUG_MODE_FULL
+if (_unit == player) then {
+    INFO_1("complete loadout config for player: %1", _loadoutHierarchy);
+};
+#endif
 
 _actualLoadout = [_loadoutHierarchy] call FUNC(mergeLoadoutHierarchy);
 

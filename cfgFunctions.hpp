@@ -42,4 +42,9 @@ class GRAD_Loadout {
         class AddReviver {};
         class ApplyRevivers {};
     };
+    class Defactionizers {
+        file = MODULES_DIRECTORY\grad-loadout\functions\defactionizers;
+        class VanillaCivDefactionizer {};
+        class VanillaMilitaryDefactionizer {};
+    };
 };
