@@ -60,9 +60,15 @@ _factionPath = _configPath >> "Faction" >> _factionPathBit;
 
 [_factionPath >> "AllPlayers", {isPlayer _unit}] call _extractor;
 
-_typeBit = [_unit] call FUNC(DefactionizeType);
-if (_typeBit != "") then {
-    [_factionPath >> "Type" >> _typeBit, {true}] call _extractor;
+_factionTypeConfig = "true" configClasses (_factionPath >> "Type");
+if (count _factionTypeConfig > 0) then {
+    TRACE_1("type configs for faction %1 exist", _factionPath);
+    _typeBit = [_unit] call FUNC(DefactionizeType);
+    if (_typeBit != "") then {
+        [_factionPath >> "Type" >> _typeBit, {true}] call _extractor;
+    };
+} else {
+    TRACE_1("no type configs for faction %1", _factionPath);
 };
 
 [_factionPath >> "Rank" >> (rank _unit), {true}] call _extractor;
