@@ -92,7 +92,7 @@ class Loadouts {
 
 ### GRAD_Loadout_fnc_AddReviver
 
-dynamically adjust loadout values. This example adds a bit of randomization to Russian helmets: 
+dynamically adjust loadout values. This example adds a bit of randomization to Russian helmets:
 
 ```
 [
@@ -274,9 +274,15 @@ The loadout options are completely modular, just use what you need and nothing m
 
 Support for `linkedItems[]` , `weapons[]` , `items[]`,  `magazines[]`, `addItems[]` and `addMagazines[]` has been dropped with version 4.x , due to the amount of work it would've required to make it work with `getUnitLoadout/setUnitLoadout` .
 
+
+## GRAD_Loadout_fnc_doLoadoutForUnit
+
+call with unit as firstp parameter to dynamically assign loadout during scenario
+
 # Roadmap
 
 There's some changes I want to change, chiefly reduce the number of config classes that are being read:
+
 
 ## Old selectors
 

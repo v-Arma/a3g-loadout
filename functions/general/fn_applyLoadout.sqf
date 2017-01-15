@@ -15,10 +15,8 @@ if (GVAR(Chosen_Prefix) != "") then {
 _isMissionStart = if (typeName _mode == "STRING") then {if (_mode == "postInit") then {true} else {false}} else {false};
 _units = ([_isMissionStart] call FUNC(GetApplicableUnits));
 
-LOG_2("applying loadouts from mission config file path '%1' to %2 units...", _configPath, count _units);
+LOG_2("applying loadouts from mission config file to %! units...", count _units);
 
 {
-    _loadoutHash = [_x, _configPath] call FUNC(GetUnitLoadoutFromConfig);
-    _loadoutHash = [_loadoutHash, _x] call FUNC(ApplyRevivers);
-    [_loadoutHash, _x] call FUNC(doLoadout);
+    [_x] call FUNC(doLoadoutForUnit);
 } forEach _units;

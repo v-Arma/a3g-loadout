@@ -3,6 +3,10 @@
 #endif
 
 class GRAD_Loadout {
+    class Api {
+        file = MODULES_DIRECTORY\grad-loadout\functions\api;
+        class doLoadoutForUnit {};
+    };
     class Extract {
         file = MODULES_DIRECTORY\grad-loadout\functions\extract;
         class GetPathExtractor {};
