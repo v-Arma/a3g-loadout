@@ -1,4 +1,3 @@
-
 #define PREFIX grad
 #define COMPONENT loadout
 #include "\x\cba\addons\main\script_macros_mission.hpp"
@@ -25,7 +24,13 @@ GRAD_Loadout_usedConfigs pushBack _configPath;
     "linkedItems",
     "primaryWeaponAttachments",
     "secondaryWeaponAttachments",
-    "handgunWeaponAttachments"
+    "handgunWeaponAttachments",
+	"primaryWeaponMagazines",
+    "secondaryWeaponMagazines",
+    "handgunWeaponMagazines",
+	"primaryWeaponUnderbarrelMagazin",
+	"secondaryWeaponUnderbarrelMagazin",
+	"handgunWeaponUnderbarrelMagazin"
 ];
 
 _configValues = [] call CBA_fnc_hashCreate;
