@@ -137,8 +137,8 @@ _defaultValueForItemCarriers = {
 [[0, 1], "primaryWeaponMuzzle"] call _assignFromLoadoutHash;
 [[0, 2], "primaryWeaponPointer"] call _assignFromLoadoutHash;
 [[0, 3], "primaryWeaponOptics"] call _assignFromLoadoutHash;
-[[0, 4], "primaryWeaponMagazin"] call _assignFromLoadoutHash;
-[[0, 5], "primaryWeaponUnderbarrelMagazin"] call _assignFromLoadoutHash;
+[[0, 4], "primaryWeaponMagazine"] call _assignFromLoadoutHash;
+[[0, 5], "primaryWeaponUnderbarrelMagazine"] call _assignFromLoadoutHash;
 [[0, 6], "primaryWeaponUnderbarrel"] call _assignFromLoadoutHash;
 (_unitLoadout select 0) call _normalizeWeaponArray;
 
@@ -147,8 +147,8 @@ _defaultValueForItemCarriers = {
 [[1, 1], "secondaryWeaponMuzzle"] call _assignFromLoadoutHash;
 [[1, 2], "secondaryWeaponPointer"] call _assignFromLoadoutHash;
 [[1, 3], "secondaryWeaponOptics"] call _assignFromLoadoutHash;
-[[1, 4], "secondaryWeaponMagazin"] call _assignFromLoadoutHash;
-[[1, 5], "secondaryWeaponUnderbarrelMagazin"] call _assignFromLoadoutHash;
+[[1, 4], "secondaryWeaponMagazine"] call _assignFromLoadoutHash;
+[[1, 5], "secondaryWeaponUnderbarrelMagazine"] call _assignFromLoadoutHash;
 [[1, 6], "secondaryWeaponUnderbarrel"] call _assignFromLoadoutHash;
 (_unitLoadout select 1) call _normalizeWeaponArray;
 
@@ -157,8 +157,8 @@ _defaultValueForItemCarriers = {
 [[2, 1], "handgunWeaponMuzzle"] call _assignFromLoadoutHash;
 [[2, 2], "handgunWeaponPointer"] call _assignFromLoadoutHash;
 [[2, 3], "handgunWeaponOptics"] call _assignFromLoadoutHash;
-[[2, 4], "handgunWeaponMagazin"] call _assignFromLoadoutHash;
-[[2, 5], "handgunWeaponUnderbarrelMagazin"] call _assignFromLoadoutHash;
+[[2, 4], "handgunWeaponMagazine"] call _assignFromLoadoutHash;
+[[2, 5], "handgunWeaponUnderbarrelMagazine"] call _assignFromLoadoutHash;
 [[2, 6], "handgunWeaponUnderbarrel"] call _assignFromLoadoutHash;
 (_unitLoadout select 2) call _normalizeWeaponArray;
 
