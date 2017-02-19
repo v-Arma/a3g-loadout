@@ -1,4 +1,3 @@
-
 #define PREFIX grad
 #define COMPONENT loadout
 #include "\x\cba\addons\main\script_macros_mission.hpp"
@@ -40,20 +39,26 @@ _configValues = [] call CBA_fnc_hashCreate;
     "vest",
     "backpack",
     "primaryWeapon",
+    "primaryWeaponMagazine",
     "primaryWeaponMuzzle",
     "primaryWeaponOptics",
     "primaryWeaponPointer",
     "primaryWeaponUnderbarrel",
+    "primaryWeaponUnderbarrelMagazine",
     "secondaryWeapon",
+    "secondaryWeaponMagazine",
     "secondaryWeaponMuzzle",
     "secondaryWeaponOptics",
     "secondaryWeaponPointer",
     "secondaryWeaponUnderbarrel",
+    "secondaryWeaponUnderbarrelMagazine",
     "handgunWeapon",
+    "handgunWeaponMagazine",
     "handgunWeaponMuzzle",
     "handgunWeaponOptics",
     "handgunWeaponPointer",
     "handgunWeaponUnderbarrel",
+    "handgunWeaponUnderbarrelMagazine",
     "headgear",
     "goggles",
     "nvgoggles",
