@@ -109,10 +109,16 @@ _normalizeWeaponArray = {
                 if (isNil "_x") then {
                     _weaponArray set [_forEachIndex, _defaultValue];
                 } else {
-                    if ((_forEachIndex >= 4 && _forEachIndex <= 5) && (typeName _x == "ARRAY") && (count _x > 0)) then {
-                        if (!([_weaponValue, _x select 0] call FUNC(WeaponIsCompatibleMagazine))) then {
-                            _weaponArray set [_forEachIndex, _defaultValue];
+                    if (_forEachIndex >= 4 && _forEachIndex <= 5) then {
+                        if (typeName _x == "STRING") then {
+                            _weaponArray set [_forEachIndex, [_x, 1]];
                         };
+                        // doesnt work for UGL values. no idea where to get those, btw
+                        // if (!([_weaponValue, _x select 0] call FUNC(WeaponIsCompatibleMagazine))) then {
+                        //    _weaponArray set [_forEachIndex, _defaultValue];
+                        //};
+
+
                     };
                 };
             } forEach _weaponArray;
