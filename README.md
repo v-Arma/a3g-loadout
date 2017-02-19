@@ -244,10 +244,12 @@ The loadout options are completely modular, just use what you need and nothing m
 | `primaryWeapon`                | Replaces primary weapon.                   |
 | `secondaryWeapon`              | Replaces secondary weapon.                 |
 | `handgunWeapon`                | Replaces handgun.                          |
+| `primaryWeaponMagazine`          | Set loaded magazine for primary weapon.   |
 | `primaryWeaponMuzzle`          | Set muzzle attachment of primary weapon.   |
 | `primaryWeaponOptics`          | Set scope of primary weapon.               |
 | `primaryWeaponPointer`         | Set flashlight attachment of primary weapon|
 | `primaryWeaponUnderbarrel`     | Set bipod/GL attachment of primary weapon. |
+| `primaryWeaponUnderbarrelMagazine`     | Set loaded GL magazine of primary weapon. |
 | `secondaryWeapon...`           | same as with primary weapon attachments.   |
 | `handgunWeapon...`             | same as with primary weapon attachments.   |
 | `headgear`                     | Replaces headgear.                         |
