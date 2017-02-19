@@ -111,7 +111,11 @@ _normalizeWeaponArray = {
                 } else {
                     if (_forEachIndex >= 4 && _forEachIndex <= 5) then {
                         if (typeName _x == "STRING") then {
-                            _weaponArray set [_forEachIndex, [_x, 1]];
+                            if (count _x > 0) then {
+                                _weaponArray set [_forEachIndex, [_x, 1]];
+                            } else {
+                                _weaponArray set [_forEachIndex, _defaultValue];
+                            };                            
                         };
                         // doesnt work for UGL values. no idea where to get those, btw
                         // if (!([_weaponValue, _x select 0] call FUNC(WeaponIsCompatibleMagazine))) then {
