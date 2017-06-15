@@ -45,7 +45,7 @@ For large numbers of players that may overload the server with simultaneous load
 ```sqf
 class Loadouts {
     baseDelay = 10; // minimum time to wait after connect before applying loadout
-    perPersonDelay = 1; // added random delay based on number of players
+    perPlayerDelay = 1; // added random delay based on number of players
     handleRadios = 0; // if radios should be handled. defaults to 0
     resetLoadout = 1; // start with empty loadouts instead of modifying existing loadout
 };
