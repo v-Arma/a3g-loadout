@@ -43,6 +43,7 @@ _extractor = [_unit, _loadoutHierarchy] call FUNC(GetPathExtractor);
 
 [_configPath >> "Type" >> typeof _unit, {true}] call _extractor;
 [_configPath >> "Rank" >> rank _unit, {true}] call _extractor;
+[_configPath >> "Type" >> typeof _unit >> "Rank" >> rank _unit, {true}] call _extractor;
 
 _str = str _unit splitString "_" select 0;
 _namePath = _configPath >> "Name" >> _str;
@@ -66,6 +67,7 @@ if (count _factionTypeConfig > 0) then {
     _typeBit = [_unit] call FUNC(DefactionizeType);
     if (_typeBit != "") then {
         [_factionPath >> "Type" >> _typeBit, {true}] call _extractor;
+        [_factionPath >> "Type" >> _typeBit >> "Rank" >> rank _unit, {true}] call _extractor;
     };
 } else {
     TRACE_1("no type configs for faction %1", _factionPath);
