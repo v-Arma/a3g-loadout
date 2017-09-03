@@ -205,7 +205,7 @@ class Loadouts {
     };
     class Side {
         class Opfor {
-            nvg = "";
+            nvgoggles = "";
         };
         class BluforAi {
             items[] = "";
