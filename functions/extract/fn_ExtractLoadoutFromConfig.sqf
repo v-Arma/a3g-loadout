@@ -2,7 +2,7 @@
 #define COMPONENT loadout
 #include "\x\cba\addons\main\script_macros_mission.hpp"
 
-params ['_configPath'];
+private _configPath = param [0];
 
 GRAD_Loadout_usedConfigs pushBack _configPath;
 
@@ -27,10 +27,10 @@ GRAD_Loadout_usedConfigs pushBack _configPath;
     "handgunWeaponAttachments"
 ];
 
-_configValues = [] call CBA_fnc_hashCreate;
+private _configValues = [] call CBA_fnc_hashCreate;
 
 {
-    _value = [_configPath >> _x, "text", false] call  CBA_fnc_getConfigEntry;
+    private _value = [_configPath >> _x, "text", false] call  CBA_fnc_getConfigEntry;
     if (!(_value isEqualTo false)) then {
         [_configValues, _x, _value] call CBA_fnc_hashSet;
     };
@@ -71,7 +71,7 @@ _configValues = [] call CBA_fnc_hashCreate;
 ];
 
 {
-    _value = [_configPath >> _x, "array", false] call  CBA_fnc_getConfigEntry;
+    private _value = [_configPath >> _x, "array", false] call  CBA_fnc_getConfigEntry;
     if (!(_value isEqualTo false)) then {
         [_configValues, _x, _value] call CBA_fnc_hashSet;
     };

@@ -2,11 +2,11 @@
 #define COMPONENT loadout
 #include "\x\cba\addons\main\script_macros_mission.hpp"
 
-_unit = param [0];
+private _unit = param [0];
 
-_faction = faction _unit;
-_type = typeOf _unit;
-_result = "";
+private _faction = faction _unit;
+private _type = typeOf _unit;
+private _result = "";
 
 if (_faction != "CIV_F") exitWith {""};
 

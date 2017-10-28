@@ -3,10 +3,10 @@
 #define COMPONENT loadout
 #include "\x\cba\addons\main\script_macros_mission.hpp"
 
-_propertyName = param [0];
+private _propertyName = param [0];
 
-_revivers = GVAR(revivers);
-_pRevivers = [];
+private _revivers = GVAR(revivers);
+private _pRevivers = [];
 
 if ([_revivers, _propertyName] call CBA_fnc_hashHasKey) then {
 	_pRevivers = [_revivers, _propertyName] call CBA_fnc_hashGet;

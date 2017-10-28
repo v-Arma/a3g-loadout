@@ -3,13 +3,14 @@
 #define COMPONENT loadout
 #include "\x\cba\addons\main\script_macros_mission.hpp"
 
-params  ["_loadoutHash", "_loadoutTarget"];
+private _loadoutHash = param [0];
+private _loadoutTarget = param [1];
 
 if (typeName _loadoutHash != "ARRAY") then {
     throw "loadoutHash is not of type array (and thus, no cba hash) :(("
 };
 
-_unitLoadout = [
+private _unitLoadout = [
   [], [], [], // weapons
   [], [], [], // containers
   "", "", // helm, goggles
@@ -17,7 +18,7 @@ _unitLoadout = [
   ["", "", "", "", "", "" ] // assignedItems
 ];
 
-_resetLoadout = [(missionConfigFile >> "Loadouts"), "resetLoadout", 0] call BIS_fnc_returnConfigEntry;
+private _resetLoadout = [(missionConfigFile >> "Loadouts"), "resetLoadout", 0] call BIS_fnc_returnConfigEntry;
 if (_resetLoadout == 0) then {
     _unitLoadout = getUnitLoadout _loadoutTarget;
 };

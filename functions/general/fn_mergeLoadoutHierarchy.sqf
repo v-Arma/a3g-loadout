@@ -1,9 +1,9 @@
-params ["_loadoutHierarchy"];
+private _loadoutHierarchy = param [0];
 
-_mergedLoadout = [] call CBA_fnc_hashCreate;
+private _mergedLoadout = [] call CBA_fnc_hashCreate;
 
 {
-    _currentLevel = _x;
+    private _currentLevel = _x;
 
     {
         if ([_currentLevel, _x] call CBA_fnc_hashHasKey) then {

@@ -4,7 +4,8 @@
 #include "\x\cba\addons\main\script_macros_mission.hpp"
 
 
-params  ["_loadoutHash", "_unitLoadout"];
+private _loadoutHash = param [0];
+private _unitLoadout = param [1];
 
 
 if (typeName _loadoutHash != "ARRAY") then {
@@ -14,33 +15,28 @@ if (typeName _unitLoadout != "ARRAY") then {
     throw "_unitLoadout is not of type array :(("
 };
 
-_assign = {
-    params ["_entryName", "_assignFunction"];
-    if ( [_loadoutHash, _entryName] call CBA_fnc_hashHasKey ) then {
-        _xxx = [_loadoutHash, _entryName] call CBA_fnc_hashGet;
-        [_xxx, _loadoutTarget] call _assignFunction;
-    };
-};
-
 // CBA_fnc_findTypeName ? CBA_fnc_findTypeOf ?
-_getFirstOfType = {
-    params ["_array", "_classPath"];
 
-    _className = configName _classPath;
-    _hierarchy = (configHierarchy _classPath);
+private _getFirstOfType = {
+    private _array = param [0];
+    private _classPath = param [1];
+
+    private _className = configName _classPath;
+    private _hierarchy = (configHierarchy _classPath);
     _hierarchy call BIS_fnc_ArrayPop;
-    _butLast = _hierarchy call BIS_fnc_ArrayPop;
+    private _butLast = _hierarchy call BIS_fnc_ArrayPop;
 
     _result = "";
     {
-        if (_x isKindof [_className, _butLast]) exitWith {_result = _x};
+        if (_x isKindOf [_className, _butLast]) exitWith {_result = _x; };
     } forEach _array;
 
     _result
 };
 
-_walkIntoArray = {
-    params ["_array", "_indices"];
+private _walkIntoArray = {
+    private _array = param [0];
+    private _indices = params [1];
     {
         _array = _array select _x;
     } forEach _indices;
@@ -48,11 +44,13 @@ _walkIntoArray = {
     _array
 };
 
-_assignFromLoadoutHash = {
-    params ["_indices", "_entryName", "_classNameToPickOrMapper"];
+private _assignFromLoadoutHash = {
+    private _indices = param [0];
+    private _entryName = param [1];
+    private _classNameToPickOrMapper = param [2];
 
     if ( [_loadoutHash, _entryName] call CBA_fnc_hashHasKey ) then {
-        _value = [_loadoutHash, _entryName] call CBA_fnc_hashGet;
+        private _value = [_loadoutHash, _entryName] call CBA_fnc_hashGet;
         if (!(isNil "_classNameToPickOrMapper")) then {
             if (typeName _classNameToPickOrMapper == "CONFIG") then {
                 _value = [_value, _classNameToPickOrMapper] call _getFirstOfType;
@@ -70,8 +68,9 @@ _assignFromLoadoutHash = {
     };
 };
 
-_assignValue = {
-    params ["_indices", "_value"];
+private _assignValue = {
+    private _indices = param [0];
+    private _value = param [1];
     if (!(isNil "_value")) then {
         _index =  _indices call BIS_fnc_arrayPop;
         _targetArray = [_unitLoadout, _indices] call _walkIntoArray;
@@ -79,8 +78,8 @@ _assignValue = {
     };
 };
 
-_setEmptyParentArrayIfEmptyString = {
-    _indices = _this;
+private _setEmptyParentArrayIfEmptyString = {
+    private _indices = _this;
     if (count _indices < 2) then {
         throw '_setEmptyParentArrayIfEmptyString needs two indices at least';
     };
@@ -93,8 +92,8 @@ _setEmptyParentArrayIfEmptyString = {
     };
 };
 
-_normalizeWeaponArray = {
-    _weaponArray = _this;
+private _normalizeWeaponArray = {
+    private _weaponArray = _this;
     if ((count _weaponArray) > 0) then {
         _weaponValue = _weaponArray select 0;
         if ((isNil "_weaponValue") || (_weaponValue == "")) then {
@@ -102,7 +101,7 @@ _normalizeWeaponArray = {
         } else {
             _weaponArray resize 7;
             {
-                _defaultValue = "";
+                private _defaultValue = "";
                 if (_forEachIndex >= 4 && _forEachIndex <= 5) then {
                     _defaultValue = [];
                 };
@@ -132,8 +131,8 @@ _normalizeWeaponArray = {
 };
 
 
-_defaultValueForItemCarriers = {
-    _targetArray = _unitLoadout select _this;
+private _defaultValueForItemCarriers = {
+    private _targetArray = _unitLoadout select _this;
     _carrierClassName = _targetArray select 0;
     if (!(isNil "_carrierClassName")) then {
         _val = _targetArray select 1;

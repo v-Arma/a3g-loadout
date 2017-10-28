@@ -2,15 +2,15 @@
 #define COMPONENT loadout
 #include "\x\cba\addons\main\script_macros_mission.hpp"
 
-_unit = param [0];
+private _unit = param [0];
 
-_faction = faction _unit;
-_type = typeOf _unit;
-_result = "";
+private _faction = faction _unit;
+private _type = typeOf _unit;
+private _result = "";
 
 if (side _unit == civilian) exitWith {""};
 
-_getTypePrefix = {
+private _getTypePrefix = {
     _faction = param [0];
 
     _prefix =  _faction select [0, (count _faction) - 1]; // cut suffix F
@@ -19,9 +19,9 @@ _getTypePrefix = {
     (_initial + (_prefix select [3])); // cut middle part & return
 };
 
-_typePrefix = [_faction] call _getTypePrefix;
+private _typePrefix = [_faction] call _getTypePrefix;
 
-_idx = _type find _typePrefix;
+private _idx = _type find _typePrefix;
 if (_idx == 0) then {
     _result = _type select [count _typePrefix];
 } else {
