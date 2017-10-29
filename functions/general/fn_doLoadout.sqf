@@ -30,6 +30,6 @@ if (_loadoutTarget == player) then {
     INFO_1("player loadout: %1", _unitLoadout);
 };
 
-_loadoutTarget setUnitLoadout [_unitLoadout, true];
+[_loadoutTarget, [_unitLoadout, true]] remoteExec ["setUnitLoadout", _loadoutTarget, false];
 
-_loadoutTarget setVariable ["GRAD_loadout_applicationCount", (_loadoutTarget getVariable ["GRAD_loadout_applicationCount", 0]) + 1];
+_loadoutTarget setVariable [QGVAR(applicationCount), (_loadoutTarget getVariable [QGVAR(applicationCount), 0]) + 1, true];
