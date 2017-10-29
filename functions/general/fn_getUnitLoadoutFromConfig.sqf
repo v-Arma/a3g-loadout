@@ -87,6 +87,6 @@ if (_unit == player) then {
 };
 #endif
 
-private _actualLoadout = [_loadoutHierarchy] call FUNC(mergeLoadoutHierarchy);
+private _actualLoadout = [_loadoutHierarchy] call FUNC(MergeLoadoutHierarchy);
 
 _actualLoadout

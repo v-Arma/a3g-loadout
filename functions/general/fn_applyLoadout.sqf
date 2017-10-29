@@ -17,5 +17,5 @@ _units = ([_isMissionStart] call FUNC(GetApplicableUnits));
 LOG_2("applying loadouts from mission config file to %! units...", count _units);
 
 {
-    [_x] call FUNC(doLoadoutForUnit);
+    [_x] call FUNC(DoLoadoutForUnit);
 } forEach _units;

@@ -24,7 +24,7 @@ if (_resetLoadout == 0) then {
 };
 if (count _unitLoadout == 0) exitWith {};
 
-_unitLoadout = [_loadoutHash, _unitLoadout] call FUNC(hashToUnitLoadout);
+_unitLoadout = [_loadoutHash, _unitLoadout] call FUNC(HashToUnitLoadout);
 
 if (_loadoutTarget == player) then {
     INFO_1("player loadout: %1", _unitLoadout);

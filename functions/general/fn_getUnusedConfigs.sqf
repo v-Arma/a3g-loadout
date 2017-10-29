@@ -6,12 +6,12 @@
 
 // get all config Classes within Loadouts, array diff with GRAD_Loadout_usedConfigs
 
-private _configPath = [] call FUNC(getLoadoutConfigPath);
+private _configPath = [] call FUNC(GetLoadoutConfigPath);
 private _maxConfigDepth = 10; // err on high side :P
 
 private _allLoadoutClasses = ([_configPath, _maxConfigDepth, true] call BIS_fnc_returnChildren);
 
-private _unusedClasses = _allLoadoutClasses - GRAD_Loadout_usedConfigs;
+private _unusedClasses = _allLoadoutClasses - GVAR(usedConfigs);
 
 private _unusedClassesAsStrings = [];
 {
