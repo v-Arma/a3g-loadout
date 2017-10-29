@@ -4,7 +4,7 @@
 
 private _configPath = param [0];
 
-GRAD_Loadout_usedConfigs pushBack _configPath;
+GVAR(usedConfigs) pushBack _configPath;
 
 {
     _value = [_configPath >> _x, "array", false] call CBA_fnc_getConfigEntry;
