@@ -35,8 +35,8 @@ private _getFirstOfType = {
 };
 
 private _walkIntoArray = {
-    private _array = param [0];
-    private _indices = params [1];
+    private _array = param [0, []];
+    private _indices = param [1, []];
     {
         _array = _array select _x;
     } forEach _indices;
@@ -45,8 +45,8 @@ private _walkIntoArray = {
 };
 
 private _assignFromLoadoutHash = {
-    private _indices = param [0];
-    private _entryName = param [1];
+    private _indices = param [0, []];
+    private _entryName = param [1, ""];
     private _classNameToPickOrMapper = param [2];
 
     if ( [_loadoutHash, _entryName] call CBA_fnc_hashHasKey ) then {
@@ -69,7 +69,7 @@ private _assignFromLoadoutHash = {
 };
 
 private _assignValue = {
-    private _indices = param [0];
+    private _indices = param [0, []];
     private _value = param [1];
     if (!(isNil "_value")) then {
         _index =  _indices call BIS_fnc_arrayPop;
