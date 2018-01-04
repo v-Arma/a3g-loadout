@@ -31,6 +31,6 @@ if (_loadoutTarget == player) then {
 };
 
 [_loadoutTarget, [_unitLoadout, true]] remoteExec ["setUnitLoadout", _loadoutTarget, false];
-[QGVAR(loadoutApplied), [], _loadoutTarget] call CBA_fnc_targetEvent;
+[QGVAR(loadoutApplied), [_loadoutTarget, _unitLoadout], _loadoutTarget] call CBA_fnc_targetEvent;
 
 _loadoutTarget setVariable [QGVAR(applicationCount), (_loadoutTarget getVariable [QGVAR(applicationCount), 0]) + 1, true];
