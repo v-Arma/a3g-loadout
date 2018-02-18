@@ -1,6 +1,9 @@
 // usage: ["BLU_T", "BwFleck"] call GRAD_Loadout_FactionSetLoadout;
 
-private _faction = param [0];
-private _loadoutClass = param [1];
+#define PREFIX grad
+#define COMPONENT loadout
+#include "\x\cba\addons\main\script_macros_mission.hpp"
 
-[GRAD_Loadout_factionPathMap, _faction, _loadoutClass] call CBA_fnc_hashSet;
+params [["_faction",""],["_loadoutClass",""],["_global",false]];
+
+GVAR(factionPathMap) setVariable [_faction,_loadoutClass,_global];
