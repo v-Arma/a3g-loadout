@@ -4,8 +4,8 @@
 #include "\x\cba\addons\main\script_macros_mission.hpp"
 
 private _getDelay = {
-    _baseDelay = [(missionConfigFile >> "Loadouts"), "baseDelay", 10] call BIS_fnc_returnConfigEntry;
-    _perPlayerDelay = [(missionConfigFile >> "Loadouts"), "perPlayerDelay", 1] call BIS_fnc_returnConfigEntry;
+    private _baseDelay = [(missionConfigFile >> "Loadouts"), "baseDelay", 10] call BIS_fnc_returnConfigEntry;
+    private _perPlayerDelay = [(missionConfigFile >> "Loadouts"), "perPlayerDelay", 1] call BIS_fnc_returnConfigEntry;
 
     _baseDelay + floor(_perPlayerDelay * random (count allPlayers));
 };
@@ -17,7 +17,7 @@ systemChat format ["grad-loadout: waiting %1 s for loadout...", _delay];
 
 [
 	{
-        _msg = "triggering loadout...";
+        private _msg = "triggering loadout...";
 		INFO(_msg);
         systemChat ("grad-loadout: " + _msg);
 		[_this select 0] call FUNC(ApplyLoadout);
