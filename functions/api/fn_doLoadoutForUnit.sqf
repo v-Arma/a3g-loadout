@@ -15,4 +15,9 @@ TRACE_1("applying loadout from mission config file %1 to %2 ...", _configPath, _
 
 private _loadoutHash = [_unit, _configPath] call FUNC(GetUnitLoadoutFromConfig);
 _loadoutHash = [_loadoutHash, _unit] call FUNC(ApplyRevivers);
-[_loadoutHash, _unit] call FUNC(DoLoadout);
+
+if (([_loadoutHash] call CBA_fnc_hashSize) > 0) then {
+    [_loadoutHash, _unit] call FUNC(DoLoadout);
+} else {
+    TRACE_1("no loadout entries found for %1, skipping unit", _unit);
+};
