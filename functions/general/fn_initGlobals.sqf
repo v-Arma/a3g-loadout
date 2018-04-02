@@ -8,5 +8,5 @@ GVAR(Chosen_Prefix) = "";
 
 // note: units get property GRAD_Loadout_applicationCount
 
-GVAR(factionPathMap) = [] call CBA_fnc_hashCreate;
-GVAR(revivers) = [] call CBA_fnc_hashCreate;
+GVAR(factionPathMap) = [true] call CBA_fnc_createNamespace;
+GVAR(revivers) = [true] call CBA_fnc_createNamespace;
