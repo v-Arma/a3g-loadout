@@ -19,6 +19,16 @@
 #define TREE_W      (0.500 * X_SCALE)
 #define TREE_H      (safeZoneH - 2 * PADDING_Y)
 
+// SUBFUNCTIONS ================================================================
+private _fnc_getParentClass = {
+    params ["_thisItemClassname"];
+    private _parentClass = "";
+    {
+        if (isClass (configFile >> _x >> _thisItemClassname)) exitWith {_parentClass = _x};
+        false
+    } count ["CfgWeapons","CfgMagazines","CfgVehicles"];
+    _parentClass
+};
 
 // CREATE DIALOG ===============================================================
 private _display = (findDisplay 46) createDisplay "RscDisplayEmpty";
@@ -61,18 +71,30 @@ private _unitsCache = [];
             _tvCtrl tvSetTooltip [_unitPath,typeOf _unit];
 
             {
-                _sanitizedX = _x select {_x != ""};
+                _sanitizedItemList = _x select {_x != ""};
+                _uniqueItemList = _sanitizedItemList arrayIntersect _sanitizedItemList;
                 _containerClassName = [QGVAR(STR_ASSIGNED_ITEMS),uniform _unit,vest _unit,backpack _unit,primaryWeapon _unit,secondaryWeapon _unit,handgunWeapon _unit] select _forEachIndex;
-                _config = ["CfgWeapons","CfgVehicles"] select (_forEachIndex in [0,3]);
-                _containerDisplayName = [configfile >> _config >> _containerClassName,"displayName",["ERROR: NO DISPLAYNAME","Assigned Items"] select (_forEachIndex == 0)] call BIS_fnc_returnConfigEntry;
+                _containerDisplayName = [[configFile >> [_containerClassName] call _fnc_getParentClass >> _containerClassName,"displayName","ERROR: NO DISPLAY NAME"] call BIS_fnc_returnConfigEntry,"Assigned Items"] select (_forEachIndex == 0);
 
                 if (_containerClassName != "") then {
                     _containerPath = _unitPath + [_tvCtrl tvAdd [_unitPath,_containerDisplayName]];
                     _tvCtrl tvSetTooltip [_containerPath,_containerClassName];
                     _tvCtrl tvSetData [_containerPath,_containerClassName];
+
+                    {
+                        _itemClassname = _x;
+                        _itemCount = {_x == _itemClassname} count _sanitizedItemList;
+                        _itemParentClass = [_itemClassname] call _fnc_getParentClass;
+                        _itemPic = [_itemClassname,_itemParentClass] call _fnc_getItemPic;
+
+                        _itemPath = _containerPath + [_tvCtrl tvAdd [_containerPath,format ["%1x %2",_itemCount,[configFile >> _itemParentClass >> _itemClassname,"displayName","ERROR: NO DISPLAY NAME"] call BIS_fnc_returnConfigEntry]]];
+                        _tvCtrl tvSetTooltip [_itemPath,_itemClassname];
+                        _tvCtrl tvSetValue [_itemPath,_itemCount];
+                        _tvCtrl tvSetData [_itemPath,_itemClassname];
+                        _tvCtrl tvSetPicture [_itemPath,[configFile >> _itemParentClass >> _itemClassname,"picture",""] call BIS_fnc_returnConfigEntry];
+                    } forEach _uniqueItemList;
                 };
             } forEach [assignedItems _unit,uniformItems _unit,vestItems _unit,backpackItems _unit,primaryWeaponItems _unit,secondaryWeaponItems _unit,handgunItems _unit];
-
         } forEach (units _x);
     } forEach _sideGroups;
 } forEach _sides;
