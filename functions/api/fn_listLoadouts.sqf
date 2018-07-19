@@ -11,7 +11,6 @@
 #define PADDING_X           (0.025 * X_SCALE)
 #define PADDING_Y           (0.025 * Y_SCALE)
 
-
 #define CAMERA_W            (0.75 * X_SCALE)
 #define COLUMN_Y            (safeZoneY + PADDING_Y)
 #define COLUMN_W            ((safeZoneW - 4 * PADDING_X - CAMERA_W) / 2)
@@ -21,8 +20,21 @@
 #define COLUMN1_X           (safeZoneX + PADDING_X)
 #define COLUMN2_X           (safeZoneX + safeZoneW - PADDING_X - COLUMN_W)
 
+#define INFOPIC_W           (COLUMN_W - 8 * PADDING_X)
+#define INFOPIC_H           (COLUMN_H/2 - 8 * PADDING_Y)
+#define INFOPIC_X           (COLUMN2_X + 4 * PADDING_X)
+#define INFOPIC_Y           (COLUMN_Y + 8 * PADDING_Y)
+
+#define INFOTEXT_W          ((COLUMN_W - 3 * PADDING_X)/2)
+#define INFOTEXTL_X         (COLUMN2_X + 2 * PADDING_X)
+#define INFOTEXTR_X         (INFOTEXTL_X + INFOTEXT_W - PADDING_X)
+#define INFOTEXT_Y          (INFOPIC_Y + INFOPIC_H + PADDING_Y)
+#define INFOTEXT_H          (5.000 * Y_SCALE)
+
+
 // OTHER DEFINES ===============================================================
 #define DEFAULT_CAMPROPS    [7,45,20,[0,0,0.9],objNull]
+#define BACKGROUND_COLOR    [0.1,0.1,0.1,1]
 
 
 // SUBFUNCTIONS ================================================================
@@ -66,7 +78,15 @@ private _fnc_addUnit = {
 
     {
         [_unitPath,_x,_forEachIndex] call _fnc_addItem;
-    } forEach [assignedItems _unit,uniformItems _unit,vestItems _unit,backpackItems _unit,primaryWeaponItems _unit,secondaryWeaponItems _unit,handgunItems _unit];
+    } forEach [
+        (assignedItems _unit) + [headgear _unit,goggles _unit,hmd _unit],
+        uniformItems _unit,
+        vestItems _unit,
+        backpackItems _unit,
+        (primaryWeaponItems _unit) + (primaryWeaponMagazine _unit),
+        (secondaryWeaponItems _unit) + (secondaryWeaponMagazine _unit),
+        (handgunItems _unit) + (handgunMagazine _unit)
+    ];
 };
 
 private _fnc_addItem = {
@@ -75,12 +95,15 @@ private _fnc_addItem = {
     _sanitizedItemsList = _itemsList select {_x != ""};
     _uniqueItemsList = _sanitizedItemsList arrayIntersect _sanitizedItemsList;
     _containerClassName = [QGVAR(STR_ASSIGNED_ITEMS),uniform _unit,vest _unit,backpack _unit,primaryWeapon _unit,secondaryWeapon _unit,handgunWeapon _unit] select _containerType;
-    _containerDisplayName = [[configFile >> [_containerClassName] call _fnc_getParentClass >> _containerClassName,"displayName","ERROR: NO DISPLAY NAME"] call BIS_fnc_returnConfigEntry,"Assigned Items"] select (_containerType == 0);
+    _containerParentClass = [_containerClassName] call _fnc_getParentClass;
+    _containerDisplayName = [[configFile >> _containerParentClass >> _containerClassName,"displayName","ERROR: NO DISPLAY NAME"] call BIS_fnc_returnConfigEntry,"Assigned Items"] select (_containerType == 0);
 
     if (_containerClassName != "") then {
+        _containerContentMass = 0;
         _containerPath = _unitPath + [_tvCtrl tvAdd [_unitPath,_containerDisplayName]];
         _tvCtrl tvSetTooltip [_containerPath,_containerClassName];
         _tvCtrl tvSetData [_containerPath,_containerClassName];
+        _tvCtrl tvSetPicture [_containerPath,[configFile >> _containerParentClass >> _containerClassName,"picture",""] call BIS_fnc_returnConfigEntry];
 
         {
             _itemClassname = _x;
@@ -93,7 +116,10 @@ private _fnc_addItem = {
             _tvCtrl tvSetValue [_itemPath,_itemCount];
             _tvCtrl tvSetData [_itemPath,_itemClassname];
             _tvCtrl tvSetPicture [_itemPath,[configFile >> _itemParentClass >> _itemClassname,"picture",""] call BIS_fnc_returnConfigEntry];
+
+            _containerContentMass = _containerContentMass + _itemCount * ([_itemClassname] call ((ctrlParent _tvCtrl) getVariable [QGVAR(fnc_getMass),{}]));
         } forEach _uniqueItemsList;
+        _tvCtrl tvSetValue [_containerPath,_containerContentMass * 100];
     };
 };
 
@@ -102,17 +128,16 @@ private _fnc_updateCamera = {
 
     if (isNull _display) exitWith {};
 
-    _cam = _display getVariable [QGVAR(cam),objNull];
-    _camProperties = _display getVariable [QGVAR(camProperties),DEFAULT_CAMPROPS];
+    private _cam = _display getVariable [QGVAR(cam),objNull];
+    private _camProperties = _display getVariable [QGVAR(camProperties),DEFAULT_CAMPROPS];
     _camProperties params ["_dis","_dirH","_dirV","_targetHelperOffset",["_targetUnit",objNull]];
 
-    _targetHelper = _targetUnit getVariable [QGVAR(targetHelper),objNull];
+    private _targetHelper = _targetUnit getVariable [QGVAR(targetHelper),objNull];
     if (isNull _targetHelper) exitWith {ERROR("_targetHelper is null")};
 
     [_targetHelper,[_dirH + 180,-_dirV,0]] call bis_fnc_setobjectrotation;
     _targetHelper attachto [_targetUnit,_targetHelperOffset,""];
 
-    diag_log ["_targetHelper",_targetHelper];
     _cam setpos (_targetHelper modeltoworld [0,-_dis,0]);
     _cam setvectordirandup [vectordir _targetHelper,vectorup _targetHelper];
 
@@ -125,17 +150,34 @@ private _fnc_updateCamera = {
     _cam camCommit 0;
 };
 
+private _fnc_getMass = {
+    params ["_className"];
+
+    private _mass = [configFile >> "CfgWeapons" >> _className >> "ItemInfo","mass",0] call BIS_fnc_returnConfigEntry;
+    if (_mass == 0) then {
+        _mass = [configFile >> "CfgWeapons" >> _className >> "WeaponSlotsInfo","mass",0] call BIS_fnc_returnConfigEntry;
+    };
+    if (_mass == 0) then {
+        _mass = [configFile >> "CfgMagazines" >> _className,"mass",0] call BIS_fnc_returnConfigEntry;
+    };
+    if (_mass == 0) then {
+        _mass = [configFile >> "CfgVehicles" >> _className,"mass",0] call BIS_fnc_returnConfigEntry;
+    };
+    (round (_mass * (1/22.046) * 100)) / 100
+};
+
 
 // CREATE DIALOG ===============================================================
 private _display = (findDisplay 46) createDisplay "RscDisplayEmpty";
 if (isNull _display) exitWith {systemChat "[GRAD] (loadout) ERROR: Display is null."};
 
 _display setVariable [QGVAR(fnc_updateCamera),_fnc_updateCamera];
+_display setVariable [QGVAR(fnc_getMass),_fnc_getMass];
 
 {
     _bgCtrl = _display ctrlCreate ["RscBackground",-1];
     _bgCtrl ctrlSetPosition _x;
-    _bgCtrl ctrlSetBackgroundColor [0.1,0.1,0.1,1];
+    _bgCtrl ctrlSetBackgroundColor BACKGROUND_COLOR;
     _bgCtrl ctrlCommit 0;
 } forEach [
     [safeZoneX,safeZoneY,safeZoneW,PADDING_Y],
@@ -146,13 +188,30 @@ _display setVariable [QGVAR(fnc_updateCamera),_fnc_updateCamera];
 
 private _camInteractionCtrl = _display ctrlCreate ["RscTextMulti",-1];
 _camInteractionCtrl ctrlSetPosition [CAMERA_X,COLUMN_Y,CAMERA_W,COLUMN_H];
-_camInteractionCtrl ctrlSetBackgroundColor [0,0,0,0];
+_camInteractionCtrl ctrlSetBackgroundColor BACKGROUND_COLOR;
 _camInteractionCtrl ctrlCommit 0;
+_display setVariable [QGVAR(camInteractionCtrl),_camInteractionCtrl];
 
 private _tvCtrl = _display ctrlCreate ["RscTree",-1];
 _tvCtrl ctrlSetPosition [COLUMN1_X,COLUMN_Y,COLUMN_W,COLUMN_H];
 _tvCtrl ctrlCommit 0;
 
+private _infoPicCtrl = _display ctrlCreate ["RscPictureKeepAspect",-1];
+/* private _infoPicCtrl = _display ctrlCreate ["RscText",-1]; */
+/* _infoPicCtrl ctrlSetBackgroundColor [1,0,0,1]; */
+_infoPicCtrl ctrlSetPosition [INFOPIC_X,INFOPIC_Y,INFOPIC_W,INFOPIC_H];
+_infoPicCtrl ctrlCommit 0;
+_display setVariable [QGVAR(infoPicCtrl),_infoPicCtrl];
+
+private _infoTextCtrlL = _display ctrlCreate ["RscStructuredText",-1];
+_infoTextCtrlL ctrlSetPosition [INFOTEXTL_X,INFOTEXT_Y,2 * X_SCALE,5 * X_SCALE];
+_infoTextCtrlL ctrlCommit 0;
+_display setVariable [QGVAR(infoTextCtrlL),_infoTextCtrlL];
+
+private _infoTextCtrlR = _display ctrlCreate ["RscStructuredText",-1];
+_infoTextCtrlR ctrlSetPosition [INFOTEXTR_X,INFOTEXT_Y,INFOTEXT_W,INFOTEXT_H];
+_infoTextCtrlR ctrlCommit 0;
+_display setVariable [QGVAR(infoTextCtrlR),_infoTextCtrlR];
 
 
 // CREATE CAMERA ===============================================================
@@ -185,8 +244,8 @@ _tvCtrl ctrlAddEventHandler ["treeSelChanged",{
 
     _display = ctrlParent _tvCtrl;
 
+    // center cam on selected unit/group
     _unitsCache = _display getVariable [QGVAR(unitsCache),[]];
-
     _unit = if (count _selPath > 1) then {
         if (count _selPath > 2) then {
             _unitsCache select _sideIndex select _groupIndex select _unitIndex
@@ -195,9 +254,13 @@ _tvCtrl ctrlAddEventHandler ["treeSelChanged",{
         };
     } else {objNull};
 
+    _camProperties = _display getVariable [QGVAR(camProperties),DEFAULT_CAMPROPS];
+    _camProperties params ["_dis","_dirH","_dirV","_targetHelperOffset",["_targetUnit",objNull]];
+
     if (!isNull _unit) then {
-        _camProperties = _display getVariable [QGVAR(camProperties),DEFAULT_CAMPROPS];
-        _camProperties params ["_dis","_dirH","_dirV","_targetHelperOffset",["_targetUnit",objNull]];
+        if (isNull _targetUnit) then {
+            (_display getVariable [QGVAR(camInteractionCtrl),controlNull]) ctrlSetBackgroundColor [0,0,0,0];
+        };
 
         if (_targetUnit != _unit) then {
             deleteVehicle (_targetUnit getVariable [QGVAR(targetHelper),objNull]);
@@ -209,6 +272,59 @@ _tvCtrl ctrlAddEventHandler ["treeSelChanged",{
         };
 
         [_display] call (_display getVariable [QGVAR(fnc_updateCamera),{ERROR("_fnc_updateCamera not found")}]);
+    } else {
+        if (!isNull _targetUnit) then {
+            (_display getVariable [QGVAR(camInteractionCtrl),controlNull]) ctrlSetBackgroundColor BACKGROUND_COLOR;
+            _camProperties set [4,_unit];
+        };
+    };
+
+    // display info
+    _infoPicCtrl = _display getVariable [QGVAR(infoPicCtrl),controlNull];
+    _infoTextCtrlL = _display getVariable [QGVAR(infoTextCtrlL),controlNull];
+    _infoTextCtrlR = _display getVariable [QGVAR(infoTextCtrlR),controlNull];
+
+    if (count _selPath > 2) then {
+        _infoTextArrayL = [(_tvCtrl tvText _selPath),lineBreak,lineBreak];
+        _infoTextArrayR = ["<br/>","<br/>"];
+
+        if (count _selPath == 3) then {
+            _infoTextArrayL pushBack "Total Load:";
+            _infoTextArrayR pushBack format ["%1 kg",(round ((0.1 * loadAbs _unit) * (1/2.2046) * 100)) / 100];
+        };
+
+        if (count _selPath in [4,5]) then {
+            _infoPicCtrl ctrlSetText (_tvCtrl tvPicture _selPath);
+
+            _itemWeight = ([_tvCtrl tvData _selPath] call (_display getVariable [QGVAR(fnc_getMass),{}]));
+
+            // assigned items container has no weight
+            if (_selPath select 3 > 0 || count _selPath == 5) then {
+                _infoTextArrayL pushBack "Item Weight:";
+                _infoTextArrayR pushBack format ["%1 kg",_itemWeight];
+                _infoTextArrayL pushBack lineBreak;
+                _infoTextArrayR pushBack "<br/>";
+            };
+
+            if (count _selPath == 4) then {
+                _infoTextArrayL pushBack "Content Weight:";
+                _infoTextArrayR pushBack format ["%1 kg",(_tvCtrl tvValue _selPath)/100];
+            };
+
+            if (count _selPath == 5 && {(_tvCtrl tvValue _selPath) > 1}) then {
+                _infoTextArrayL pushBack "Total Weight:";
+                _infoTextArrayR pushBack format ["%1 kg",_itemWeight * (_tvCtrl tvValue _selPath)];
+            };
+        } else {
+            _infoPicCtrl ctrlSetText "";
+        };
+
+        _infoTextCtrlL ctrlSetStructuredText composeText _infoTextArrayL;
+        _infoTextCtrlR ctrlSetStructuredText parseText call {_t = "<t align='right'>"; {_t=_t+_x} forEach _infoTextArrayR;_t + "</t>"};
+    } else {
+        _infoTextCtrlL ctrlSetStructuredText parseText "";
+        _infoTextCtrlR ctrlSetStructuredText parseText "";
+        _infoPicCtrl ctrlSetText "";
     };
 }];
 
