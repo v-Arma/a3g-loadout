@@ -6,6 +6,7 @@ class GRAD_Loadout {
     class Api {
         file = MODULES_DIRECTORY\grad-loadout\functions\api;
         class DoLoadoutForUnit {};
+        class LoadoutViewer {};
     };
     class Extract {
         file = MODULES_DIRECTORY\grad-loadout\functions\extract;
