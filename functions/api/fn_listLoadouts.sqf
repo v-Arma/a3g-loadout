@@ -42,6 +42,7 @@
 #define DISPLAYFUNC(var)            (_display getVariable [QUOTE(QUADS(PREFIX,COMPONENT,fnc,var)),{}])
 #define DISPLAYCONTROL(var)         (_display getVariable [QUOTE(TRIPLES(PREFIX,COMPONENT,var)),controlNull])
 #define DISPLAYVAR(var1,var2)       (_display getVariable [QGVAR(var1),var2])
+#define CONVERTTOKG(var)            (round ((0.1 * var) * (1/2.2046) * 100)) / 100
 
 // CREATE DIALOG ===============================================================
 private _display = (findDisplay 46) createDisplay "RscDisplayEmpty";
@@ -243,7 +244,7 @@ _display setVariable [QGVAR(fnc_getItemMass),{
     if (_mass == 0) then {
         _mass = [configFile >> "CfgVehicles" >> _className,"mass",0] call BIS_fnc_returnConfigEntry;
     };
-    (round (_mass * (1/22.046) * 100)) / 100
+    CONVERTTOKG(_mass)
 }];
 
 
@@ -306,12 +307,13 @@ _tvCtrl ctrlAddEventHandler ["treeSelChanged",{
     _infoTextCtrlR = DISPLAYCONTROL(infoTextCtrlR);
 
     if (count _selPath > 2) then {
+        // _infoTextArrayR needs <br/> instead of lineBreak because it's converted to structured text differently in order for <t align='right'> to work
         _infoTextArrayL = [(_tvCtrl tvText _selPath),lineBreak,lineBreak];
         _infoTextArrayR = ["<br/>","<br/>"];
 
         if (count _selPath == 3) then {
             _infoTextArrayL pushBack "Total Load:";
-            _infoTextArrayR pushBack format ["%1 kg",(round ((0.1 * loadAbs _unit) * (1/2.2046) * 100)) / 100];
+            _infoTextArrayR pushBack format ["%1 kg",CONVERTTOKG(loadAbs _unit)];
         };
 
         if (count _selPath in [4,5]) then {
@@ -328,8 +330,25 @@ _tvCtrl ctrlAddEventHandler ["treeSelChanged",{
             };
 
             if (count _selPath == 4) then {
+                _containerClassName = (_tvCtrl tvData _selPath);
                 _infoTextArrayL pushBack "Content Weight:";
                 _infoTextArrayR pushBack format ["%1 kg",(_tvCtrl tvValue _selPath)/100];
+
+
+                if ((isClass (configFile >> "CfgWeapons" >> _containerClassName) || (isClass (configFile >> "CfgVehicles" >> _containerClassName))) && {getContainerMaxLoad _containerClassName > -1}) then {
+                    _infoTextArrayL pushBack lineBreak;
+                    _infoTextArrayR pushBack "<br/>";
+
+                    _maxLoad = CONVERTTOKG(getContainerMaxLoad _containerClassName);
+                    _currentLoad = ((_tvCtrl tvValue _selPath)/100);
+                    _spaceleft = _maxLoad - _currentLoad;
+
+                    _infoTextArrayL pushBack "Space Left:";
+                    _infoTextArrayR pushBack ([
+                        format ["%1 kg (%2%3)",_spaceleft,(round ((_spaceleft/_maxLoad)*100)),"%"],
+                        "<t color='#ff2b2b'>Beyond max. capacity!"
+                    ] select (_spaceleft < 0));
+                };
             };
 
             if (count _selPath == 5 && {(_tvCtrl tvValue _selPath) > 1}) then {
