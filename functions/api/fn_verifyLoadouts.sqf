@@ -10,7 +10,7 @@ private _fnc_verify = {
 
     _this call _fnc_checkContainers;
     _this call _fnc_checkWeapons;
-
+    _this call _fnc_checkOther;
 };
 
 private _fnc_getMass = {
@@ -161,6 +161,19 @@ private _fnc_magazineFits = {
         } forEach _muzzles;
     };
     _magazineFits
+};
+
+private _fnc_checkOther = {
+    params ["_loadoutHash","_unit"];
+
+    {
+        _otherClassname = [_loadoutHash,_x] call CBA_fnc_hashGet;
+        if (!isNil "_otherClassname" && {_otherClassname != ""}) then {
+            if !([_otherClassname] call _fnc_checkClassExists) then {
+                _errorLog pushBack [format ["%1 %2 does not exist",_x,_otherClassname],_unit];
+            };
+        };
+    } forEach ["headgear","goggles","nvgoggles","binoculars","map","gps","compass","watch","radio"];
 };
 
 // MAIN ========================================================================
