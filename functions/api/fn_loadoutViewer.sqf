@@ -235,14 +235,17 @@ _display setVariable [QGVAR(fnc_getItemMass),{
     params ["_className"];
 
     private _mass = [configFile >> "CfgWeapons" >> _className >> "ItemInfo","mass",0] call BIS_fnc_returnConfigEntry;
-    if (_mass == 0) then {
+    if (_mass isEqualTo 0) then {
         _mass = [configFile >> "CfgWeapons" >> _className >> "WeaponSlotsInfo","mass",0] call BIS_fnc_returnConfigEntry;
     };
-    if (_mass == 0) then {
+    if (_mass isEqualTo 0) then {
         _mass = [configFile >> "CfgMagazines" >> _className,"mass",0] call BIS_fnc_returnConfigEntry;
     };
-    if (_mass == 0) then {
+    if (_mass isEqualTo 0) then {
         _mass = [configFile >> "CfgVehicles" >> _className,"mass",0] call BIS_fnc_returnConfigEntry;
+    };
+    if !(_mass isEqualType 0) then {
+        _mass = 0;
     };
     CONVERTTOKG(_mass)
 }];

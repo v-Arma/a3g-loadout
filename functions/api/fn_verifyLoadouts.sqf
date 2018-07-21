@@ -16,14 +16,17 @@ private _fnc_verify = {
 private _fnc_getMass = {
     params ["_className"];
     private _mass = [configFile >> "CfgWeapons" >> _className >> "ItemInfo","mass",0] call BIS_fnc_returnConfigEntry;
-    if (_mass == 0) then {
+    if (_mass isEqualTo 0) then {
         _mass = [configFile >> "CfgWeapons" >> _className >> "WeaponSlotsInfo","mass",0] call BIS_fnc_returnConfigEntry;
     };
-    if (_mass == 0) then {
+    if (_mass isEqualTo 0) then {
         _mass = [configFile >> "CfgMagazines" >> _className,"mass",0] call BIS_fnc_returnConfigEntry;
     };
-    if (_mass == 0) then {
+    if (_mass isEqualTo 0) then {
         _mass = [configFile >> "CfgVehicles" >> _className,"mass",0] call BIS_fnc_returnConfigEntry;
+    };
+    if !(_mass isEqualType 0) then {
+        _mass = 0;
     };
     _mass
 };
@@ -35,7 +38,10 @@ private _fnc_getLoad = {
         _load = _load + ([_x] call _fnc_getMass);
         false
     } count _itemsList;
-    _load/(getContainerMaxLoad _container)
+    _maxLoad = getContainerMaxLoad _container;
+
+    _loadRatio = if (_maxLoad <= 0) then {-1} else {_load/_maxLoad};
+    _loadRatio
 };
 
 private _fnc_checkClassExists = {
@@ -78,10 +84,14 @@ private _fnc_checkContainers = {
         if (!isNil "_itemsList" && !isNil "_container" && {count _itemsList > 0} && {_container != ""}) then {
             if (count _itemsList == 0) then {
                 _warningLog pushBack [format ["no items in %1",_containerKey],_unit];
-            };
-            _load = [_container,_itemsList] call _fnc_getLoad;
-            if (_load > 1) then {
-                _errorLog pushBack [format ["%1 %2 loaded beyond capacity (%3%4)",_containerKey,_container,round (_load*100),"%"],_unit];
+            } else {
+                _load = [_container,_itemsList] call _fnc_getLoad;
+                if (_load > 1) then {
+                    _errorLog pushBack [format ["%1 %2 loaded beyond capacity (%3%4)",_containerKey,_container,round (_load*100),"%"],_unit];
+                };
+                if (_load < 0) then {
+                    _errorLog pushBack [format ["%1 %2 can not hold any items",_containerKey,_container],_unit];
+                };
             };
         };
 
