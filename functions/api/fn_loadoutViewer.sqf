@@ -348,7 +348,7 @@ _tvCtrl ctrlAddEventHandler ["treeSelChanged",{
 
                     _infoTextArrayL pushBack "Space Left:";
                     _infoTextArrayR pushBack ([
-                        format ["%1 kg (%2%3)",_spaceleft,(round ((_spaceleft/_maxLoad)*100)),"%"],
+                        format ["%1 kg (%2%3)",_spaceleft,(round ((_spaceleft/(_maxLoad max 0.0001))*100)),"%"],
                         "<t color='#ff2b2b'>Beyond max. capacity!"
                     ] select (_spaceleft < 0));
                 };
