@@ -2,7 +2,25 @@
 #define COMPONENT loadout
 #include "\x\cba\addons\main\script_macros_mission.hpp"
 
+#define CENTER(PARENT_SIZE, CHILD_SIZE)     ((PARENT_SIZE / 2) - (CHILD_SIZE / 2))
+#define SZ_SCALE                            (safezoneW min safezoneH)
+#define X_SCALE                             (SZ_SCALE * 0.75)
+#define Y_SCALE                             (SZ_SCALE * 1.0)
 
+#define PADDING_X                           (0.025 * X_SCALE)
+#define PADDING_Y                           (0.025 * Y_SCALE)
+#define SPACER_Y                            (0.000 * Y_SCALE)
+
+#define TOTAL_W                             (safeZoneW)
+#define TOTAL_H                             (safeZoneH)
+#define TOTAL_X                             (CENTER(1,TOTAL_W))
+#define TOTAL_Y                             (CENTER(1,TOTAL_H))
+
+#define TITLE_H                             (0.025 * Y_SCALE)
+#define BACKGROUND_H                        (TOTAL_H - SPACER_Y - TITLE_H)
+#define BACKGROUND_Y                        (TOTAL_Y + SPACER_Y + TITLE_H)
+
+#define BACKGROUND_COLOR                    [0.1,0.1,0.1,1]
 
 // SUBFUNCTIONS ================================================================
 private _fnc_verify = {
@@ -186,7 +204,36 @@ private _fnc_checkOther = {
     } forEach ["headgear","goggles","nvgoggles","binoculars","map","gps","compass","watch","radio"];
 };
 
+private _fnc_errorDisplay = {
+    params ["_textArray",["_title",""]];
+
+    private _display = (findDisplay 46) createDisplay "RscDisplayEmpty";
+    if (isNull _display) exitWith {systemChat "[GRAD] (loadout) ERROR: Display is null."};
+
+    private _titleCtrl = _display ctrlCreate ["RscTitle",-1];
+    _titleCtrl ctrlSetPosition [TOTAL_X,TOTAL_Y,TOTAL_W,TITLE_H];
+    _titleCtrl ctrlSetBackgroundColor [profilenamespace getvariable ['GUI_BCG_RGB_R',0.13],profilenamespace getvariable ['GUI_BCG_RGB_G',0.54],profilenamespace getvariable ['GUI_BCG_RGB_B',0.21],profilenamespace getvariable ['GUI_BCG_RGB_A',0.8]];
+    _titleCtrl ctrlSetText _title;
+    _titleCtrl ctrlCommit 0;
+
+    private _bgCtrl = _display ctrlCreate ["RscBackground",-1];
+    _bgCtrl ctrlSetPosition [TOTAL_X,BACKGROUND_Y,TOTAL_W,BACKGROUND_H];
+    _bgCtrl ctrlSetBackgroundColor BACKGROUND_COLOR;
+    _bgCtrl ctrlCommit 0;
+
+    _cgCtrl = _display ctrlCreate ["RscControlsGroupNoHScrollbars",-1];
+    _cgCtrl ctrlSetPosition [TOTAL_X,BACKGROUND_Y,TOTAL_W,BACKGROUND_H];
+    _cgCtrl ctrlCommit 0;
+
+    _textCtrl = _display ctrlCreate ["RscStructuredText",-1,_cgCtrl];
+    _textCtrl ctrlSetStructuredText parseText (_textArray joinString "<br/>");
+    _textCtrl ctrlSetPosition [0,0,TOTAL_W,(ctrlTextHeight _textCtrl) * 0.10];
+    _textCtrl ctrlCommit 0;
+};
+
 // MAIN ========================================================================
+systemChat "grad-loadout verifier: checking loadouts";
+
 private _configPath = missionConfigFile >> "Loadouts";
 
 if ((missionNamespace getVariable [QGVAR(Chosen_Prefix),""]) != "") then {
@@ -207,6 +254,8 @@ private _verifiedLoadoutCount = 0;
     };
 } forEach allUnits;
 
+private _displayText = [];
+
 diag_log "GRAD-LOADOUT VERIFICATION REPORT =====================================";
 diag_log format ["%1 loadouts checked",_verifiedLoadoutCount];
 diag_log format ["%1 errors, %2 warnings",count _errorLog,count _warningLog];
@@ -214,11 +263,15 @@ diag_log format ["%1 errors, %2 warnings",count _errorLog,count _warningLog];
     _logType = ["ERROR","WARNING"] select _forEachIndex;
     {
         _x params ["_message","_unit"];
-        diag_log format ["%1: %2 - %3 (%4)",_logType,_message,_unit,[_unit] call _fnc_getRoleDescription];
+        _log = format ["%1: %2 - %3 (%4)",_logType,_message,_unit,[_unit] call _fnc_getRoleDescription];
+        diag_log _log;
+        _displayText pushBack _log;
     } forEach _x;
 } forEach [_errorLog,_warningLog];
 diag_log "======================================================================";
 
-systemChat format ["%1 loadouts checked",_verifiedLoadoutCount];
-systemChat format ["%1 errors, %2 warnings",count _errorLog,count _warningLog];
-if (count _errorLog > 0 || count _warningLog > 0) then {systemChat "see rpt file for results"};
+systemChat format ["grad-loadout verifier: %1 loadouts checked",_verifiedLoadoutCount];
+systemChat format ["grad-loadout verifier: %1 errors, %2 warnings",count _errorLog,count _warningLog];
+if (count _errorLog > 0 || count _warningLog > 0) then {systemChat "grad-loadout verifier: see rpt file for results"};
+
+[_displayText,format ["GRAD-LOADOUT VERIFIER  -  %1 ERRORS, %2 WARNINGS",count _errorLog,count _warningLog]] call _fnc_errorDisplay;
