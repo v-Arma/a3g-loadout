@@ -34,6 +34,11 @@
 #define INFOTEXT_Y          (INFOPIC_Y + INFOPIC_H + PADDING_Y)
 #define INFOTEXT_H          (5.000 * Y_SCALE)
 
+#define SWITCHBUTTON_H      (0.025 * Y_SCALE)
+#define SWITCHBUTTON_W      (COLUMN_W - 6 * PADDING_X)
+#define SWITCHBUTTON_X      (COLUMN2_X + (COLUMN_W - SWITCHBUTTON_W) / 2)
+#define SWITCHBUTTON_Y      (safeZoneY + safeZoneH - PADDING_Y - SWITCHBUTTON_H)
+
 
 // OTHER DEFINES ===============================================================
 #define DEFAULT_CAMPROPS            [7,45,20,[0,0,0.9],objNull]
@@ -97,6 +102,14 @@ private _infoTextCtrlR = _display ctrlCreate ["RscStructuredText",-1];
 _infoTextCtrlR ctrlSetPosition [INFOTEXTR_X,INFOTEXT_Y,INFOTEXT_W,INFOTEXT_H];
 _infoTextCtrlR ctrlCommit 0;
 _display setVariable [QGVAR(infoTextCtrlR),_infoTextCtrlR];
+
+private _switchUnitCtrl = _display ctrlCreate ["RscButtonMenu",-1];
+_switchUnitCtrl ctrlSetPosition [SWITCHBUTTON_X,SWITCHBUTTON_Y,SWITCHBUTTON_W,SWITCHBUTTON_H];
+_switchUnitCtrl ctrlSetBackgroundColor [profilenamespace getvariable ['GUI_BCG_RGB_R',0.13],profilenamespace getvariable ['GUI_BCG_RGB_G',0.54],profilenamespace getvariable ['GUI_BCG_RGB_B',0.21],profilenamespace getvariable ['GUI_BCG_RGB_A',0.8]];
+_switchUnitCtrl ctrlSetText "Switch to Unit";
+_switchUnitCtrl ctrlEnable false;
+_switchUnitCtrl ctrlCommit 0;
+_display setVariable [QGVAR(switchUnitCtrl),_switchUnitCtrl];
 
 
 // SUBFUNCTIONS ================================================================
@@ -268,6 +281,7 @@ _tvCtrl ctrlAddEventHandler ["treeSelChanged",{
     _selPath params [["_sideIndex",999999],["_groupIndex",999999],["_unitIndex",999999],["_containerIndex",999999],["_itemIndex",999999]];
 
     _display = ctrlParent _tvCtrl;
+    _switchUnitCtrl = _display getVariable [QGVAR(switchUnitCtrl),controlNull];
 
     // center cam on selected unit/group
     _unitsCache = DISPLAYVAR(unitsCache,[]);
@@ -281,6 +295,12 @@ _tvCtrl ctrlAddEventHandler ["treeSelChanged",{
 
     _camProperties = _display getVariable [QGVAR(camProperties),DEFAULT_CAMPROPS];
     _camProperties params ["_dis","_dirH","_dirV","_targetHelperOffset",["_targetUnit",objNull]];
+
+    if (count _selPath > 2 && {!isNull _unit} && {!isPlayer _unit}) then {
+        _switchUnitCtrl ctrlEnable true;
+    } else {
+        _switchUnitCtrl ctrlEnable false;
+    };
 
     if (!isNull _unit) then {
         if (isNull _targetUnit) then {
@@ -368,6 +388,35 @@ _tvCtrl ctrlAddEventHandler ["treeSelChanged",{
         _infoTextCtrlL ctrlSetStructuredText parseText "";
         _infoTextCtrlR ctrlSetStructuredText parseText "";
         _infoPicCtrl ctrlSetText "";
+    };
+}];
+
+_switchUnitCtrl ctrlAddEventHandler ["buttonClick",{
+    params [["_switchUnitCtrl",controlNull]];
+
+
+    _display = ctrlParent _switchUnitCtrl;
+    _tvCtrl = _display getVariable [QGVAR(tvCtrl),controlNull];
+    _selPath = tvCurSel _tvCtrl;
+
+    _selPath params [["_sideIndex",999999],["_groupIndex",999999],["_unitIndex",999999],["_containerIndex",999999],["_itemIndex",999999]];
+    _unitsCache = DISPLAYVAR(unitsCache,[]);
+
+    _unit = if (count _selPath > 1) then {
+        if (count _selPath > 2) then {
+            _unitsCache select _sideIndex select _groupIndex select _unitIndex
+        } else {
+            leader (_unitsCache select _sideIndex select _groupIndex select 0)
+        };
+    } else {objNull};
+
+    if (!isNull _unit) then {
+        _display closeDisplay 1;
+        selectPlayer _unit;
+        player action ["Gear",player];
+    } else {
+        _switchUnitCtrl ctrlEnable false;
+        playSound "taskFailed";
     };
 }];
 
