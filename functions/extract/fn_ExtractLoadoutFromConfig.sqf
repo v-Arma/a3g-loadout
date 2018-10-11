@@ -34,6 +34,10 @@ private _configValues = [] call CBA_fnc_hashCreate;
     if (!(_value isEqualTo false)) then {
         [_configValues, _x, _value] call CBA_fnc_hashSet;
     };
+    _value = [_configPath >> _x, "array", false] call CBA_fnc_getConfigEntry;
+    if (!(_value isEqualTo false)) then {
+        [_configValues, _x, (selectRandom _value)] call CBA_fnc_hashSet;
+    };
 } forEach [
     "uniform",
     "vest",
