@@ -149,7 +149,7 @@ This simple block of code changes and applies the loadout of 18 units at once, b
 To use a random selection of Uniforms, Vests, etc. it is possible to define them as an array. Example:
 ```sqf
 class AllUnits {
-		uniform[] = {"U_C_man_sport_1_F", "U_BG_Guerilla2_1"};
+	uniform[] = {"U_C_man_sport_1_F", "U_BG_Guerilla2_1"};
 };
 ```
 
