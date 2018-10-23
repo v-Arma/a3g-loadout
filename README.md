@@ -108,6 +108,11 @@ dynamically adjust loadout values. This example adds a bit of randomization to R
 ] call GRAD_Loadout_fnc_addReviver;
 ```
 
+## Debugging
+To see if your loadouts were applied correctly, you can use the chat command `#grad-loadout viewer` to open the loadoutViewer and inspect all units.
+
+To check all currently loaded loadouts, you can use the chat command `#grad-loadout verify`. This will test the loadouts of all units currently in the game and output errors and warning to your rpt file.
+
 ## Loadouts
 
 Loadouts are defined directly inside the `description.ext`. They are applied on mission start and when you respawn. This is an example on how a loadout looks like with this system:

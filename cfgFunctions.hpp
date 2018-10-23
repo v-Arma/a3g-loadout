@@ -6,6 +6,8 @@ class GRAD_Loadout {
     class Api {
         file = MODULES_DIRECTORY\grad-loadout\functions\api;
         class DoLoadoutForUnit {};
+        class LoadoutViewer {};
+        class VerifyLoadouts {};
     };
     class Extract {
         file = MODULES_DIRECTORY\grad-loadout\functions\extract;
@@ -14,6 +16,9 @@ class GRAD_Loadout {
     };
     class General {
         file = MODULES_DIRECTORY\grad-loadout\functions\general;
+        class AddChatCommands {
+            postInit = 1;
+        };
         class ApplyLoadout {};
         class AssignRespawn {
           postInit = 1;
