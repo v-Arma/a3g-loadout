@@ -146,6 +146,13 @@ class Loadouts {
 
 This simple block of code changes and applies the loadout of 18 units at once, based on a few key instructions. Since the `AllPlayers` class is done first ( the actual order inside the block plays no role, the loadout for `AllPlayers` is always applied first ), followed by the class based loadouts and finally the individual loadouts, you can combine the different priority layers for some extremely tight loadout descriptions. We don't have to redefine a different primary weapon for the individual soldiers because the `AllPlayers` class already gives them each one. Note that the marksman class `AV_IndUs_Marksman_M14_Des` gets a different primary weapon, which is why we redefine it in his loadout, which overwrites the generic behavior of `AllPlayers`.
 
+To use a random selection of Uniforms, Vests, etc. it is possible to define them as an array. Example:
+```sqf
+class AllUnits {
+		uniform[] = {"U_C_man_sport_1_F", "U_BG_Guerilla2_1"};
+};
+```
+
 ### Notes
 - Unique loadouts ( targeting a specific unit ) overwrite class loadouts ( targeting all units of the same class ), which in turn overwrite `generic` loadouts ( targeting multiple units ).
 - All loadouts are case _insensitive_, meaning `person`, `Person` and `perSon` all refer to the same unit, likewise, class definition and the `AllPlayers` class are also case insensitive. This is because Bohemia Interactive doesn't know how string comparisons should work.
