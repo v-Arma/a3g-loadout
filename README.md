@@ -97,7 +97,7 @@ dynamically adjust loadout values. This example adds a bit of randomization to R
 ```
 [
     {
-        _value = param [0];
+        params ["_value"];
         if (_value == "rhs_6b27m_digi") then {
             _value = selectRandom ["rhs_6b27m_digi", "rhs_6b27m_digi_bala"];
         };

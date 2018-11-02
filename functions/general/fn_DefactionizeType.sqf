@@ -3,7 +3,7 @@
 #define COMPONENT loadout
 #include "\x\cba\addons\main\script_macros_mission.hpp"
 
-private _unit = param [0];
+params ["_unit"];
 
 private _defactionedClassname = "";
 {

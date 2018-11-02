@@ -3,8 +3,7 @@
 #define COMPONENT loadout
 #include "\x\cba\addons\main\script_macros_mission.hpp"
 
-private _loadoutHash = param [0, []];
-private _unit = param [1, objNull];
+params [["_loadoutHash", []], ["_unit", objNull]];
 
 [
 	_loadoutHash,

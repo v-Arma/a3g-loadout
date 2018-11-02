@@ -2,12 +2,12 @@
 #define COMPONENT loadout
 #include "\x\cba\addons\main\script_macros_mission.hpp"
 
-private _configPath = param [0];
+params ["_configPath"];
 
 GVAR(usedConfigs) pushBack _configPath;
 
 {
-    _value = [_configPath >> _x, "array", false] call CBA_fnc_getConfigEntry;
+    private _value = [_configPath >> _x, "array", false] call CBA_fnc_getConfigEntry;
     if (_value isEqualTo false) then {
         _value = [_configPath >> _x, "text", false] call CBA_fnc_getConfigEntry;
     };
