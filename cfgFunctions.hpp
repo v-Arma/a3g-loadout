@@ -35,8 +35,7 @@ class GRAD_Loadout {
         class hashToUnitLoadout {};
         class initGlobals {preinit = 1;};
         class mergeLoadoutHierarchy {};
-        class normalizeMagazinesInContent {};
-        class normalizeWeaponsInContent {};
+        class normalizeContent {};
         class removeRadios {preinit = 1;};
         class scheduleLoadout {postInit = 1;};
         class weaponIsCompatibleMagazine {};

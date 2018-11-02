@@ -164,17 +164,17 @@ private _defaultValueForItemCarriers = {
 (_unitLoadout select 2) call _normalizeWeaponArray;
 
 [[3, 0], "uniform"] call _assignFromLoadoutHash;
-[[3, 1], "addItemsToUniform", FUNC(NormalizeMagazinesInContent)] call _assignFromLoadoutHash;
+[[3, 1], "addItemsToUniform", FUNC(normalizeContent)] call _assignFromLoadoutHash;
 3 call _defaultValueForItemCarriers;
 [3, 0] call _setEmptyParentArrayIfEmptyString;
 
 [[4, 0], "vest"] call _assignFromLoadoutHash;
-[[4, 1], "addItemsToVest", FUNC(NormalizeMagazinesInContent)] call _assignFromLoadoutHash;
+[[4, 1], "addItemsToVest", FUNC(normalizeContent)] call _assignFromLoadoutHash;
 4 call _defaultValueForItemCarriers;
 [4, 0] call _setEmptyParentArrayIfEmptyString;
 
 [[5, 0], "backpack"] call _assignFromLoadoutHash;
-[[5, 1], "addItemsToBackpack", FUNC(NormalizeMagazinesInContent)] call _assignFromLoadoutHash;
+[[5, 1], "addItemsToBackpack", FUNC(normalizeContent)] call _assignFromLoadoutHash;
 5 call _defaultValueForItemCarriers;
 [5, 0] call _setEmptyParentArrayIfEmptyString;
 

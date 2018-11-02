@@ -81,8 +81,19 @@ private _configValues = [] call CBA_fnc_hashCreate;
     };
 } forEach [
     "addItemsToUniform",
-    "addItemsToVest",
-    "addItemsToBackpack"
+    "addItemsToVest"
 ];
+
+
+private _value = [_configPath >> "addItemsToBackpack", "array", false] call  CBA_fnc_getConfigEntry;
+if (!(_value isEqualTo false)) then {
+   {
+      if () then {
+
+      };
+   } forEach _value;
+   [_configValues, "addItemsToBackpack", _value] call CBA_fnc_hashSet;
+};
+
 
 _configValues
