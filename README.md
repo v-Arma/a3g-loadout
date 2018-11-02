@@ -151,13 +151,14 @@ class Loadouts {
 
 This simple block of code changes and applies the loadout of 18 units at once, based on a few key instructions. Since the `AllPlayers` class is done first ( the actual order inside the block plays no role, the loadout for `AllPlayers` is always applied first ), followed by the class based loadouts and finally the individual loadouts, you can combine the different priority layers for some extremely tight loadout descriptions. We don't have to redefine a different primary weapon for the individual soldiers because the `AllPlayers` class already gives them each one. Note that the marksman class `AV_IndUs_Marksman_M14_Des` gets a different primary weapon, which is why we redefine it in his loadout, which overwrites the generic behavior of `AllPlayers`.
 
+### Random selection
 To use a random selection of Uniforms, Vests, etc. it is possible to define them as an array. Example:
 ```sqf
 class AllUnits {
 	uniform[] = {"U_C_man_sport_1_F", "U_BG_Guerilla2_1"};
 };
 ```
-
+### Weapons in backpacks
 If you want to use a weapon in a backpack, the config has to look like the following:
 ```sqf
 addItemsToBackpack[] = {"arifle_Mk20C_F", ...};
