@@ -106,7 +106,7 @@ if (!(_value isEqualTo false)) then {
 
       if (_check) then {
          private _weapon = [_configPath >> _x >> "weapon", "text", ""] call  CBA_fnc_getConfigEntry;
-         if (!(_weapon isEqualTo "") && (_weapon isKindOf (configFile >> "CfgWeapons"))) then {
+         if (!(_weapon isEqualTo "") && (isClass (configFile >> "CfgWeapons" >> _weapon))) then {
             private _muzzle = [_configPath >> _x >> "muzzle", "text", ""] call  CBA_fnc_getConfigEntry;
             private _pointer = [_configPath >> _x >> "pointer", "text", ""] call  CBA_fnc_getConfigEntry;
             private _scope = [_configPath >> _x >> "scope", "text", ""] call  CBA_fnc_getConfigEntry;
