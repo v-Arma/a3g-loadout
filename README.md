@@ -158,6 +158,32 @@ class AllUnits {
 };
 ```
 
+If you want to use a weapon in a backpack, the config has to look like the following:
+```sqf
+addItemsToBackpack[] = {"arifle_Mk20C_F", ...};
+class arifle_Mk20C_F {
+    muzzle = "";
+    pointer = "";
+    scope = "";
+    magazine = "30Rnd_556x45_Stanag";
+    underBarrelMagazine = "";
+    underBarrel = "";
+};
+```
+or
+```sqf
+addItemsToBackpack[] = {"FancySchmazyWeapon", ...};
+class FancySchmazyWeapon {
+    weapon = "arifle_Mk20C_F";
+    muzzle = "";
+    pointer = "";
+    scope = "";
+    magazine = "30Rnd_556x45_Stanag";
+    underBarrelMagazine = "";
+    underBarrel = "";
+};
+```
+
 ### Notes
 - Unique loadouts ( targeting a specific unit ) overwrite class loadouts ( targeting all units of the same class ), which in turn overwrite `generic` loadouts ( targeting multiple units ).
 - All loadouts are case _insensitive_, meaning `person`, `Person` and `perSon` all refer to the same unit, likewise, class definition and the `AllPlayers` class are also case insensitive. This is because Bohemia Interactive doesn't know how string comparisons should work.

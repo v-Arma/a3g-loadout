@@ -92,7 +92,7 @@ if (!(_value isEqualTo false)) then {
          private _pointer = [_configPath >> _x >> "pointer", "text", ""] call  CBA_fnc_getConfigEntry;
          private _scope = [_configPath >> _x >> "scope", "text", ""] call  CBA_fnc_getConfigEntry;
          private _magazine = [_configPath >> _x >> "magazine", "text", ""] call  CBA_fnc_getConfigEntry;
-         private _underBarrelMagazine = [_configPath >> _x >> "muzzle", "text", ""] call  CBA_fnc_getConfigEntry;
+         private _underBarrelMagazine = [_configPath >> _x >> "underBarrelMagazine", "text", ""] call  CBA_fnc_getConfigEntry;
          private _underBarrel = [_configPath >> _x >> "underBarrel", "text", ""] call  CBA_fnc_getConfigEntry;
          _value set [_forEachIndex, [_x, _muzzle, _pointer, _scope, _magazine, _underBarrelMagazine, _underBarrel]];
       };
@@ -103,7 +103,7 @@ if (!(_value isEqualTo false)) then {
             private _pointer = [_configPath >> _x >> "pointer", "text", ""] call  CBA_fnc_getConfigEntry;
             private _scope = [_configPath >> _x >> "scope", "text", ""] call  CBA_fnc_getConfigEntry;
             private _magazine = [_configPath >> _x >> "magazine", "text", ""] call  CBA_fnc_getConfigEntry;
-            private _underBarrelMagazine = [_configPath >> _x >> "muzzle", "text", ""] call  CBA_fnc_getConfigEntry;
+            private _underBarrelMagazine = [_configPath >> _x >> "underBarrelMagazine", "text", ""] call  CBA_fnc_getConfigEntry;
             private _underBarrel = [_configPath >> _x >> "underBarrel", "text", ""] call  CBA_fnc_getConfigEntry;
             _value set [_forEachIndex, [_weapon, _muzzle, _pointer, _scope, _magazine, _underBarrelMagazine, _underBarrel]];
          };
