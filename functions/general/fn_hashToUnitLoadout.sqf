@@ -3,7 +3,7 @@
 #define COMPONENT loadout
 #include "\x\cba\addons\main\script_macros_mission.hpp"
 
-params ["_loadoutHash", "_unitLoadout"]
+params ["_loadoutHash", "_unitLoadout"];
 
 if (typeName _loadoutHash != "ARRAY") then {
     throw "loadoutHash is not of type array (and thus, no cba hash) :(("
