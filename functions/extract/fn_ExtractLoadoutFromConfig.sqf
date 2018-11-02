@@ -84,16 +84,28 @@ private _configValues = [] call CBA_fnc_hashCreate;
     "addItemsToVest"
 ];
 
-
 private _value = [_configPath >> "addItemsToBackpack", "array", false] call  CBA_fnc_getConfigEntry;
 if (!(_value isEqualTo false)) then {
    {
-      if () then {
-
+      if (_x isKindOf (configFile >> "CfgWeapons")) then {
+         private _muzzle = [_configPath >> _x >> "muzzle", "text", ""] call  CBA_fnc_getConfigEntry;
+         private _scope = [_configPath >> _x >> "scope", "text", ""] call  CBA_fnc_getConfigEntry;
+         private _magazine = [_configPath >> _x >> "magazine", "text", ""] call  CBA_fnc_getConfigEntry;
+         private _underBarrelMagazine = [_configPath >> _x >> "muzzle", "text", ""] call  CBA_fnc_getConfigEntry;
+         private _underBarrel = [_configPath >> _x >> "underBarrel", "text", ""] call  CBA_fnc_getConfigEntry;
+         _value set [_forEachIndex, [_x, _muzzle, _scope, _magazine, _underBarrelMagazine, _underBarrel]];
       };
-   } forEach _value;
+      if !(_x isKindOf [(configFile >> "CfgWeapons"),(configFile >> "CfgItems"), (configFile >> "CfgMagazines"), (configFile >> "CfgVehicles"), (configFile >> "CfgAmmo")]) then {
+         private _weapon = [_configPath >> _x >> "weapon", "text", ""] call  CBA_fnc_getConfigEntry;
+         private _muzzle = [_configPath >> _x >> "muzzle", "text", ""] call  CBA_fnc_getConfigEntry;
+         private _scope = [_configPath >> _x >> "scope", "text", ""] call  CBA_fnc_getConfigEntry;
+         private _magazine = [_configPath >> _x >> "magazine", "text", ""] call  CBA_fnc_getConfigEntry;
+         private _underBarrelMagazine = [_configPath >> _x >> "muzzle", "text", ""] call  CBA_fnc_getConfigEntry;
+         private _underBarrel = [_configPath >> _x >> "_underBarrel", "text", ""] call  CBA_fnc_getConfigEntry;
+         _value set [_forEachIndex, [_weapon, _muzzle, _scope, _magazine, _underBarrelMagazine, _underBarrel]];
+      };
+   }forEach _value;
    [_configValues, "addItemsToBackpack", _value] call CBA_fnc_hashSet;
 };
-
 
 _configValues
