@@ -26,36 +26,38 @@ private _checkIfWeaponFits = {
    _result
 };
 
-private _items = [] call CBA_fnc_hashCreate;
+private _magazines = [] call CBA_fnc_hashCreate;
 private _contentForLoadout = [];
 private _backpackClass = [5, 0] call CBA_fnc_hashGet;
 
 {
-    [_items, _x] call _CBA_fnc_hashIncr;
+   if ((typeName _x) == "ARRAY") && (_x select 1) isKindOf (configFile >> "CfgWeapons") then {
+      _x params ["_weapon", "_muzzle", "_pointer", "_optics", "_magazine", "_underbarrelMagazine", "_underbarrel"];
+
+      if ([_backpackClass, _className] call _checkIfWeaponFits) then {
+         if (!(_magazine isEqualTo "") && isNumber (configFile >> _magazine >> "count")) then {
+            _magazine = [_magazine, (getNumber (configFile >> _magazine >> "count"))];
+         };
+         if (!(_underbarrelMagazine isEqualTo "") && isNumber (configFile >> _underbarrelMagazine >> "count")) then {
+            _underbarrelMagazine = [_underbarrelMagazine, (getNumber (configFile >> _underbarrelMagazine >> "count"))];
+         };
+         _contentForLoadout pushBack [_weapon, _muzzle, _pointer, _optics, _magazine, _underbarrelMagazine, _underbarrel];
+      };
+   }else{
+      [_magazines, _x] call _CBA_fnc_hashIncr;
+   };
 } forEach _contentFromConfig;
 
 [
-    _items,
+    _magazines,
     {
-        _className = _key;
+      _className = _key;
 
-        switch (true) do {
-            case (_className isKindOf ["CA_Magazine", configFile >> "CfgMagazines"]) : {_contentForLoadout pushBack [_key, _value, 1];};
-            case (_className isKindOf (configFile >> "CfgWeapons") : {
-               _value params ["_weapon", "_muzzle", "_pointer", "_optics", "_magazine", "_underbarrelMagazine", "_underbarrel"];
-
-               if ([_backpackClass, _weapon] call _checkIfWeaponFits) then {
-                  if (!(_magazine isEqualTo "") && isNumber (configFile >> _magazine >> "count")) then {
-                     _magazine = [_magazine, (getNumber (configFile >> _magazine >> "count"))];
-                  };
-                  if (!(_underbarrelMagazine isEqualTo "") && isNumber (configFile >> _underbarrelMagazine >> "count")) then {
-                     _underbarrelMagazine = [_underbarrelMagazine, (getNumber (configFile >> _underbarrelMagazine >> "count"))];
-                  };
-                  _contentForLoadout pushBack [_key, [_weapon, _muzzle, _pointer, _optics, _magazine, _underbarrelMagazine, _underbarrel]];
-               };
-            };
-            default : {_contentForLoadout pushBack [_key, _value];};
-         };
+      if (_className isKindOf ["CA_Magazine", configFile >> "CfgMagazines"]) then {
+         _contentForLoadout pushBack [_key, _value, 1];
+      } else {
+         _contentForLoadout pushBack [_key, _value];
+      };
     }
 ] call CBA_fnc_hashEachPair;
 
