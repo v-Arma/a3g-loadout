@@ -2,7 +2,7 @@
 // input: ["stanag_foo", "stanag_blub", "handgrenade", "something_else"]
 // output: [["stanag_foo", 2], ["handgrenade", 1],  "something_else"]
 
-params ["_contentFromConfig"];
+params ["_contentFromConfig", "_unitLoadout"];
 
 private _CBA_fnc_hashIncr = {
    params ["_hash","_key"];
@@ -28,7 +28,7 @@ private _checkIfWeaponFits = {
 
 private _magazines = [] call CBA_fnc_hashCreate;
 private _contentForLoadout = [];
-private _backpackClass = [5, 0] call CBA_fnc_hashGet;
+private _backpackClass = (_unitLoadout select 5) select 0;
 
 {
    if ((typeName _x) == "ARRAY") && (_x select 1) isKindOf (configFile >> "CfgWeapons") then {

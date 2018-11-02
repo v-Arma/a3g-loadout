@@ -49,7 +49,7 @@ private _assignFromLoadoutHash = {
                 _value = [_value, _classNameToPickOrMapper] call _getFirstOfType;
             };
             if (typeName _classNameToPickOrMapper == "CODE") then {
-                _value = [_value] call _classNameToPickOrMapper;
+                _value = [_value, _unitLoadout] call _classNameToPickOrMapper;
             };
         };
 
