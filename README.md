@@ -159,7 +159,7 @@ class AllUnits {
 };
 ```
 ### Weapons in backpacks
-If you want to add a weapon to a backpack, simply add the weapon's classname to `addItemsToBackpack` like you would with any other item. However, if you want the weapon to have attachments and/or loaded magazines, the config has to look like this:
+If you want to add a weapon to a backpack, simply add the weapon's classname to `addItemsToBackpack` like you would with any other item. However, if you want the weapon to have attachments and/or loaded magazines, the config has to look like the following examples. Note that the weapon class has to be inside the same parent class as the `addItemsToBackpack` property where it is used.
 ```sqf
 addItemsToBackpack[] = {"arifle_Mk20C_F", ...};
 class arifle_Mk20C_F {
