@@ -90,7 +90,7 @@ if (!(_value isEqualTo false)) then {
         if (isClass (configFile >> "CfgWeapons" >> _x)) then {
             private _muzzle = [_configPath >> _x >> "muzzle", "text", ""] call  CBA_fnc_getConfigEntry;
             private _pointer = [_configPath >> _x >> "pointer", "text", ""] call  CBA_fnc_getConfigEntry;
-            private _scope = [_configPath >> _x >> "scope", "text", ""] call  CBA_fnc_getConfigEntry;
+            private _scope = [_configPath >> _x >> "optics", "text", ""] call  CBA_fnc_getConfigEntry;
             private _magazine = [_configPath >> _x >> "magazine", "text", ""] call  CBA_fnc_getConfigEntry;
             private _underBarrelMagazine = [_configPath >> _x >> "underBarrelMagazine", "text", ""] call  CBA_fnc_getConfigEntry;
             private _underBarrel = [_configPath >> _x >> "underBarrel", "text", ""] call  CBA_fnc_getConfigEntry;
