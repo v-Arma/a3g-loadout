@@ -165,7 +165,7 @@ addItemsToBackpack[] = {"arifle_Mk20C_F", ...};
 class arifle_Mk20C_F {
     muzzle = "";
     pointer = "";
-    scope = "";
+    optics = "";
     magazine = "30Rnd_556x45_Stanag";
     underBarrelMagazine = "";
     underBarrel = "";
