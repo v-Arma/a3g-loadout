@@ -15,7 +15,7 @@ if (typeName _unitLoadout != "ARRAY") then {
 // CBA_fnc_findTypeName ? CBA_fnc_findTypeOf ?
 
 private _getFirstOfType = {
-   params ["_array","_classPath"];
+    params ["_array","_classPath"];
 
     private _className = configName _classPath;
     private _hierarchy = (configHierarchy _classPath);
@@ -31,7 +31,7 @@ private _getFirstOfType = {
 };
 
 private _walkIntoArray = {
-   params [["_array",[]],["_indices",[]]];
+    params [["_array",[]],["_indices",[]]];
     {
         _array = _array select _x;
     } forEach _indices;
@@ -40,7 +40,7 @@ private _walkIntoArray = {
 };
 
 private _assignFromLoadoutHash = {
-   params [["_indices",[]],["_entryName",""],"_classNameToPickOrMapper"];
+    params [["_indices",[]],["_entryName",""],"_classNameToPickOrMapper"];
 
     if ( [_loadoutHash, _entryName] call CBA_fnc_hashHasKey ) then {
         private _value = [_loadoutHash, _entryName] call CBA_fnc_hashGet;
@@ -62,7 +62,7 @@ private _assignFromLoadoutHash = {
 };
 
 private _assignValue = {
-   params [["_indices",[]], "_value"];
+    params [["_indices",[]], "_value"];
 
     if (!(isNil "_value")) then {
         _index =  _indices call BIS_fnc_arrayPop;
