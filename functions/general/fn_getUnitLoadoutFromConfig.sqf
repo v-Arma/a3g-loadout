@@ -3,8 +3,7 @@
 #define COMPONENT loadout
 #include "\x\cba\addons\main\script_macros_mission.hpp"
 
-private _unit = param [0];
-private _configPath = param [1];
+params ["_unit", "_configPath"];
 
 private _getSidePath = {
     _configPath >> "Side" >> _this;

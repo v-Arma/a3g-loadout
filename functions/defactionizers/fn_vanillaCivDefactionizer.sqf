@@ -2,7 +2,7 @@
 #define COMPONENT loadout
 #include "\x\cba\addons\main\script_macros_mission.hpp"
 
-private _unit = param [0];
+params ["_unit"];
 
 private _faction = faction _unit;
 private _type = typeOf _unit;

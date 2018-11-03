@@ -1,4 +1,4 @@
-private _loadoutHierarchy = param [0];
+params ["_loadoutHierarchy"];
 
 private _mergedLoadout = [] call CBA_fnc_hashCreate;
 

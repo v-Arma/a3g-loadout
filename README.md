@@ -97,7 +97,7 @@ dynamically adjust loadout values. This example adds a bit of randomization to R
 ```
 [
     {
-        _value = param [0];
+        params ["_value"];
         if (_value == "rhs_6b27m_digi") then {
             _value = selectRandom ["rhs_6b27m_digi", "rhs_6b27m_digi_bala"];
         };
@@ -151,10 +151,37 @@ class Loadouts {
 
 This simple block of code changes and applies the loadout of 18 units at once, based on a few key instructions. Since the `AllPlayers` class is done first ( the actual order inside the block plays no role, the loadout for `AllPlayers` is always applied first ), followed by the class based loadouts and finally the individual loadouts, you can combine the different priority layers for some extremely tight loadout descriptions. We don't have to redefine a different primary weapon for the individual soldiers because the `AllPlayers` class already gives them each one. Note that the marksman class `AV_IndUs_Marksman_M14_Des` gets a different primary weapon, which is why we redefine it in his loadout, which overwrites the generic behavior of `AllPlayers`.
 
+### Random selection
 To use a random selection of Uniforms, Vests, etc. it is possible to define them as an array. Example:
 ```sqf
 class AllUnits {
 	uniform[] = {"U_C_man_sport_1_F", "U_BG_Guerilla2_1"};
+};
+```
+### Weapons in backpacks
+If you want to add a weapon to a backpack, simply add the weapon's classname to `addItemsToBackpack` like you would with any other item. However, if you want the weapon to have attachments and/or loaded magazines, the config has to look like the following examples. Note that the weapon class has to be inside the same parent class as the `addItemsToBackpack` property where it is used.
+```sqf
+addItemsToBackpack[] = {"arifle_Mk20C_F", ...};
+class arifle_Mk20C_F {
+    muzzle = "";
+    pointer = "";
+    optics = "";
+    magazine = "30Rnd_556x45_Stanag";
+    underBarrelMagazine = "";
+    underBarrel = "";
+};
+```
+or
+```sqf
+addItemsToBackpack[] = {"FancySchmazyWeapon", ...};
+class FancySchmazyWeapon {
+    weapon = "arifle_Mk20C_F";
+    muzzle = "";
+    pointer = "";
+    optics = "";
+    magazine = "30Rnd_556x45_Stanag";
+    underBarrelMagazine = "";
+    underBarrel = "";
 };
 ```
 

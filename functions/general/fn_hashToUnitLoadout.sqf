@@ -3,10 +3,7 @@
 #define COMPONENT loadout
 #include "\x\cba\addons\main\script_macros_mission.hpp"
 
-
-private _loadoutHash = param [0];
-private _unitLoadout = param [1];
-
+params ["_loadoutHash", "_unitLoadout"];
 
 if (typeName _loadoutHash != "ARRAY") then {
     throw "loadoutHash is not of type array (and thus, no cba hash) :(("
@@ -18,8 +15,7 @@ if (typeName _unitLoadout != "ARRAY") then {
 // CBA_fnc_findTypeName ? CBA_fnc_findTypeOf ?
 
 private _getFirstOfType = {
-    private _array = param [0];
-    private _classPath = param [1];
+    params ["_array","_classPath"];
 
     private _className = configName _classPath;
     private _hierarchy = (configHierarchy _classPath);
@@ -35,8 +31,7 @@ private _getFirstOfType = {
 };
 
 private _walkIntoArray = {
-    private _array = param [0, []];
-    private _indices = param [1, []];
+    params [["_array",[]],["_indices",[]]];
     {
         _array = _array select _x;
     } forEach _indices;
@@ -45,9 +40,7 @@ private _walkIntoArray = {
 };
 
 private _assignFromLoadoutHash = {
-    private _indices = param [0, []];
-    private _entryName = param [1, ""];
-    private _classNameToPickOrMapper = param [2];
+    params [["_indices",[]],["_entryName",""],"_classNameToPickOrMapper"];
 
     if ( [_loadoutHash, _entryName] call CBA_fnc_hashHasKey ) then {
         private _value = [_loadoutHash, _entryName] call CBA_fnc_hashGet;
@@ -69,8 +62,8 @@ private _assignFromLoadoutHash = {
 };
 
 private _assignValue = {
-    private _indices = param [0, []];
-    private _value = param [1];
+    params [["_indices",[]], "_value"];
+
     if (!(isNil "_value")) then {
         _index =  _indices call BIS_fnc_arrayPop;
         _targetArray = [_unitLoadout, _indices] call _walkIntoArray;
@@ -114,7 +107,7 @@ private _normalizeWeaponArray = {
                                 _weaponArray set [_forEachIndex, [_x, 1]];
                             } else {
                                 _weaponArray set [_forEachIndex, _defaultValue];
-                            };                            
+                            };
                         };
                         // doesnt work for UGL values. no idea where to get those, btw
                         // if (!([_weaponValue, _x select 0] call FUNC(WeaponIsCompatibleMagazine))) then {
@@ -130,10 +123,9 @@ private _normalizeWeaponArray = {
    _weaponArray
 };
 
-
 private _defaultValueForItemCarriers = {
     private _targetArray = _unitLoadout select _this;
-    _carrierClassName = _targetArray select 0;
+    private _carrierClassName = _targetArray select 0;
     if (!(isNil "_carrierClassName")) then {
         _val = _targetArray select 1;
         if (isNil "_val") then {
@@ -172,17 +164,17 @@ private _defaultValueForItemCarriers = {
 (_unitLoadout select 2) call _normalizeWeaponArray;
 
 [[3, 0], "uniform"] call _assignFromLoadoutHash;
-[[3, 1], "addItemsToUniform", FUNC(NormalizeMagazinesInContent)] call _assignFromLoadoutHash;
+[[3, 1], "addItemsToUniform", FUNC(normalizeContent)] call _assignFromLoadoutHash;
 3 call _defaultValueForItemCarriers;
 [3, 0] call _setEmptyParentArrayIfEmptyString;
 
 [[4, 0], "vest"] call _assignFromLoadoutHash;
-[[4, 1], "addItemsToVest", FUNC(NormalizeMagazinesInContent)] call _assignFromLoadoutHash;
+[[4, 1], "addItemsToVest", FUNC(normalizeContent)] call _assignFromLoadoutHash;
 4 call _defaultValueForItemCarriers;
 [4, 0] call _setEmptyParentArrayIfEmptyString;
 
 [[5, 0], "backpack"] call _assignFromLoadoutHash;
-[[5, 1], "addItemsToBackpack", FUNC(NormalizeMagazinesInContent)] call _assignFromLoadoutHash;
+[[5, 1], "addItemsToBackpack", FUNC(normalizeContent)] call _assignFromLoadoutHash;
 5 call _defaultValueForItemCarriers;
 [5, 0] call _setEmptyParentArrayIfEmptyString;
 

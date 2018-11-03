@@ -3,7 +3,7 @@
 #define COMPONENT loadout
 #include "\x\cba\addons\main\script_macros_mission.hpp"
 
-private _unit = param [0, objNull];
+params [["_unit", objNull]];
 
 private _configPath = missionConfigFile >> "Loadouts";
 
