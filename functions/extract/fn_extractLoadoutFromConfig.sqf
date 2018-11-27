@@ -98,7 +98,7 @@ private _value = [_configPath >> "addItemsToBackpack", "array", false] call  CBA
 if (!(_value isEqualTo false)) then {
     {
       private _check = [_x] call _checkWeapon;
-      if (_x isKindOf ["Rifle", configFile >> "CfgWeapons"]) then {
+      if (_check) then {
          private _muzzle = [_configPath >> _x >> "muzzle", "text", ""] call  CBA_fnc_getConfigEntry;
          private _pointer = [_configPath >> _x >> "pointer", "text", ""] call  CBA_fnc_getConfigEntry;
          private _scope = [_configPath >> _x >> "optics", "text", ""] call  CBA_fnc_getConfigEntry;
