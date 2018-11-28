@@ -6,12 +6,11 @@ params ["_configPath"];
 
 GVAR(usedConfigs) pushBack _configPath;
 
-private _checkWeapon = {
-   params ["_type"];
-
-   if (((_type call BIS_fnc_itemType)select 0) == "Weapon") exitWith {true};
-   false
+private _isWeapon = {
+    params ["_type"];
+    ((_type call BIS_fnc_itemType) select 0) == "Weapon"
 };
+
 {
     private _value = [_configPath >> _x, "array", false] call CBA_fnc_getConfigEntry;
     if (_value isEqualTo false) then {
@@ -90,41 +89,54 @@ private _configValues = [] call CBA_fnc_hashCreate;
     "addItemsToVest"
 ];
 
+
+// special functionality for adding weapons with attachments to backpack
 private _value = [_configPath >> "addItemsToBackpack", "array", false] call  CBA_fnc_getConfigEntry;
 if (!(_value isEqualTo false)) then {
     {
-      private _check = [_x] call _checkWeapon;
-      if (_check) then {
-         private _muzzle = [_configPath >> _x >> "muzzle", "text", ""] call  CBA_fnc_getConfigEntry;
-         private _pointer = [_configPath >> _x >> "pointer", "text", ""] call  CBA_fnc_getConfigEntry;
-         private _scope = [_configPath >> _x >> "optics", "text", ""] call  CBA_fnc_getConfigEntry;
-         private _magazine = [_configPath >> _x >> "magazine", "text", ""] call  CBA_fnc_getConfigEntry;
-         private _underBarrelMagazine = [_configPath >> _x >> "underBarrelMagazine", "text", ""] call  CBA_fnc_getConfigEntry;
-         private _underBarrel = [_configPath >> _x >> "underBarrel", "text", ""] call  CBA_fnc_getConfigEntry;
-         _value set [_forEachIndex, [_x, _muzzle, _pointer, _scope, _magazine, _underBarrelMagazine, _underBarrel]];
-      }else{
-         private _check = true;
-         private _type = _x;
 
-         {
-            if (isClass (configFile >> _x >> _type)) exitWith {_check = false;};
-         }forEach ["CfgWeapons", "CfgAmmo", "CfgVehicles", "CfgMagazines", "CfgItems"];
+        /* entry is a weapon classname --> read attachments from a sibling class with the same classname, e.g.:
+        *  addItemsToBackpack[] = {"arifle_Mk20C_F",...};
+        *  class arifle_Mk20C_F {
+        *     muzzle = "";
+        *     ...
+        *  };
+        */
 
-         if (_check) then {
-            _check  = [_type] call _checkWeapon;
-            private _weapon = [_configPath >> _x >> "weapon", "text", ""] call  CBA_fnc_getConfigEntry;
+        if ([_x] call _isWeapon) then {
+            private _muzzle = [_configPath >> _x >> "muzzle", "text", ""] call  CBA_fnc_getConfigEntry;
+            private _pointer = [_configPath >> _x >> "pointer", "text", ""] call  CBA_fnc_getConfigEntry;
+            private _scope = [_configPath >> _x >> "optics", "text", ""] call  CBA_fnc_getConfigEntry;
+            private _magazine = [_configPath >> _x >> "magazine", "text", ""] call  CBA_fnc_getConfigEntry;
+            private _underBarrelMagazine = [_configPath >> _x >> "underBarrelMagazine", "text", ""] call  CBA_fnc_getConfigEntry;
+            private _underBarrel = [_configPath >> _x >> "underBarrel", "text", ""] call  CBA_fnc_getConfigEntry;
+            _value set [_forEachIndex, [_x, _muzzle, _pointer, _scope, _magazine, _underBarrelMagazine, _underBarrel]];
+        } else {
 
-            if (!(_weapon isEqualTo "") && _check) then {
-               private _muzzle = [_configPath >> _type >> "muzzle", "text", ""] call  CBA_fnc_getConfigEntry;
-               private _pointer = [_configPath >> _type >> "pointer", "text", ""] call  CBA_fnc_getConfigEntry;
-               private _scope = [_configPath >> _type >> "optics", "text", ""] call  CBA_fnc_getConfigEntry;
-               private _magazine = [_configPath >> _type >> "magazine", "text", ""] call  CBA_fnc_getConfigEntry;
-               private _underBarrelMagazine = [_configPath >> _type >> "underBarrelMagazine", "text", ""] call  CBA_fnc_getConfigEntry;
-               private _underBarrel = [_configPath >> _type >> "underBarrel", "text", ""] call  CBA_fnc_getConfigEntry;
-               _value set [_forEachIndex, [_weapon, _muzzle, _pointer, _scope, _magazine, _underBarrelMagazine, _underBarrel]];
+            /* entry is not a weapon classname --> check if it's not a classname of any other item either --> if so, it has to be a custom weapon class, e.g.:
+            *  addItemsToBackpack[] = {"FancySchmazyWeapon", ...};
+            *  class FancySchmazyWeapon {
+            *      weapon = "arifle_Mk20C_F";
+            *      muzzle = "";
+            *      ...
+            *  };
+            */
+
+            private _type = _x;
+            if ((["CfgWeapons", "CfgAmmo", "CfgVehicles", "CfgMagazines", "CfgItems"] findIf {isClass (configFile >> _x >> _type)}) < 0) then {
+                private _weapon = [_configPath >> _x >> "weapon", "text", ""] call  CBA_fnc_getConfigEntry;
+
+                if (!(_weapon isEqualTo "") && {[_weapon] call _isWeapon}) then {
+                    private _muzzle = [_configPath >> _type >> "muzzle", "text", ""] call  CBA_fnc_getConfigEntry;
+                    private _pointer = [_configPath >> _type >> "pointer", "text", ""] call  CBA_fnc_getConfigEntry;
+                    private _scope = [_configPath >> _type >> "optics", "text", ""] call  CBA_fnc_getConfigEntry;
+                    private _magazine = [_configPath >> _type >> "magazine", "text", ""] call  CBA_fnc_getConfigEntry;
+                    private _underBarrelMagazine = [_configPath >> _type >> "underBarrelMagazine", "text", ""] call  CBA_fnc_getConfigEntry;
+                    private _underBarrel = [_configPath >> _type >> "underBarrel", "text", ""] call  CBA_fnc_getConfigEntry;
+                    _value set [_forEachIndex, [_weapon, _muzzle, _pointer, _scope, _magazine, _underBarrelMagazine, _underBarrel]];
+                };
             };
-         };
-      };
+        };
 
     } forEach _value;
     [_configValues, "addItemsToBackpack", _value] call CBA_fnc_hashSet;
