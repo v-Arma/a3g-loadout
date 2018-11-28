@@ -8,13 +8,9 @@ GVAR(usedConfigs) pushBack _configPath;
 
 private _checkWeapon = {
    params ["_type"];
-   private _check = true;
 
-   {
-      if (_type isKindOf [_x, configFile >> "CfgWeapons"]) then {_check = false;};
-   }forEach ["Rifle", "Pistol", "GrenadeLauncher", "Launcher"];
-
-   _check
+   if (((_type call BIS_fnc_itemType)select 0) == "Weapon") exitWith {true};
+   false
 };
 {
     private _value = [_configPath >> _x, "array", false] call CBA_fnc_getConfigEntry;
