@@ -33,19 +33,31 @@ private _fnc_verify = {
 
 private _fnc_getMass = {
     params ["_className"];
-    private _mass = [configFile >> "CfgWeapons" >> _className >> "ItemInfo","mass",0] call BIS_fnc_returnConfigEntry;
-    if (_mass isEqualTo 0) then {
-        _mass = [configFile >> "CfgWeapons" >> _className >> "WeaponSlotsInfo","mass",0] call BIS_fnc_returnConfigEntry;
+
+    // workaround for weapons with attachments arrays --> handle all classnames as arrays
+    if !(_className isEqualType []) then {
+        _className = [_className];
     };
-    if (_mass isEqualTo 0) then {
-        _mass = [configFile >> "CfgMagazines" >> _className,"mass",0] call BIS_fnc_returnConfigEntry;
-    };
-    if (_mass isEqualTo 0) then {
-        _mass = [configFile >> "CfgVehicles" >> _className,"mass",0] call BIS_fnc_returnConfigEntry;
-    };
-    if !(_mass isEqualType 0) then {
-        _mass = 0;
-    };
+
+    private _mass = 0;
+    {
+        _thisMass = [configFile >> "CfgWeapons" >> _x >> "ItemInfo","mass",0] call BIS_fnc_returnConfigEntry;
+        if (_thisMass isEqualTo 0) then {
+            _thisMass = [configFile >> "CfgWeapons" >> _x >> "WeaponSlotsInfo","mass",0] call BIS_fnc_returnConfigEntry;
+        };
+        if (_thisMass isEqualTo 0) then {
+            _thisMass = [configFile >> "CfgMagazines" >> _x,"mass",0] call BIS_fnc_returnConfigEntry;
+        };
+        if (_thisMass isEqualTo 0) then {
+            _thisMass = [configFile >> "CfgVehicles" >> _x,"mass",0] call BIS_fnc_returnConfigEntry;
+        };
+        if !(_thisMass isEqualType 0) then {
+            _thisMass = 0;
+        };
+
+        _mass = _mass + _thisMass;
+    } forEach _className;
+
     _mass
 };
 
