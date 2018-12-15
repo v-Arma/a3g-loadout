@@ -237,7 +237,7 @@ http://gruppe-adler.de/api/grad-loadout/
 ```sqf
 class Loadouts {
     baseDelay = 1;
-    perPersonDelay = 0;
+    perPlayerDelay = 0;
     resetLoadout = 0;
 
     class AllPlayers {
