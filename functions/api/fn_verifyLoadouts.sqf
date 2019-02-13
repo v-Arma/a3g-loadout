@@ -197,7 +197,7 @@ private _fnc_magazineFits = {
         {
             if (
                 _magazineClassname in ([configfile >> "CfgWeapons" >> _weaponClassname >> _x,"magazines",[]] call BIS_fnc_returnConfigEntry) || 
-                _magazineClassname in ([configfile >> "CfgWeapons" >> _weaponClassname >> _x,"magazineWell",[]] call BIS_fnc_returnConfigEntry)
+                {_magazineClassname in ([configfile >> "CfgWeapons" >> _weaponClassname >> _x,"magazineWell",[]] call BIS_fnc_returnConfigEntry)}
             ) exitWith {
                 _magazineFits = true;
             };
