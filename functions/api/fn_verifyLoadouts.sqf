@@ -185,22 +185,34 @@ private _fnc_checkAccessoryFits = {
     _accessoryFits
 };
 
+private _fnc_getMagWells = {
+        params ["_magazineClassname", "_configPath"];
+
+        private _magazines = [];
+        _magazines append ([_configPath,"magazines",[]] call BIS_fnc_returnConfigEntry);
+        {
+            private _magWell = _x;
+            {
+                _magazines append ([configfile >> "CfgMagazineWells" >> _magWell, _x,[]] call BIS_fnc_returnConfigEntry);
+            }forEach (configProperties [configfile >> "CfgMagazineWells" >> _magWell]);
+        }forEach ([_configPath,"magazineWell",[]] call BIS_fnc_returnConfigEntry);
+
+        private _magazineFits = _magazineClassname in _magazines;
+        _magazineFits
+};
+
 private _fnc_magazineFits = {
     params ["_weaponClassname","_magazineClassname","_magazineTypeID"];
 
-    _magazineFits = false;
+    private _magazineFits = false;
     if (_magazineTypeID == 0) then {
-        _magazineFits = _magazineClassname in ([configfile >> "CfgWeapons" >> _weaponClassname,"magazines",[]] call BIS_fnc_returnConfigEntry);
+        _magazineFits = [_magazineClassname, configfile >> "CfgWeapons" >> _weaponClassname] call _fnc_getMagWells;
     };
     if (_magazineTypeID == 1) then {
-        _muzzles = [configfile >> "CfgWeapons" >> _weaponClassname,"muzzles",[]] call BIS_fnc_returnConfigEntry;
+        private _muzzles = [configfile >> "CfgWeapons" >> _weaponClassname,"muzzles",[]] call BIS_fnc_returnConfigEntry;
         {
-            if (
-                _magazineClassname in ([configfile >> "CfgWeapons" >> _weaponClassname >> _x,"magazines",[]] call BIS_fnc_returnConfigEntry) || 
-                {_magazineClassname in ([configfile >> "CfgWeapons" >> _weaponClassname >> _x,"magazineWell",[]] call BIS_fnc_returnConfigEntry)}
-            ) exitWith {
-                _magazineFits = true;
-            };
+            _magazineFits = [_magazineClassname, configfile >> "CfgWeapons" >> _weaponClassname >> _x] call _fnc_getMagWells;
+            if (_magazineFits) exitWith {};
         } forEach _muzzles;
     };
     _magazineFits
