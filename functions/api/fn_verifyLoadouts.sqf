@@ -188,19 +188,62 @@ private _fnc_checkAccessoryFits = {
 private _fnc_magazineFits = {
     params ["_weaponClassname","_magazineClassname","_magazineTypeID"];
 
-    _magazineFits = false;
-    if (_magazineTypeID == 0) then {
-        _magazineFits = _magazineClassname in ([configfile >> "CfgWeapons" >> _weaponClassname,"magazines",[]] call BIS_fnc_returnConfigEntry);
+    if (_magazineTypeID > 1) exitWith {
+        ERROR_1("_magazineTypeID > 1 in _fnc_magazineFits for weapon (%1)",_weaponClassname);
+        false
     };
+
+    private _magazineFits = false;
+
+    // main magazine
+    if (_magazineTypeID == 0) then {
+
+        private _weaponConfig = configfile >> "CfgWeapons" >> _weaponClassname;
+        _magazineFits = _magazineClassname in ([_weaponConfig,"magazines",[]] call BIS_fnc_returnConfigEntry);
+
+        // check magazine wells
+        if (!_magazineFits) then {
+            _magazineFits = [_magazineClassname,_weaponConfig] call _fnc_magazineFitsMagwell;
+        };
+    };
+
+    // underbarrel magazine
     if (_magazineTypeID == 1) then {
         _muzzles = [configfile >> "CfgWeapons" >> _weaponClassname,"muzzles",[]] call BIS_fnc_returnConfigEntry;
         {
-            if (_magazineClassname in ([configfile >> "CfgWeapons" >> _weaponClassname >> _x,"magazines",[]] call BIS_fnc_returnConfigEntry)) exitWith {
+            private _muzzleConfig = configfile >> "CfgWeapons" >> _weaponClassname >> _x;
+            if (_magazineClassname in ([_muzzleConfig,"magazines",[]] call BIS_fnc_returnConfigEntry)) exitWith {
+                _magazineFits = true;
+            };
+
+            if ([_magazineClassname,_muzzleConfig] call _fnc_magazineFitsMagwell) exitWith {
                 _magazineFits = true;
             };
         } forEach _muzzles;
     };
+
     _magazineFits
+};
+
+private _fnc_magazineFitsMagwell = {
+        params ["_magazineClassname", "_configPath"];
+
+        private _magazineFitsMagwell = false;
+
+        // magazine well names
+        {
+            // get all magazines from compatibility sets (e.g."BI_Magazines")
+            private _compatibleMagazines = [];
+            private _magWellConfigPath = configfile >> "CfgMagazineWells" >> _x;
+            {
+                _compatibleMagazines append ([_magWellConfigPath,configName _x,[]] call BIS_fnc_returnConfigEntry);
+            } forEach (configProperties [_magWellConfigPath]);
+
+            // check if magazine is in compatible magazines
+            if (_magazineClassname in _compatibleMagazines) exitWith {_magazineFitsMagwell = true};
+        } forEach ([_configPath,"magazineWell",[]] call BIS_fnc_returnConfigEntry);
+
+        _magazineFitsMagwell
 };
 
 private _fnc_checkOther = {
