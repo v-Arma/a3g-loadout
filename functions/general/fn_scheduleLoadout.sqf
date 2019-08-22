@@ -22,13 +22,9 @@ systemChat format ["grad-loadout: waiting %1 s for loadout...", _delay];
 
 [
 	{
-        private _msg = "triggering loadout...";
-		INFO(_msg);
-        systemChat ("grad-loadout: " + _msg);
+		INFO("triggering loadout...");
 		[_this select 0] call FUNC(ApplyLoadout);
-        _msg = "loadout was applied.";
-        INFO(_msg);
-        systemChat ("grad-loadout: " +  _msg);
+        INFO("loadout was applied.");
 	},
 	[_this select 0],
 	_delay
