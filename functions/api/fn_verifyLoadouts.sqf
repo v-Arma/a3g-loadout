@@ -193,13 +193,15 @@ private _fnc_magazineFits = {
         false
     };
 
+    _magazineClassname = toLower _magazineClassname;
     private _magazineFits = false;
 
     // main magazine
     if (_magazineTypeID == 0) then {
 
         private _weaponConfig = configfile >> "CfgWeapons" >> _weaponClassname;
-        _magazineFits = _magazineClassname in ([_weaponConfig,"magazines",[]] call BIS_fnc_returnConfigEntry);
+        private _magazines = ([_weaponConfig,"magazines",[]] call BIS_fnc_returnConfigEntry) apply {toLower _x};
+        _magazineFits = _magazineClassname in _magazines;
 
         // check magazine wells
         if (!_magazineFits) then {
@@ -212,7 +214,8 @@ private _fnc_magazineFits = {
         _muzzles = [configfile >> "CfgWeapons" >> _weaponClassname,"muzzles",[]] call BIS_fnc_returnConfigEntry;
         {
             private _muzzleConfig = configfile >> "CfgWeapons" >> _weaponClassname >> _x;
-            if (_magazineClassname in ([_muzzleConfig,"magazines",[]] call BIS_fnc_returnConfigEntry)) exitWith {
+            private _magazines = ([_muzzleConfig,"magazines",[]] call BIS_fnc_returnConfigEntry) apply {toLower _x};
+            if (_magazineClassname in _magazines) exitWith {
                 _magazineFits = true;
             };
 
@@ -228,6 +231,7 @@ private _fnc_magazineFits = {
 private _fnc_magazineFitsMagwell = {
         params ["_magazineClassname", "_configPath"];
 
+        _magazineClassname = toLower _magazineClassname;
         private _magazineFitsMagwell = false;
 
         // magazine well names
@@ -238,6 +242,7 @@ private _fnc_magazineFitsMagwell = {
             {
                 _compatibleMagazines append ([_magWellConfigPath,configName _x,[]] call BIS_fnc_returnConfigEntry);
             } forEach (configProperties [_magWellConfigPath]);
+            _compatibleMagazines = _compatibleMagazines apply {toLower _x};
 
             // check if magazine is in compatible magazines
             if (_magazineClassname in _compatibleMagazines) exitWith {_magazineFitsMagwell = true};
