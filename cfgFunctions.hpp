@@ -9,6 +9,10 @@ class GRAD_Loadout {
         class loadoutViewer {};
         class verifyLoadouts {};
     };
+    class customgear {
+        file = MODULES_DIRECTORY\grad-loadout\functions\customgear;
+        class initCustomGear {postInit = 1;};
+    };
     class Defactionizers {
         file = MODULES_DIRECTORY\grad-loadout\functions\defactionizers;
         class vanillaCivDefactionizer {};
