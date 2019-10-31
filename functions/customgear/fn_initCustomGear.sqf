@@ -27,5 +27,5 @@ GVAR(customGearCondition) = if (_enabled isEqualType 0) then {
     compile _enabled
 };
 
-private _action = [QGVAR(customGearAction), "Select custom gear", "", {[{_this call FUNC(customGearDialog)}, _this] call CBA_fnc_execNextFrame}, GVAR(customGearCondition)] call ace_interact_menu_fnc_createAction;
+private _action = [QGVAR(customGearAction), "Select custom gear", "", {[{_this call FUNC(openCustomGearDialog)}, _this] call CBA_fnc_execNextFrame}, GVAR(customGearCondition)] call ace_interact_menu_fnc_createAction;
 ["CAManBase", 1, ["ACE_SelfActions", "ACE_Equipment"], _action, true] call ace_interact_menu_fnc_addActionToClass;

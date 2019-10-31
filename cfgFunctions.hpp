@@ -11,7 +11,13 @@ class GRAD_Loadout {
     };
     class customgear {
         file = MODULES_DIRECTORY\grad-loadout\functions\customgear;
+        class createCustomGearDialog {};
+        class getCurrentItem {};
+        class getCustomGearOptions {};
         class initCustomGear {postInit = 1;};
+        class onCustomGearListSelection {};
+        class onCustomGearTabButton {};
+        class openCustomGearDialog {};
     };
     class Defactionizers {
         file = MODULES_DIRECTORY\grad-loadout\functions\defactionizers;
