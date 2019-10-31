@@ -47,6 +47,7 @@ _ctrlListBoxRight ctrlCommit 0;
 _ctrlListBoxRight ctrlAddEventHandler ["lbSelChanged", {_this call FUNC(onCustomGearListSelection)}];
 
 // create tab buttons
+private _ctrlFirstActivated = controlNull;
 {
     _x params ["_tooltip", "_pic", "_hashKey"];
 
@@ -68,6 +69,9 @@ _ctrlListBoxRight ctrlAddEventHandler ["lbSelChanged", {_this call FUNC(onCustom
         _ctrlButton ctrlCommit 0;
     } else {
         _ctrlButton ctrlSetTooltip _tooltip;
+        if (isNull _ctrlFirstActivated) then {
+            _ctrlFirstActivated = _ctrlButton;
+        };
     };
 
 } forEach [
@@ -113,3 +117,6 @@ private _attachmentButtons = _display getVariable [QGVAR(attachmentButtons), []]
     ["Muzzle Attachment", "ItemMuzzle_ca.paa"],
     ["Underbarrel Attachment", "ItemBipod_ca.paa"]
 ];
+
+// activate first button on left side last, so right side is already loaded
+[_ctrlFirstActivated, true] call FUNC(onCustomGearTabButton);
