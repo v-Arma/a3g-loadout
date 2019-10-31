@@ -40,6 +40,7 @@ class GRAD_Loadout {
         class initGlobals {preinit = 1;};
         class mergeLoadoutHierarchy {};
         class normalizeContent {};
+        class randomizeLoadout {};
         class removeRadios {preinit = 1;};
         class scheduleLoadout {postInit = 1;};
         class weaponIsCompatibleMagazine {};

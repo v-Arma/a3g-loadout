@@ -306,6 +306,7 @@ private _verifiedLoadoutCount = 0;
 
 {
     _loadoutHash = [_x,_configPath] call FUNC(GetUnitLoadoutFromConfig);
+    [_loadoutHash] call FUNC(randomizeLoadout);
     _loadoutHash = [_loadoutHash,_x] call FUNC(ApplyRevivers);
 
     if (([_loadoutHash] call CBA_fnc_hashSize) > 0) then {
