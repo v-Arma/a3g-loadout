@@ -18,6 +18,7 @@ class GRAD_Loadout {
         class onCustomGearListSelection {};
         class onCustomGearTabButton {};
         class openCustomGearDialog {};
+        class updateCamera {};
     };
     class Defactionizers {
         file = MODULES_DIRECTORY\grad-loadout\functions\defactionizers;

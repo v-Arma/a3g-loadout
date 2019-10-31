@@ -4,6 +4,19 @@
 
 params [["_unit", objNull]];
 
+// save currently selected weapon for camera, because unit will re-select primary on every setUnitLoadout without actually switching to it
+GVAR(curSelectedWeaponID) = -1;
+private _curWeapon = currentWeapon _unit;
+{
+    if (_curWeapon == _x) exitWith {
+        GVAR(curSelectedWeaponID) = _foreachindex;
+    };
+} forEach [
+    primaryWeapon _unit,
+    secondaryWeapon _unit,
+    handgunWeapon _unit
+];
+
 disableSerialization;
 
 // create camera
@@ -11,9 +24,7 @@ if !(isNull (missionNamespace getVariable [QGVAR(customGearCam), objNull])) exit
 GVAR(customGearCam) = "camera" camcreate (getPos _unit);
 GVAR(customGearCam) cameraeffect ["External", "back"];
 showCinemaBorder false;
-GVAR(customGearCam) camSetTarget _unit;
-GVAR(customGearCam) camSetRelPos [0, 3, 2];
-GVAR(customGearCam) camCommit 0;
+[_unit, "uniform", 0] call FUNC(updateCamera);
 
 // get gear options
 private _configPath = missionConfigFile >> "Loadouts";

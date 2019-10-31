@@ -49,6 +49,9 @@ _ctrlListBox ctrlCommit 0;
     };
 } forEach _availableOptions;
 
+//update camera
+[_unit, _hashKey] call FUNC(updateCamera);
+
 // activate right side tabs and listbox, if weapon has been selected
 private _weaponID = ["primaryWeapon", "secondaryWeapon", "handgunWeapon"] find _hashKey;
 private _attachmentButtons = _display getVariable [QGVAR(attachmentButtons), []];
