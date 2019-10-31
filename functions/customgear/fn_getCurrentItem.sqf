@@ -1,4 +1,4 @@
-params [["_unit", objNull], ["_key", ""]];
+params [["_unit", objNull], ["_key", ""], ["_getBaseWeapon", false]];
 
 private _keyID = [
     "uniform",
@@ -63,4 +63,10 @@ private _fnc_getCurrent = [
     {((getUnitLoadout _unit) param [9, []]) param [2, ""]}
 ] select _keyID;
 
-call _fnc_getCurrent
+private _current = call _fnc_getCurrent;
+
+if (_getBaseWeapon) then {
+    _current = [configfile >> "CfgWeapons" >> _current, "baseWeapon", _current] call BIS_fnc_returnConfigEntry;
+};
+
+_current

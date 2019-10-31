@@ -42,7 +42,9 @@ _ctrlListBox ctrlCommit 0;
     _ctrlListBox lbSetData [_lbIndex, _itemClassname];
     _ctrlListBox lbSetPicture [_lbIndex, _pic];
 
-    if ((toLower _itemClassname) == (toLower ([_unit, _hashKey] call FUNC(getCurrentItem)))) then {
+    if (
+        (toLower _itemClassname) == (toLower ([_unit, _hashKey, true] call FUNC(getCurrentItem)))
+    ) then {
         _ctrlListBox lbSetCurSel _lbIndex;
     };
 } forEach _availableOptions;

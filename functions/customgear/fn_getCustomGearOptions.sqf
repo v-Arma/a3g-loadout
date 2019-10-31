@@ -13,7 +13,11 @@ private _currentLoadout = getUnitLoadout _unit;
     if (
         _value isEqualType [] &&
         {count _value > 0} &&
-        {([_unit, _key] call FUNC(getCurrentItem)) in _value}
+        {
+
+            (([_unit, _key] call FUNC(getCurrentItem)) in _value) ||
+            (([_unit, _key, true] call FUNC(getCurrentItem)) in _value)
+        }
     ) then {
         [_loadoutOptionsHash, _key, _value] call CBA_fnc_hashSet;
     };
