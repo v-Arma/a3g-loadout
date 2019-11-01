@@ -27,5 +27,21 @@ GVAR(customGearCondition) = if (_enabled isEqualType 0) then {
     compile _enabled
 };
 
-private _action = [QGVAR(customGearAction), "Select custom gear", "", {[{_this call FUNC(openCustomGearDialog)}, _this] call CBA_fnc_execNextFrame}, GVAR(customGearCondition)] call ace_interact_menu_fnc_createAction;
+// notification the first time customization becomes available after loadout application
+[QGVAR(loadoutApplied), {
+    params [["_unit", objNull]];
+
+    if (_unit != ACE_player) exitWith {};
+
+    [{(missionNamespace getVariable ["CBA_missionTime",0]) > 10 && {[_this] call GVAR(customGearCondition)}}, {
+        if (isClass (configfile >> "CfgNotifications" >> "GRAD_saveMarkers_notification")) then {
+            ["GRAD_saveMarkers_notification",["GRAD CUSTOM GEAR","Loadout customization now available. (Selfinteract >> Equipment)"]] call BIS_fnc_showNotification;
+        } else {
+            ["TaskUpdated",["","Loadout customization now available. (Selfinteract >> Equipment)"]] call BIS_fnc_showNotification;
+        };
+    },_unit] call CBA_fnc_waitUntilAndExecute;
+}] call CBA_fnc_addEventHandler;
+
+// add interaction
+private _action = [QGVAR(customGearAction), "Customize loadout", "", {[{_this call FUNC(openCustomGearDialog)}, _this] call CBA_fnc_execNextFrame}, GVAR(customGearCondition)] call ace_interact_menu_fnc_createAction;
 ["CAManBase", 1, ["ACE_SelfActions", "ACE_Equipment"], _action, true] call ace_interact_menu_fnc_addActionToClass;

@@ -14,7 +14,7 @@ class GRAD_Loadout {
         class createCustomGearDialog {};
         class getCurrentItem {};
         class getCustomGearOptions {};
-        class initCustomGear {postInit = 1;};
+        class initCustomGear {preInit = 1;};
         class onCustomGearListSelection {};
         class onCustomGearTabButton {};
         class openCustomGearDialog {};
