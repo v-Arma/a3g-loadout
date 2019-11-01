@@ -19,6 +19,7 @@ class GRAD_Loadout {
         class onCustomGearListSelection {};
         class onCustomGearTabButton {};
         class openCustomGearDialog {};
+        class setAllowedCategories {};
         class updateCamera {};
     };
     class Defactionizers {
