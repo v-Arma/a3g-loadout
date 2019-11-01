@@ -2,7 +2,7 @@
 #define COMPONENT loadout
 #include "\x\cba\addons\main\script_macros_mission.hpp"
 
-params [["_unit", objNull]];
+params ["",["_unit", objNull]];
 
 // save currently selected weapon for camera, because unit will re-select primary on every setUnitLoadout without actually switching to it
 GVAR(curSelectedWeaponID) = -1;

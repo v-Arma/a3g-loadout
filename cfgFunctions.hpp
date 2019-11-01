@@ -11,6 +11,7 @@ class GRAD_Loadout {
     };
     class customgear {
         file = MODULES_DIRECTORY\grad-loadout\functions\customgear;
+        class addCustomGearInteraction {};
         class createCustomGearDialog {};
         class getCurrentItem {};
         class getCustomGearOptions {};
