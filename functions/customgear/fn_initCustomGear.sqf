@@ -14,6 +14,37 @@ if !(isClass (configfile >> "CfgPatches" >> "ace_interact_menu")) exitWith {
     ERROR("customGear needs ace_interact_menu addon.");
 };
 
+// get allowed categories from config
+GVAR(customGearAllowedCategories) = [missionConfigFile >> "Loadouts", "customGearAllowedCategories", [
+    "uniform",
+    "vest",
+    "backpack",
+    "primaryWeapon",
+    "primaryWeaponMuzzle",
+    "primaryWeaponOptics",
+    "primaryWeaponPointer",
+    "primaryWeaponUnderbarrel",
+    "secondaryWeapon",
+    "secondaryWeaponMuzzle",
+    "secondaryWeaponOptics",
+    "secondaryWeaponPointer",
+    "secondaryWeaponUnderbarrel",
+    "handgunWeapon",
+    "handgunWeaponMuzzle",
+    "handgunWeaponOptics",
+    "handgunWeaponPointer",
+    "handgunWeaponUnderbarrel",
+    "headgear",
+    "goggles",
+    "nvgoggles",
+    "binoculars",
+    "map",
+    "gps",
+    "compass",
+    "watch",
+    "radio"
+]] call BIS_fnc_returnConfigEntry;
+
 // user supplied number for custom gear timeout
 GVAR(customGearCondition) = if (_enabled isEqualType 0) then {
     GVAR(customGearTimeout) = _enabled;

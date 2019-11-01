@@ -6,6 +6,7 @@ params [["_unit", objNull],["_loadoutHash", []], ["_ignoreCurrentLoadout", false
 
 private _loadoutOptionsHash = [[], false] call CBA_fnc_hashCreate;
 private _currentLoadout = getUnitLoadout _unit;
+private _allowedCategories = _unit getVariable [QGVAR(customGearAllowedCategories), GVAR(customGearAllowedCategories)];
 
 {
     private _key = _x;
@@ -21,7 +22,7 @@ private _currentLoadout = getUnitLoadout _unit;
     ) then {
         [_loadoutOptionsHash, _key, _value] call CBA_fnc_hashSet;
     };
-} forEach [
+} forEach ([
     "uniform",
     "vest",
     "backpack",
@@ -49,6 +50,6 @@ private _currentLoadout = getUnitLoadout _unit;
     "compass",
     "watch",
     "radio"
-];
+] arrayIntersect _allowedCategories);
 
 _loadoutOptionsHash
