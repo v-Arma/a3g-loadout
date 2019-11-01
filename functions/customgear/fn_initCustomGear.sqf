@@ -43,5 +43,5 @@ GVAR(customGearCondition) = if (_enabled isEqualType 0) then {
 }] call CBA_fnc_addEventHandler;
 
 // add interaction
-private _action = [QGVAR(customGearAction), "Customize loadout", "", {[{_this call FUNC(openCustomGearDialog)}, _this] call CBA_fnc_execNextFrame}, GVAR(customGearCondition)] call ace_interact_menu_fnc_createAction;
+private _action = [QGVAR(customGearAction), "Customize loadout", "\A3\Ui_f\data\GUI\Rsc\RscDisplayArsenal\uniform_ca.paa", {[{_this call FUNC(openCustomGearDialog)}, _this] call CBA_fnc_execNextFrame}, GVAR(customGearCondition)] call ace_interact_menu_fnc_createAction;
 ["CAManBase", 1, ["ACE_SelfActions", "ACE_Equipment"], _action, true] call ace_interact_menu_fnc_addActionToClass;
