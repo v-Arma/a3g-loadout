@@ -2,7 +2,7 @@
 #define COMPONENT loadout
 #include "\x\cba\addons\main\script_macros_mission.hpp"
 
-params [["_unit", objNull],["_loadoutHash", []]];
+params [["_unit", objNull],["_loadoutHash", []], ["_ignoreCurrentLoadout", false]];
 
 private _loadoutOptionsHash = [[], false] call CBA_fnc_hashCreate;
 private _currentLoadout = getUnitLoadout _unit;
@@ -14,7 +14,7 @@ private _currentLoadout = getUnitLoadout _unit;
         _value isEqualType [] &&
         {count _value > 0} &&
         {
-
+            _ignoreCurrentLoadout ||
             (([_unit, _key] call FUNC(getCurrentItem)) in _value) ||
             (([_unit, _key, true] call FUNC(getCurrentItem)) in _value)
         }
