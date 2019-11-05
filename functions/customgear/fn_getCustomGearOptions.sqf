@@ -11,13 +11,15 @@ private _allowedCategories = _unit getVariable [QGVAR(customGearAllowedCategorie
 {
     private _key = _x;
     private _value = [_loadoutHash, _key] call CBA_fnc_hashGet;
+    if (_value isEqualType []) then {_value = _value apply {toLower _x}};
+
     if (
         _value isEqualType [] &&
         {count _value > 0} &&
         {
             _ignoreCurrentLoadout ||
-            (([_unit, _key] call FUNC(getCurrentItem)) in _value) ||
-            (([_unit, _key, true] call FUNC(getCurrentItem)) in _value)
+            ((toLower ([_unit, _key] call FUNC(getCurrentItem))) in _value) ||
+            ((toLower ([_unit, _key, true] call FUNC(getCurrentItem))) in _value)
         }
     ) then {
         [_loadoutOptionsHash, _key, _value] call CBA_fnc_hashSet;
