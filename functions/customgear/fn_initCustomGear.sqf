@@ -79,7 +79,7 @@ GVAR(customGearCondition) = if (_enabled isEqualType 0) then {
             if (isClass (configfile >> "CfgNotifications" >> "GRAD_saveMarkers_notification")) then {
                 ["GRAD_saveMarkers_notification", ["GRAD CUSTOM GEAR", "Loadout customization now available. (Selfinteract >> Equipment)"]] call BIS_fnc_showNotification;
             } else {
-                ["TaskUpdated",["","Loadout customization now available. (Selfinteract >> Equipment)"]] call BIS_fnc_showNotification;
+                ["TaskUpdated", ["", "Loadout customization now available. (Selfinteract >> Equipment)"]] call BIS_fnc_showNotification;
             };
         },_unit] call CBA_fnc_waitUntilAndExecute;
     };
