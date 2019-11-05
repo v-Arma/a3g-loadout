@@ -1,6 +1,4 @@
-#define PREFIX grad
-#define COMPONENT loadout
-#include "\x\cba\addons\main\script_macros_mission.hpp"
+#include "component.hpp"
 
 params [["_unit", objNull],["_loadoutHash", []], ["_ignoreCurrentLoadout", false]];
 
@@ -24,34 +22,6 @@ private _allowedCategories = _unit getVariable [QGVAR(customGearAllowedCategorie
     ) then {
         [_loadoutOptionsHash, _key, _value] call CBA_fnc_hashSet;
     };
-} forEach ([
-    "uniform",
-    "vest",
-    "backpack",
-    "primaryWeapon",
-    "primaryWeaponMuzzle",
-    "primaryWeaponOptics",
-    "primaryWeaponPointer",
-    "primaryWeaponUnderbarrel",
-    "secondaryWeapon",
-    "secondaryWeaponMuzzle",
-    "secondaryWeaponOptics",
-    "secondaryWeaponPointer",
-    "secondaryWeaponUnderbarrel",
-    "handgunWeapon",
-    "handgunWeaponMuzzle",
-    "handgunWeaponOptics",
-    "handgunWeaponPointer",
-    "handgunWeaponUnderbarrel",
-    "headgear",
-    "goggles",
-    "nvgoggles",
-    "binoculars",
-    "map",
-    "gps",
-    "compass",
-    "watch",
-    "radio"
-] arrayIntersect _allowedCategories);
+} forEach ([CUSTOMGEAR_SUPPORTED_KEYS] arrayIntersect _allowedCategories);
 
 _loadoutOptionsHash

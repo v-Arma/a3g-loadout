@@ -1,7 +1,4 @@
-#define PREFIX grad
-#define COMPONENT loadout
-#include "\x\cba\addons\main\script_macros_mission.hpp"
-
+#include "component.hpp"
 
 private _enabled = [missionConfigFile >> "Loadouts", "customGear", 300] call BIS_fnc_returnConfigEntry;
 if (_enabled isEqualType 0 && {_enabled <= 0}) exitWith {};
@@ -15,35 +12,7 @@ if !(isClass (configfile >> "CfgPatches" >> "ace_interact_menu")) exitWith {
 };
 
 // get allowed categories from config
-GVAR(customGearAllowedCategories) = [missionConfigFile >> "Loadouts", "customGearAllowedCategories", [
-    "uniform",
-    "vest",
-    "backpack",
-    "primaryWeapon",
-    "primaryWeaponMuzzle",
-    "primaryWeaponOptics",
-    "primaryWeaponPointer",
-    "primaryWeaponUnderbarrel",
-    "secondaryWeapon",
-    "secondaryWeaponMuzzle",
-    "secondaryWeaponOptics",
-    "secondaryWeaponPointer",
-    "secondaryWeaponUnderbarrel",
-    "handgunWeapon",
-    "handgunWeaponMuzzle",
-    "handgunWeaponOptics",
-    "handgunWeaponPointer",
-    "handgunWeaponUnderbarrel",
-    "headgear",
-    "goggles",
-    "nvgoggles",
-    "binoculars",
-    "map",
-    "gps",
-    "compass",
-    "watch",
-    "radio"
-]] call BIS_fnc_returnConfigEntry;
+GVAR(customGearAllowedCategories) = [missionConfigFile >> "Loadouts", "customGearAllowedCategories", [CUSTOMGEAR_SUPPORTED_KEYS]] call BIS_fnc_returnConfigEntry;
 
 // user supplied number for custom gear timeout
 GVAR(customGearCondition) = if (_enabled isEqualType 0) then {

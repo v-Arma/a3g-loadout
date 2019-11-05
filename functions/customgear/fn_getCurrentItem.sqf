@@ -1,34 +1,8 @@
+#include "component.hpp"
+
 params [["_unit", objNull], ["_key", ""], ["_getBaseWeapon", false]];
 
-private _keyID = [
-    "uniform",
-    "vest",
-    "backpack",
-    "primaryWeapon",
-    "primaryWeaponMuzzle",
-    "primaryWeaponOptics",
-    "primaryWeaponPointer",
-    "primaryWeaponUnderbarrel",
-    "secondaryWeapon",
-    "secondaryWeaponMuzzle",
-    "secondaryWeaponOptics",
-    "secondaryWeaponPointer",
-    "secondaryWeaponUnderbarrel",
-    "handgunWeapon",
-    "handgunWeaponMuzzle",
-    "handgunWeaponOptics",
-    "handgunWeaponPointer",
-    "handgunWeaponUnderbarrel",
-    "headgear",
-    "goggles",
-    "nvgoggles",
-    "binoculars",
-    "map",
-    "gps",
-    "compass",
-    "watch",
-    "radio"
-] find _key;
+private _keyID = [CUSTOMGEAR_SUPPORTED_KEYS] find _key;
 
 private _currentItem = "";
 if (_keyID < 0) exitWith {_currentItem};

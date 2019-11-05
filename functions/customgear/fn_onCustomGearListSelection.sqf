@@ -1,6 +1,4 @@
-#define PREFIX grad
-#define COMPONENT loadout
-#include "\x\cba\addons\main\script_macros_mission.hpp"
+#include "component.hpp"
 
 params ["_ctrlListBox", "_curSelIndex"];
 
@@ -11,35 +9,7 @@ private _unitLoadout = getUnitLoadout _unit;
 private _itemClassname = _ctrlListBox lbData _curSelIndex;
 private _hashKey = _ctrlListBox getVariable [QGVAR(hashKey), ""];
 
-private _keyID = [
-    "uniform",
-    "vest",
-    "backpack",
-    "primaryWeapon",
-    "primaryWeaponMuzzle",
-    "primaryWeaponOptics",
-    "primaryWeaponPointer",
-    "primaryWeaponUnderbarrel",
-    "secondaryWeapon",
-    "secondaryWeaponMuzzle",
-    "secondaryWeaponOptics",
-    "secondaryWeaponPointer",
-    "secondaryWeaponUnderbarrel",
-    "handgunWeapon",
-    "handgunWeaponMuzzle",
-    "handgunWeaponOptics",
-    "handgunWeaponPointer",
-    "handgunWeaponUnderbarrel",
-    "headgear",
-    "goggles",
-    "nvgoggles",
-    "binoculars",
-    "map",
-    "gps",
-    "compass",
-    "watch",
-    "radio"
-] find _hashKey;
+private _keyID = [CUSTOMGEAR_SUPPORTED_KEYS] find _hashKey;
 
 if (_keyID < 0) exitWith {};
 
