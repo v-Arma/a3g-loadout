@@ -75,7 +75,7 @@ GVAR(customGearCondition) = if (_enabled isEqualType 0) then {
 
     // notification the first time customization becomes available after loadout application
     if (count ([_customGearOptionsHash] call CBA_fnc_hashKeys) > 0) then {
-        [{(missionNamespace getVariable ["CBA_missionTime",0]) > 10 && {[_this] call GVAR(customGearCondition)}}, {
+        [{(missionNamespace getVariable ["CBA_missionTime", 0]) > 10 && {[_this] call GVAR(customGearCondition)}}, {
             if (isClass (configfile >> "CfgNotifications" >> "GRAD_saveMarkers_notification")) then {
                 ["GRAD_saveMarkers_notification",["GRAD CUSTOM GEAR","Loadout customization now available. (Selfinteract >> Equipment)"]] call BIS_fnc_showNotification;
             } else {
