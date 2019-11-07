@@ -6,7 +6,7 @@ private _display = ctrlParent _button;
 private _unit = _display getVariable [QGVAR(unit), objNull];
 
 // move selection indicator to selected tab
-private _ctrlTabSelected = _display getVariable [[QGVAR(ctrlTabSelectedRight),QGVAR(ctrlTabSelectedLeft)] select _isLeftSide, controlNull];
+private _ctrlTabSelected = _display getVariable [[QGVAR(ctrlTabSelectedRight), QGVAR(ctrlTabSelectedLeft)] select _isLeftSide, controlNull];
 private _ctrlTabSelectedPosition = ctrlPosition _ctrlTabSelected;
 _ctrlTabSelectedPosition set [1, (ctrlPosition _button) select 1];
 _ctrlTabSelected ctrlSetPosition _ctrlTabSelectedPosition;
