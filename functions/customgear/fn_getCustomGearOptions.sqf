@@ -1,6 +1,6 @@
 #include "component.hpp"
 
-params [["_unit", objNull],["_loadoutHash", []], ["_ignoreCurrentLoadout", false]];
+params [["_unit", objNull], ["_loadoutHash", []], ["_ignoreCurrentLoadout", false]];
 
 private _loadoutOptionsHash = [[], false] call CBA_fnc_hashCreate;
 private _currentLoadout = getUnitLoadout _unit;
