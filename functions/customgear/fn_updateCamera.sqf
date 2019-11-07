@@ -27,7 +27,7 @@ private _selectionData = [
     ["Spine3", -0.1, [0,1.4,0.1]],
     ["Spine3", 0, [-1,-1.2,0]],
     ["proxy:\A3\Characters_F\Proxies\weapon.001", [-0.1, 0.1] select (GVAR(curSelectedWeaponID) == 0), [[0.8,-0.8,0],[0.8,0.8,0]] select (GVAR(curSelectedWeaponID) == 0)],
-    ["proxy:\A3\Characters_F\Proxies\launcher.001", 0, [[-1.7,-0.1,0],[0.8,0.8,0]] select (GVAR(curSelectedWeaponID) == 1)],
+    ["proxy:\A3\Characters_F\Proxies\launcher.001", 0, [[-1.7,-0.1,0], [0.8,0.8,0]] select (GVAR(curSelectedWeaponID) == 1)],
     ["proxy:\A3\Characters_F\Proxies\pistol.001", 0, [[0.4,2.4,0.3],[0.5,0.5,0]] select (GVAR(curSelectedWeaponID) == 2)],
     ["Head_axis", 0, [-0.7,0.7,0]],
     ["Head_axis", 0, [-0.7,0.7,0]],
