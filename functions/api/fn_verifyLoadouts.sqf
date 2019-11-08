@@ -1,6 +1,4 @@
-#define PREFIX grad
-#define COMPONENT loadout
-#include "\x\cba\addons\main\script_macros_mission.hpp"
+#include "component.hpp"
 
 #define CENTER(PARENT_SIZE, CHILD_SIZE)     ((PARENT_SIZE / 2) - (CHILD_SIZE / 2))
 #define SZ_SCALE                            (safezoneW min safezoneH)

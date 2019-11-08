@@ -1,3 +1,5 @@
+#include "component.hpp"
+
 params ["_loadoutHierarchy"];
 
 private _mergedLoadout = [] call CBA_fnc_hashCreate;

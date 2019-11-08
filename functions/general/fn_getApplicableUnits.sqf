@@ -1,3 +1,5 @@
+#include "component.hpp"
+
 params ["_isMissionStart"];
 
 // Make sure that only local player is considered as target on respawn.

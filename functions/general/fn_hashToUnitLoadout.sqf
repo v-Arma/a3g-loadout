@@ -1,7 +1,4 @@
-
-#define PREFIX grad
-#define COMPONENT loadout
-#include "\x\cba\addons\main\script_macros_mission.hpp"
+#include "component.hpp"
 
 params ["_loadoutHash", "_unitLoadout"];
 

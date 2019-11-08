@@ -1,7 +1,4 @@
-
-#define PREFIX grad
-#define COMPONENT loadout
-#include "\x\cba\addons\main\script_macros_mission.hpp"
+#include "component.hpp"
 
 private _handleRadios = [(missionConfigFile >> "Loadouts"), "handleRadios", 0] call BIS_fnc_returnConfigEntry;
 if (_handleRadios == 1) then {
