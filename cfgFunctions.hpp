@@ -9,6 +9,19 @@ class GRAD_Loadout {
         class loadoutViewer {};
         class verifyLoadouts {};
     };
+    class customgear {
+        file = MODULES_DIRECTORY\grad-loadout\functions\customgear;
+        class addCustomGearInteraction {};
+        class createCustomGearDialog {};
+        class getCurrentItem {};
+        class getCustomGearOptions {};
+        class initCustomGear {preInit = 1;};
+        class onCustomGearListSelection {};
+        class onCustomGearTabButton {};
+        class openCustomGearDialog {};
+        class setAllowedCategories {};
+        class updateCamera {};
+    };
     class Defactionizers {
         file = MODULES_DIRECTORY\grad-loadout\functions\defactionizers;
         class vanillaCivDefactionizer {};
@@ -36,6 +49,7 @@ class GRAD_Loadout {
         class initGlobals {preinit = 1;};
         class mergeLoadoutHierarchy {};
         class normalizeContent {};
+        class randomizeLoadout {};
         class removeRadios {preinit = 1;};
         class scheduleLoadout {postInit = 1;};
         class weaponIsCompatibleMagazine {};

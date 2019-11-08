@@ -48,6 +48,9 @@ class Loadouts {
     perPlayerDelay = 1; // added random delay based on number of players
     handleRadios = 0; // if radios should be handled. defaults to 0
     resetLoadout = 1; // start with empty loadouts instead of modifying existing loadout
+
+    customGear = 300; // time in seconds after loadout application that units can use the custom gear selection dialog, -1 to disable
+    // alternatively use a statement here to enable selection dialog while statement returns true, e.g.: "(_this select 0) distance2D (getMarkerPos "respawn_west") < 100", params are [unit]
 };
 ```
 
