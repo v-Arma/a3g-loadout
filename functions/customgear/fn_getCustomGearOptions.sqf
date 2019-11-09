@@ -9,10 +9,11 @@ private _allowedCategories = _unit getVariable [QGVAR(customGearAllowedCategorie
 {
     private _key = _x;
     private _value = [_loadoutHash, _key] call CBA_fnc_hashGet;
-    if (_value isEqualType []) then {_value = _value apply {toLower _x}};
+    if (!isNil "_value" && {_value isEqualType []}) then {_value = _value apply {toLower _x}};
 
     if (
-        _value isEqualType [] &&
+        !isNil "_value" &&
+        {_value isEqualType []} &&
         {count _value > 0} &&
         {
             _ignoreCurrentLoadout ||
