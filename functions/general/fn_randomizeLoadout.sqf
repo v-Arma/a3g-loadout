@@ -6,7 +6,7 @@ params [["_loadoutHash", []]];
 
 {
     private _value = [_loadoutHash, _x] call CBA_fnc_hashGet;
-    if (_value isEqualType []) then {
+    if (!isNil "_value" && {_value isEqualType []}) then {
         if (count _value == 0) then {_value = ""} else {_value = selectRandom _value};
         [_loadoutHash, _x, _value] call CBA_fnc_hashSet;
     };
