@@ -50,47 +50,58 @@ _ctrlListBox ctrlCommit 0;
 //update camera
 [_unit, _hashKey] call FUNC(updateCamera);
 
-// activate right side tabs and listbox, if weapon has been selected
-private _weaponID = ["primaryWeapon", "secondaryWeapon", "handgunWeapon"] find _hashKey;
-private _attachmentButtons = _display getVariable [QGVAR(attachmentButtons), []];
-if (_isLeftSide && _weaponID >= 0) then {
+if (_isLeftSide) then {
 
-    private _hashKeyArray = [
-        ["primaryWeaponOptics", "primaryWeaponPointer", "primaryWeaponMuzzle", "primaryWeaponUnderbarrel"],
-        ["secondaryWeaponMuzzle", "secondaryWeaponOptics", "secondaryWeaponPointer", "secondaryWeaponUnderbarrel"],
-        ["handgunWeaponMuzzle", "handgunWeaponOptics", "handgunWeaponPointer", "handgunWeaponUnderbarrel"]
-    ] select _weaponID;
+    private _weaponID = ["primaryWeapon", "secondaryWeapon", "handgunWeapon"] find _hashKey;
+    private _attachmentButtons = _display getVariable [QGVAR(attachmentButtons), []];
 
-    private _firstActivated = false;
-    {
-        private _ctrlButton = _x;
-        private _tooltip = _ctrlButton getVariable [QGVAR(tooltip), ""];
+    // hide right side selection indicator
+    private _ctrlTabSelectedRight = _display getVariable [QGVAR(ctrlTabSelectedRight), controlNull];
+    _ctrlTabSelectedRight ctrlSetFade 1;
+    _ctrlTabSelectedRight ctrlCommit 0;
 
-        _hashKey = _hashKeyArray select _forEachIndex;
-        _ctrlButton setVariable [QGVAR(hashKey), _hashKey];
-        _availableOptions = [_loadoutOptionsHash, _hashKey] call CBA_fnc_hashGet;
+    // hide right side listbox
+    private _ctrlListBoxRight = _display getVariable [QGVAR(ctrlListBoxRight), controlNull];
+    _ctrlListBoxRight ctrlSetFade 1;
+    _ctrlListBoxRight ctrlCommit 0;
 
-        if !(_availableOptions isEqualType [] && {count _availableOptions > 0}) then {
-            _ctrlButton ctrlEnable false;
-            _ctrlButton ctrlSetTooltip format ["%1 unavailable", _tooltip];
-            _ctrlButton ctrlSetFade 0.5;
-            _ctrlButton ctrlCommit 0;
-        } else {
-            _ctrlButton ctrlSetTooltip _tooltip;
-            _x ctrlEnable true;
-            _x ctrlSetFade 0;
-            _x ctrlCommit 0;
-            if (!_firstActivated) then {
-                [_x, false] call FUNC(onCustomGearTabButton);
-                _firstActivated = true;
+    // activate right side tabs and listbox, if weapon has been selected
+    if (_weaponID >= 0) then {
+        private _hashKeyArray = [
+            ["primaryWeaponOptics", "primaryWeaponPointer", "primaryWeaponMuzzle", "primaryWeaponUnderbarrel"],
+            ["secondaryWeaponMuzzle", "secondaryWeaponOptics", "secondaryWeaponPointer", "secondaryWeaponUnderbarrel"],
+            ["handgunWeaponMuzzle", "handgunWeaponOptics", "handgunWeaponPointer", "handgunWeaponUnderbarrel"]
+        ] select _weaponID;
+
+        private _firstActivated = false;
+        {
+            private _ctrlButton = _x;
+            private _tooltip = _ctrlButton getVariable [QGVAR(tooltip), ""];
+
+            _hashKey = _hashKeyArray select _forEachIndex;
+            _ctrlButton setVariable [QGVAR(hashKey), _hashKey];
+            _availableOptions = [_loadoutOptionsHash, _hashKey] call CBA_fnc_hashGet;
+
+            if !(_availableOptions isEqualType [] && {count _availableOptions > 0}) then {
+                _ctrlButton ctrlEnable false;
+                _ctrlButton ctrlSetTooltip format ["%1 unavailable", _tooltip];
+                _ctrlButton ctrlSetFade 0.5;
+                _ctrlButton ctrlCommit 0;
+            } else {
+                _ctrlButton ctrlSetTooltip _tooltip;
+                _x ctrlEnable true;
+                _x ctrlSetFade 0;
+                _x ctrlCommit 0;
+                if (!_firstActivated) then {
+                    [_x, false] call FUNC(onCustomGearTabButton);
+                    _firstActivated = true;
+                };
             };
-        };
 
-    } forEach _attachmentButtons;
+        } forEach _attachmentButtons;
 
-// otherwise hide right side
-} else {
-    if (_isLeftSide) then {
+    // otherwise hide right side
+    } else {
         {
             _x ctrlEnable false;
             _x ctrlSetFade 1;
@@ -99,9 +110,5 @@ if (_isLeftSide && _weaponID >= 0) then {
 
         _ctrlTabSelected ctrlSetFade 1;
         _ctrlTabSelected ctrlCommit 0;
-
-        private _ctrlListBoxRight = _display getVariable [QGVAR(ctrlListBoxRight), controlNull];
-        _ctrlListBoxRight ctrlSetFade 1;
-        _ctrlListBoxRight ctrlCommit 0;
     };
 };
