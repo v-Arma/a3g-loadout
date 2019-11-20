@@ -18,6 +18,7 @@ class GRAD_Loadout {
         class initCustomGear {preInit = 1;};
         class onCustomGearListSelection {};
         class onCustomGearTabButton {};
+        class onCustomGearUnload {};
         class openCustomGearDialog {};
         class setAllowedCategories {};
         class updateCamera {};
