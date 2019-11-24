@@ -1,5 +1,5 @@
 # GRAD Loadout
-[![GitHub tag](https://img.shields.io/github/tag/gruppe-adler/grad-loadout.svg)](https://github.com/gruppe-adler/grad-loadout/releases)
+[![GitHub tag](https://img.shields.io/github/tag/gruppe-adler/grad-loadout.svg)](https://github.com/gruppe-adler/grad-loadout/releases)  
 Declarative loadout system for Arma3 by [Gruppe Adler](https://www.gruppe-adler.de/).
 
 ## Acknowledgment
