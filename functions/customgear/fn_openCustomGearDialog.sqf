@@ -38,10 +38,6 @@ uiNamespace setVariable [QGVAR(customGearDisplay), _display];
 _display setVariable [QGVAR(loadoutOptionsHash), _loadoutOptionsHash];
 _display setVariable [QGVAR(unit), _unit];
 
-_display displayAddEventHandler ["unload" ,{
-    GVAR(customGearCam) cameraeffect ["terminate", "back"];
-    camDestroy GVAR(customGearCam);
-    GVAR(customGearCam) = nil;
-}];
+_display displayAddEventHandler ["unload", {_this call FUNC(onCustomGearUnload)}];
 
 [_display] call FUNC(createCustomGearDialog);
