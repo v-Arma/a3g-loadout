@@ -81,5 +81,5 @@ Param | Type   | Default Value | Description
 ] call GRAD_Loadout_fnc_addReviver;
 ```
 
-## `customGear` Functions
+## customGear Functions
 There are a number of functions specifically for the `customGear` funcionality. See [customGear](customGear.md#Functions) page for more information.

@@ -19,7 +19,7 @@ class CfgFunctions {
 };
 ```
 
-## Installing Via `npm`
+## Installing Via npm
 
 *For details about what npm is and how to use it, look it up on [npmjs.com](https://www.npmjs.com/).*
 
