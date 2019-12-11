@@ -24,7 +24,7 @@ To see if your loadouts were applied correctly, you can use the chat command `#g
 To check all currently loaded loadouts, you can use the chat command `#grad-loadout verify`. This will test the loadouts of all units currently in the game and output errors and warning to your rpt file.
 
 ## Randomization
-If you are defining an array where you would usually expect a single item (e.g. `uniform`, `primaryWeapon`, etc.) a random item of the array will be selected on a per-unit basis.
+If you are defining an array where you would usually expect a single item (e.g. `uniform`, `primaryWeapon`, etc.) a random item of the array will be selected on a per-unit basis, if not disabled by config or script (see [GRAD_Loadout_fnc_setRandomizationMode](functions.md#GRAD_Loadout_fnc_setRandomizationMode) and [Configuration](configuration.md)).
 
 **Example:**
 ```sqf
