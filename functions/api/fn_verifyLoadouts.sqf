@@ -1,6 +1,4 @@
-#define PREFIX grad
-#define COMPONENT loadout
-#include "\x\cba\addons\main\script_macros_mission.hpp"
+#include "component.hpp"
 
 #define CENTER(PARENT_SIZE, CHILD_SIZE)     ((PARENT_SIZE / 2) - (CHILD_SIZE / 2))
 #define SZ_SCALE                            (safezoneW min safezoneH)
@@ -306,6 +304,7 @@ private _verifiedLoadoutCount = 0;
 
 {
     _loadoutHash = [_x,_configPath] call FUNC(GetUnitLoadoutFromConfig);
+    [_loadoutHash] call FUNC(randomizeLoadout);
     _loadoutHash = [_loadoutHash,_x] call FUNC(ApplyRevivers);
 
     if (([_loadoutHash] call CBA_fnc_hashSize) > 0) then {

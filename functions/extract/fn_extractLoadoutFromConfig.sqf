@@ -1,6 +1,4 @@
-#define PREFIX grad
-#define COMPONENT loadout
-#include "\x\cba\addons\main\script_macros_mission.hpp"
+#include "component.hpp"
 
 params ["_configPath"];
 
@@ -41,7 +39,7 @@ private _configValues = [] call CBA_fnc_hashCreate;
     };
     _value = [_configPath >> _x, "array", false] call CBA_fnc_getConfigEntry;
     if (!(_value isEqualTo false)) then {
-        [_configValues, _x, (selectRandom _value)] call CBA_fnc_hashSet;
+        [_configValues, _x, _value] call CBA_fnc_hashSet;
     };
 } forEach [
     "uniform",

@@ -7,7 +7,22 @@ class GRAD_Loadout {
         file = MODULES_DIRECTORY\grad-loadout\functions\api;
         class doLoadoutForUnit {};
         class loadoutViewer {};
+        class setAllowedCategories {};
+        class setRandomizationMode {};
         class verifyLoadouts {};
+    };
+    class customgear {
+        file = MODULES_DIRECTORY\grad-loadout\functions\customgear;
+        class addCustomGearInteraction {};
+        class createCustomGearDialog {};
+        class getCurrentItem {};
+        class getCustomGearOptions {};
+        class initCustomGear {preInit = 1;};
+        class onCustomGearListSelection {};
+        class onCustomGearTabButton {};
+        class onCustomGearUnload {};
+        class openCustomGearDialog {};
+        class updateCamera {};
     };
     class Defactionizers {
         file = MODULES_DIRECTORY\grad-loadout\functions\defactionizers;
@@ -36,6 +51,7 @@ class GRAD_Loadout {
         class initGlobals {preinit = 1;};
         class mergeLoadoutHierarchy {};
         class normalizeContent {};
+        class randomizeLoadout {};
         class removeRadios {preinit = 1;};
         class scheduleLoadout {postInit = 1;};
         class weaponIsCompatibleMagazine {};
