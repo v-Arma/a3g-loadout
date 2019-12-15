@@ -81,5 +81,18 @@ Param | Type   | Default Value | Description
 ] call GRAD_Loadout_fnc_addReviver;
 ```
 
+## GRAD_Loadout_fnc_setRandomizationMode
+Sets randomization mode of a unit, overriding the [config set value](configuration.md). Effect is global.
+
+Param | Type   | Default Value | Description
+------|--------|---------------|-------------------------------------------
+0     | object | -             | The unit to set the randomization mode of.
+1     | number | 0             | Randomization mode. 0 to disable, 1 to enable, 2 to enable for players only, 3 to enable for AI only.
+
+**Example:**
+```sqf
+[player, 2] call GRAD_Loadout_fnc_setRandomizationMode;
+```
+
 ## customGear Functions
 There are a number of functions specifically for the `customGear` funcionality. See [customGear](customGear.md#Functions) page for more information.

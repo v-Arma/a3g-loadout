@@ -7,6 +7,8 @@ class GRAD_Loadout {
         file = MODULES_DIRECTORY\grad-loadout\functions\api;
         class doLoadoutForUnit {};
         class loadoutViewer {};
+        class setAllowedCategories {};
+        class setRandomizationMode {};
         class verifyLoadouts {};
     };
     class customgear {
@@ -20,7 +22,6 @@ class GRAD_Loadout {
         class onCustomGearTabButton {};
         class onCustomGearUnload {};
         class openCustomGearDialog {};
-        class setAllowedCategories {};
         class updateCamera {};
     };
     class Defactionizers {
