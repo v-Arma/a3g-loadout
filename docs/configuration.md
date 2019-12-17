@@ -21,6 +21,7 @@ class Loadouts {
     perPlayerDelay = 1;
     handleRadios = 0;
     resetLoadout = 1;
+    randomizationMode = 1;
     customGear = 300;
     customGearAllowedCategories[] = {"uniform","vest"};
 };
