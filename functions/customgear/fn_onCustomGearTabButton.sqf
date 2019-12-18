@@ -32,8 +32,9 @@ _ctrlListBox ctrlCommit 0;
     private _parentClass = "";
     {
         if (isClass (configFile >> _x >> _itemClassname)) exitWith {_parentClass = _x};
-    } forEach ["CfgWeapons", "CfgMagazines", "CfgVehicles"];
+    } forEach ["CfgWeapons", "CfgMagazines", "CfgVehicles", "CfgGlasses"];
     private _displayName = [configFile >> _parentClass >> _itemClassname, "displayName", "ERROR: NO DISPLAY NAME"] call BIS_fnc_returnConfigEntry;
+
     private _pic = [configFile >> _parentClass >> _itemClassname, "picture", ""] call BIS_fnc_returnConfigEntry;
 
     private _lbIndex = _ctrlListBox lbAdd _displayName;
