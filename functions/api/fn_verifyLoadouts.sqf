@@ -175,11 +175,20 @@ private _fnc_checkAccessoryFits = {
         // check if class exists first, because Arma throws some bullshit error message when nonexistant class is accessed
         private _configPath = (configFile >> "CfgWeapons" >> _weaponClassname >> "WeaponSlotsInfo" >> _x);
         if (isClass _configPath) then {
+
+            // compatibleItems are in separate class
             if (([_configPath >> "compatibleItems",_accessoryClassname,0] call BIS_fnc_returnConfigEntry) == 1) exitWith {
+                _accessoryFits = true;
+            };
+
+            // compatibleItems are in array
+            private _compatibleItems = [_configPath,"compatibleItems",[]] call BIS_fnc_returnConfigEntry;
+            if (_compatibleItems isEqualType [] && {_accessoryClassname in _compatibleItems}) exitWith {
                 _accessoryFits = true;
             };
         };
     } forEach _accessorySlots;
+
     _accessoryFits
 };
 
