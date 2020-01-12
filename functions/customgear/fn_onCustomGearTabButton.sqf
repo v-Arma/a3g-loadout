@@ -16,43 +16,51 @@ _ctrlTabSelected ctrlCommit 0;
 // get available options for selected category
 private _hashKey = _button getVariable [QGVAR(hashKey), ""];
 private _loadoutOptionsHash = _display getVariable [QGVAR(loadoutOptionsHash), []];
-private _availableOptions = [_loadoutOptionsHash, _hashKey] call CBA_fnc_hashGet;
+private _availableOptions = if !([_loadoutOptionsHash] call CBA_fnc_isHash) then {
+    ERROR("_loadoutOptionsHash got lost along the way and is no longer a hash.");
+    []
+} else {
+    [_loadoutOptionsHash, _hashKey] call CBA_fnc_hashGet
+};
 
 // fill listbox with available options
-private _ctrlListBox = _display getVariable [[QGVAR(ctrlListBoxRight), QGVAR(ctrlListBoxLeft)] select _isLeftSide, controlNull];
-_ctrlListBox setVariable [QGVAR(hashKey), _hashKey];
-lbClear _ctrlListBox;
-private _ctrlListBoxPosition = ctrlPosition _ctrlListBox;
-_ctrlListBoxPosition set [1, [-safeZoneH, (ctrlPosition _button) select 1] select (count _availableOptions > 0)];
-_ctrlListBox ctrlSetPosition _ctrlListBoxPosition;
-_ctrlListBox ctrlSetFade 0;
-_ctrlListBox ctrlCommit 0;
-{
-    private _itemClassname = _x;
-    private _displayName = "";
-    private _parentClass = "";
+// check if _availableOptions is type array, because default return for hash is *false*
+if (_availableOptions isEqualType []) then {
+    private _ctrlListBox = _display getVariable [[QGVAR(ctrlListBoxRight), QGVAR(ctrlListBoxLeft)] select _isLeftSide, controlNull];
+    _ctrlListBox setVariable [QGVAR(hashKey), _hashKey];
+    lbClear _ctrlListBox;
+    private _ctrlListBoxPosition = ctrlPosition _ctrlListBox;
+    _ctrlListBoxPosition set [1, [-safeZoneH, (ctrlPosition _button) select 1] select (count _availableOptions > 0)];
+    _ctrlListBox ctrlSetPosition _ctrlListBoxPosition;
+    _ctrlListBox ctrlSetFade 0;
+    _ctrlListBox ctrlCommit 0;
+    {
+        private _itemClassname = _x;
+        private _displayName = "";
+        private _parentClass = "";
 
-    if (_itemClassname == "") then {
-        _displayName = "empty";
-    } else {
-        {
-            if (isClass (configFile >> _x >> _itemClassname)) exitWith {_parentClass = _x};
-        } forEach ["CfgWeapons", "CfgMagazines", "CfgVehicles", "CfgGlasses"];
-        _displayName = [configFile >> _parentClass >> _itemClassname, "displayName", "ERROR: NO DISPLAY NAME"] call BIS_fnc_returnConfigEntry;
-    };
+        if (_itemClassname == "") then {
+            _displayName = "empty";
+        } else {
+            {
+                if (isClass (configFile >> _x >> _itemClassname)) exitWith {_parentClass = _x};
+            } forEach ["CfgWeapons", "CfgMagazines", "CfgVehicles", "CfgGlasses"];
+            _displayName = [configFile >> _parentClass >> _itemClassname, "displayName", "ERROR: NO DISPLAY NAME"] call BIS_fnc_returnConfigEntry;
+        };
 
-    private _pic = [configFile >> _parentClass >> _itemClassname, "picture", ""] call BIS_fnc_returnConfigEntry;
+        private _pic = [configFile >> _parentClass >> _itemClassname, "picture", ""] call BIS_fnc_returnConfigEntry;
 
-    private _lbIndex = _ctrlListBox lbAdd _displayName;
-    _ctrlListBox lbSetData [_lbIndex, _itemClassname];
-    _ctrlListBox lbSetPicture [_lbIndex, _pic];
+        private _lbIndex = _ctrlListBox lbAdd _displayName;
+        _ctrlListBox lbSetData [_lbIndex, _itemClassname];
+        _ctrlListBox lbSetPicture [_lbIndex, _pic];
 
-    if (
-        (toLower _itemClassname) == (toLower ([_unit, _hashKey, true] call FUNC(getCurrentItem)))
-    ) then {
-        _ctrlListBox lbSetCurSel _lbIndex;
-    };
-} forEach _availableOptions;
+        if (
+            (toLower _itemClassname) == (toLower ([_unit, _hashKey, true] call FUNC(getCurrentItem)))
+        ) then {
+            _ctrlListBox lbSetCurSel _lbIndex;
+        };
+    } forEach _availableOptions;
+};
 
 //update camera
 [_unit, _hashKey] call FUNC(updateCamera);
