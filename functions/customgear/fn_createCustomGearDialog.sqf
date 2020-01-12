@@ -60,16 +60,25 @@ private _ctrlFirstActivated = controlNull;
 
     private _availableOptions = [_loadoutOptionsHash, _hashKey] call CBA_fnc_hashGet;
 
-    if !(_availableOptions isEqualType [] && {count _availableOptions > 0}) then {
-        _ctrlButton ctrlEnable false;
-        _ctrlButton ctrlSetTooltip format ["%1 unavailable", _tooltip];
-        _ctrlButton ctrlSetFade 0.5;
-        _ctrlButton ctrlCommit 0;
-    } else {
+    // check if weapon categories have accessories available
+    private _hasSubOptionsAvailable = false;
+    {
+        private _availableSubOptions = [_loadoutOptionsHash, _x] call CBA_fnc_hashGet;
+        if (_availableSubOptions isEqualType [] && {count _availableSubOptions > 0}) exitWith {
+            _hasSubOptionsAvailable = true;
+        };
+    } forEach _subkeys;
+
+    if ((_availableOptions isEqualType [] && {count _availableOptions > 0}) || _hasSubOptionsAvailable) then {
         _ctrlButton ctrlSetTooltip _tooltip;
         if (isNull _ctrlFirstActivated) then {
             _ctrlFirstActivated = _ctrlButton;
         };
+    } else {
+        _ctrlButton ctrlEnable false;
+        _ctrlButton ctrlSetTooltip format ["%1 unavailable", _tooltip];
+        _ctrlButton ctrlSetFade 0.5;
+        _ctrlButton ctrlCommit 0;
     };
 
 } forEach [
