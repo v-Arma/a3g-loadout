@@ -64,7 +64,8 @@ private _action = [
     },
     {
         params ["_unit"];
-        [_unit] call GVAR(customGearCondition) &&
+        !visibleMap &&
+        {[_unit] call GVAR(customGearCondition)} &&
         {
             private _customGearOptionsHash = _unit getVariable QGVAR(customGearOptionsCache);
             if (isNil "_customGearOptionsHash") then {
