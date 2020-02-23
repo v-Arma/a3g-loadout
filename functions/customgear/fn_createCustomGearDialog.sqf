@@ -47,7 +47,7 @@ _ctrlListBoxRight ctrlAddEventHandler ["lbSelChanged", {_this call FUNC(onCustom
 // create tab buttons
 private _ctrlFirstActivated = controlNull;
 {
-    _x params ["_tooltip", "_pic", "_hashKey"];
+    _x params ["_tooltip", "_pic", "_hashKey", ["_subKeys", []]];
 
     private _tabY = safezoneY + 0.02 + _forEachIndex * 1.5 * (((safezoneH - 0.1) / 18 / 1.5) min (0.04));
 
@@ -82,9 +82,9 @@ private _ctrlFirstActivated = controlNull;
     };
 
 } forEach [
-    ["Rifle", "PrimaryWeapon_ca.paa", "primaryWeapon"],
-    ["Launcher", "SecondaryWeapon_ca.paa", "secondaryWeapon"],
-    ["Handgun", "Handgun_ca.paa", "handgunWeapon"],
+    ["Rifle", "PrimaryWeapon_ca.paa", "primaryWeapon", ["primaryWeaponOptics", "primaryWeaponMuzzle", "primaryWeaponPointer", "primaryWeaponUnderbarrel"]],
+    ["Launcher", "SecondaryWeapon_ca.paa", "secondaryWeapon", ["secondaryWeaponOptics", "secondaryWeaponMuzzle", "secondaryWeaponPointer", "secondaryWeaponUnderbarrel"]],
+    ["Handgun", "Handgun_ca.paa", "handgunWeapon", ["handgunWeaponOptics", "handgunWeaponMuzzle", "handgunWeaponPointer", "handgunWeaponUnderbarrel"]],
     ["Uniform", "Uniform_ca.paa", "uniform"],
     ["Vest", "Vest_ca.paa", "vest"],
     ["Backpack", "Backpack_ca.paa", "backpack"],
