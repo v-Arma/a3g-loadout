@@ -97,6 +97,39 @@ There are a couple of generic classes for you to use, ontop of being able to spe
 
 Loadout is read from top to bottom, and augemented/overwritten along the way.
 
+## Special Case: Using "Faction"
+Most of the classes mentioned above are self explanatory, but a few words need to be said about the `Faction` class:
+
+`Faction` allows you to create `typeOf` unit based loadouts that can then be dynamically assigned to any of the three main vanilla faction (NATO, CSAT, AAF) - this is shown in the [Complete Example](creatingLoadouts.md#Complete-Example). For this to work, you need to use the *defactionized* type of a unit, so instead of `B_Soldier_F` (which is a BLUFOR rifleman) you would use `Soldier_F` (which is any rifleman).
+
+Grad-Loadout will check if a unit can be defactionized and then check if an applicable loadout exists. If Grad-Loadout encounters a unit that can not be defactionized (i.e. a unit that is not one of the three vanilla factions), it will instead look for its full `typeOf` name.
+
+**Example 1:**
+```sqf
+// initServer.sqf
+// the "MyLoadout" loadouts class is assigned to both the BLU_F and gmx_fc_tak factions
+["BLU_F", "MyLoadout", true] call GRAD_Loadout_fnc_factionSetLoadout;
+["gmx_fc_tak", "MyLoadout", true] call GRAD_Loadout_fnc_factionSetLoadout;
+```
+
+```sqf
+class Loadouts {
+    class Faction {
+        class MyLoadout {
+            class Type {
+                // a NATO (BLU_F) Rifleman will receive this loadout
+                class Soldier_F {
+                    // Soldier_F loadout
+                };
+
+                // a Takistan Army (gmx_fc_tak) Rifleman will receive this loadout
+                class gmx_tak_army_rifleman: Soldier_F {};
+            };
+        };
+    };
+};
+```
+
 ## Special Case: Weapons in backpacks
 If you want to add a weapon to a backpack, simply add the weapon's classname to `addItemsToBackpack` like you would with any other item. However, if you want the weapon to have attachments and/or loaded magazines, the config has to look like the following examples. Note that the weapon class has to be inside the same parent class as the `addItemsToBackpack` property where it is used.
 
@@ -140,80 +173,82 @@ Note that a `LIST` macro is utilized here, which can be found [here](https://git
 ```sqf
 //description.ext
 class Loadouts {
-    class USOCP {
-        class AllUnits {
-            uniform = "rhs_uniform_cu_ocp";
-            vest = "rhsusf_iotv_ocp_Rifleman";
-            backpack = "";
-            headgear = "rhsusf_ach_helmet_ocp";
-            primaryWeapon = "rhs_weap_m4a1_blockII_bk";
-            primaryWeaponMagazine = "30Rnd_556x45_Stanag";
-            primaryWeaponOptics = "rhsusf_acc_g33_T1";
-            primaryWeaponUnderbarrel = "";
-    		primaryWeaponUnderbarrelMagazine = "";
-            secondaryWeapon = "";
-            secondaryWeaponMagazine = "";
-            handgunWeapon = "rhsusf_weap_m9";
-            handgunWeaponMagazine = "rhsusf_mag_15Rnd_9x19_JHP";
-            binoculars = "Binocular";
-            map = "ItemMap";
-            compass = "ItemCompass";
-            watch = "ItemWatch";
-            gps = "ItemGPS";
-            radio = "tfar_anprc152";
-        };
-
-        class Type {
-            //Rifleman
-            class Soldier_F {
-                addItemsToUniform[] = {
-                    LIST_1("ACE_MapTools"),
-                    LIST_1("ACE_DefusalKit"),
-                    LIST_2("ACE_CableTie"),
-                    LIST_1("ACE_Flashlight_MX991"),
-
-                    LIST_4("ACE_packingBandage"),
-                    LIST_4("ACE_elasticBandage"),
-                    LIST_4("ACE_quikclot"),
-                    LIST_4("ACE_tourniquet"),
-                    LIST_2("ACE_morphine"),
-                    LIST_2("ACE_epinephrine")
-                };
-                addItemsToVest[] = {
-                    LIST_2("HandGrenade"),
-                    LIST_2("SmokeShell"),
-                    LIST_2("rhsusf_mag_15Rnd_9x19_JHP"),
-                    LIST_7("30Rnd_556x45_Stanag")
-                };
+    class Faction {
+        class USOCP {
+            class AllUnits {
+                uniform = "rhs_uniform_cu_ocp";
+                vest = "rhsusf_iotv_ocp_Rifleman";
+                backpack = "";
+                headgear = "rhsusf_ach_helmet_ocp";
+                primaryWeapon = "rhs_weap_m4a1_blockII_bk";
+                primaryWeaponMagazine = "30Rnd_556x45_Stanag";
+                primaryWeaponOptics = "rhsusf_acc_g33_T1";
+                primaryWeaponUnderbarrel = "";
+        		primaryWeaponUnderbarrelMagazine = "";
+                secondaryWeapon = "";
+                secondaryWeaponMagazine = "";
+                handgunWeapon = "rhsusf_weap_m9";
+                handgunWeaponMagazine = "rhsusf_mag_15Rnd_9x19_JHP";
+                binoculars = "Binocular";
+                map = "ItemMap";
+                compass = "ItemCompass";
+                watch = "ItemWatch";
+                gps = "ItemGPS";
+                radio = "tfar_anprc152";
             };
 
-            //Asst. Autorifleman
-            class soldier_AAR_F: Soldier_F {
-                backpack = "rhsusf_assault_eagleaiii_ocp";
-                addItemsToBackpack[] = {
-                    LIST_2("rhs_200rnd_556x45_M_SAW"),
-                    "rhsusf_100Rnd_556x45_soft_pouch"
-                };
-            };
+            class Type {
+                //Rifleman
+                class Soldier_F {
+                    addItemsToUniform[] = {
+                        LIST_1("ACE_MapTools"),
+                        LIST_1("ACE_DefusalKit"),
+                        LIST_2("ACE_CableTie"),
+                        LIST_1("ACE_Flashlight_MX991"),
 
-            //Autorifleman
-            class soldier_AR_F: Soldier_F {
-                primaryWeapon = "rhs_weap_m249_pip_S";
-                primaryWeaponMagazine = "rhs_200rnd_556x45_M_SAW";
-                handgunWeapon = "";
-                handgunWeaponMagazine = "";
-                vest = "rhsusf_iotv_ocp_SAW";
-                backpack = "rhsusf_assault_eagleaiii_ocp";
-                addItemsToBackpack[] = {
-                    LIST_2("rhs_200rnd_556x45_M_SAW"),
-                    "rhsusf_100Rnd_556x45_soft_pouch"
+                        LIST_4("ACE_packingBandage"),
+                        LIST_4("ACE_elasticBandage"),
+                        LIST_4("ACE_quikclot"),
+                        LIST_4("ACE_tourniquet"),
+                        LIST_2("ACE_morphine"),
+                        LIST_2("ACE_epinephrine")
+                    };
+                    addItemsToVest[] = {
+                        LIST_2("HandGrenade"),
+                        LIST_2("SmokeShell"),
+                        LIST_2("rhsusf_mag_15Rnd_9x19_JHP"),
+                        LIST_7("30Rnd_556x45_Stanag")
+                    };
                 };
-                addItemsToVest[] = {
-                    LIST_2("HandGrenade"),
-                    LIST_2("SmokeShell")
-                };
-            };
 
+                //Asst. Autorifleman
+                class soldier_AAR_F: Soldier_F {
+                    backpack = "rhsusf_assault_eagleaiii_ocp";
+                    addItemsToBackpack[] = {
+                        LIST_2("rhs_200rnd_556x45_M_SAW"),
+                        "rhsusf_100Rnd_556x45_soft_pouch"
+                    };
+                };
+
+                //Autorifleman
+                class soldier_AR_F: Soldier_F {
+                    primaryWeapon = "rhs_weap_m249_pip_S";
+                    primaryWeaponMagazine = "rhs_200rnd_556x45_M_SAW";
+                    handgunWeapon = "";
+                    handgunWeaponMagazine = "";
+                    vest = "rhsusf_iotv_ocp_SAW";
+                    backpack = "rhsusf_assault_eagleaiii_ocp";
+                    addItemsToBackpack[] = {
+                        LIST_2("rhs_200rnd_556x45_M_SAW"),
+                        "rhsusf_100Rnd_556x45_soft_pouch"
+                    };
+                    addItemsToVest[] = {
+                        LIST_2("HandGrenade"),
+                        LIST_2("SmokeShell")
+                    };
+                };
+
+            };
         };
     };
 };
