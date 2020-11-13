@@ -16,7 +16,6 @@ private _getDelay = {
 private _delay = [_didJIP] call _getDelay;
 
 INFO_1("waiting %1 s for loadout...", _delay);
-systemChat format ["grad-loadout: waiting %1 s for loadout...", _delay];
 
 [
 	{
